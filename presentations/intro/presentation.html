@@ -139,6 +139,20 @@
     src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
     </script>
 
+    <style>
+      /* Table Style */
+      .tg  {border-collapse:collapse;border-color:#9ABAD9;border-spacing:0;}
+      .tg td{background-color:#EBF5FF;border-color:#9ABAD9;border-style:solid;border-width:1px;color:#444;
+        font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:3px 3px;word-break:normal;}
+      .tg th{background-color:#409cff;border-color:#9ABAD9;border-style:solid;border-width:1px;color:#fff;
+        font-family:Arial, sans-serif;font-size:14px;font-weight:normal;overflow:hidden;padding:3px 3px;word-break:normal;}
+      .tg .tg-dzaw{background-color:#4F81BD;color:#FFF;font-weight:bold;text-align:left;vertical-align:top}
+      .tg .tg-sabo{background-color:#ebf5ff;color:#000000;text-align:left;vertical-align:top}
+      .tg .tg-096r{color:#000000;text-align:left;vertical-align:top}
+      .tg .tg-jayl{background-color:#d2e4fc;color:#000000;text-align:left;vertical-align:top}
+      .tg .tg-ig71{background-color:#D2E4FC;color:#000000;text-align:left;vertical-align:top}
+    </style>
+
   </head>
   <body>
     <textarea id="source">
@@ -340,10 +354,21 @@ of the semester each year to find a winner. This is the final race, in 2018, whe
 
 
 ---
-name: S12
+name: S13
 
 # ELECTENG 734 Prizegiving
 
+&nbsp
+
+.center[
+<img src="img/EE734_2018.png" height="325">
+.credits[
+Prizegiving (left) & Finalists (right) showcasing their final designs (2018).
+]
+.credits[
+Sumant, Kunal and a few other engineers from Apple attended the event.
+]
+]
 
 ---
 
@@ -364,7 +389,7 @@ name: template_slide
 .footer[[Duleepa J Thrimawithana](https://www.linkedin.com/in/duleepajt), Department of Electrical, Computer and Software Engineering (2020)]
 
 ---
-name: S13
+name: S14
 
 # The Project
 
@@ -380,7 +405,7 @@ name: S13
  - The information is shown on a __local LCD display__ and also communicated __wirelessly using Bluetooth__ with other smart devices
 
 ---
-name: S14
+name: S15
 
 # System to Implement
 
@@ -394,6 +419,77 @@ AC source
 name: S15
 
 # Design Specifications
+
+<table class="tg" style="undefined;table-layout: fixed; width: 647px; margin-left:auto; margin-right:auto;">
+  <colgroup>
+  <col style="width: 333px">
+  <col style="width: 314px">
+  </colgroup>
+  <thead>
+    <tr>
+      <th class="tg-dzaw"><span style="color:white">Parameter</span></th>
+      <th class="tg-dzaw"><span style="color:white">Value</span></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="tg-jayl">Source Voltage</td>
+      <td class="tg-jayl"> 12 V<sub>RMS</sub> &plusmn 10% </td>
+    </tr>
+    <tr>
+      <td class="tg-sabo">Source Frequency </td>
+      <td class="tg-sabo"> 50 Hz &plusmn 10% </td>
+    </tr>
+    <tr>
+      <td class="tg-ig71">Load Range</td>
+      <td class="tg-ig71"> 1 VA to 7 VA </td>
+    </tr>
+    <tr>
+      <td class="tg-sabo">Load Power Factor</td>
+      <td class="tg-sabo">0.89 to 0.99</td>
+    </tr>
+    <tr>
+      <td class="tg-ig71">Measurement Accuracy</td>
+      <td class="tg-ig71">5% of full-scale reading</td>
+    </tr>
+    <tr>
+      <td class="tg-sabo">ADC Conversion Rate</td>
+      <td class="tg-sabo">1 kHz or slower</td>
+    </tr>
+    <tr>
+      <td class="tg-ig71">LCD Display Information</td>
+      <td class="tg-ig71">Voltage, Current, Power and Energy</td>
+    </tr>
+    <tr>
+      <td class="tg-sabo">LCD Display Units</td>
+      <td class="tg-sabo">V<sub>RMS</sub>, A<sub>pk</sub>, W and W.min</td>
+    </tr>
+    <tr>
+      <td class="tg-ig71">LCD Scroll Rate</td>
+      <td class="tg-ig71">0.3 s</td>
+    </tr>
+    <tr>
+      <td class="tg-sabo">UART Baud Rate</td>
+      <td class="tg-sabo">9600 Baud</td>
+    </tr>
+    <tr>
+      <td class="tg-jayl">Information Transferred Via UART</td>
+      <td class="tg-jayl">Voltage, Current, Power and Energy</td>
+    </tr>
+    <tr>
+      <td class="tg-096r">PCB Size</td>
+      <td class="tg-096r">150 cm&sup2 </td>
+    </tr>
+    <tr>
+      <td class="tg-jayl">PCB Technology</td>
+      <td class="tg-jayl">Double Layer with PTH</td>
+    </tr>
+    <tr>
+      <td class="tg-096r">Device Technology </td>
+      <td class="tg-096r">TH or SMT</td>
+    </tr>
+  </tbody>
+</table>
 
 
 ---
