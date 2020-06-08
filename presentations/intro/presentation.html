@@ -143,9 +143,9 @@
       /* Table Style */
       .tg  {border-collapse:collapse;border-color:#9ABAD9;border-spacing:0;}
       .tg td{background-color:#EBF5FF;border-color:#9ABAD9;border-style:solid;border-width:1px;color:#444;
-        font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:3px 3px;word-break:normal;}
+        font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:3px 10px;word-break:normal;}
       .tg th{background-color:#409cff;border-color:#9ABAD9;border-style:solid;border-width:1px;color:#fff;
-        font-family:Arial, sans-serif;font-size:14px;font-weight:normal;overflow:hidden;padding:3px 3px;word-break:normal;}
+        font-family:Arial, sans-serif;font-size:14px;font-weight:normal;overflow:hidden;padding:3px 10px;word-break:normal;}
       .tg .tg-dzaw{background-color:#4F81BD;color:#FFF;font-weight:bold;text-align:left;vertical-align:top}
       .tg .tg-sabo{background-color:#ebf5ff;color:#000000;text-align:left;vertical-align:top}
       .tg .tg-096r{color:#000000;text-align:left;vertical-align:top}
@@ -466,7 +466,7 @@ name: S15
     </tr>
     <tr>
       <td class="tg-ig71">LCD Scroll Rate</td>
-      <td class="tg-ig71">0.3 s</td>
+      <td class="tg-ig71">0.5 s</td>
     </tr>
     <tr>
       <td class="tg-sabo">UART Baud Rate</td>
@@ -490,6 +490,26 @@ name: S15
     </tr>
   </tbody>
 </table>
+
+---
+name: S15
+
+# Working in Teams
+
+- You will work in a team of 4 
+ - You can chose your team members and register your group details on Canvas by the end of 1st week
+ - All team members should be from the same lab stream (NB: There are two lab streams)
+- Throughout the project work as a team and aim to support each other
+ - This is an important part of preparing to be a professional engineer
+ - You depend on each other to do well in this course
+- Plan your work, document your work and communicate regularly with your team members
+ - Use [Trello](https://trello.com) to plan and manage the work as well as to document design notes and team discussions 
+ - Use [Slack](https://slack.com/intl/en-nz/) for team communications
+ - Use [GitHub](https://github.com) and [G Suite](https://gsuite.google.com) products to collaborate with team members
+- Be patient with your team members even if they are not making much progress during the initial stage
+ - If things are not working out, after about 3 weeks, let us know
+ - If a member is not engaging in team work we will ask that person to work alone
+
 
 
 ---
@@ -561,7 +581,7 @@ name: S18
  - Yes, because this is your first real-world engineering design project
  - Due to lack of experience it is common to encounter unforeseen design and integration issues when developing a system, especially with hardware-software interface
 - What are the most challenging aspects?
- - Time management, planing and group work are the key challenges
+ - Time management, planing and team work are the key challenges
  - As in a real life project, resources are limited (time, teams' availability, lab space, equipment, etc.) and therefore last minute frantic endeavour will not help
 - How could I get an excellent grade?
  - Enjoy designing a real-world product and be passionate about your design (this is the key ingredient)
@@ -613,18 +633,116 @@ name: template_slide
 .footer[[Duleepa J Thrimawithana](https://www.linkedin.com/in/duleepajt), Department of Electrical, Computer and Software Engineering (2020)]
 
 ---
-exclude: true
 name: S19
 
-# An Uncompensated Pick-up
+# Assessment Components
+
+- All assessment components except the Smart Energy Challenge are compulsory
+ - It is compulsory to satisfactorily complete all components except the Smart Energy Challenge to obtain a passing grade
+ - To be eligible for the bonus marks you must satisfactorily complete the entire project
+ - Although this project will be undertaken in design teams of 4, you will be assessed individually
+
+<table class="tg" style="undefined;table-layout: fixed; width: 647px; margin-left:auto; margin-right:auto;">
+  <colgroup>
+  <col style="width: 383px">
+  <col style="width: 264px">
+  </colgroup>
+  <thead>
+    <tr>
+      <th class="tg-dzaw"><span style="color:white">Component</span></th>
+      <th class="tg-dzaw"><span style="color:white">Weighting</span></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="tg-jayl">Test 1 & 2 (Written and Simulation Components)</td>
+      <td class="tg-jayl"> 40% </td>
+    </tr>
+    <tr>
+      <td class="tg-sabo">Lecture Quizzes (Available for 24 Hrs) </td>
+      <td class="tg-sabo"> 5% </td>
+    </tr>
+    <tr>
+      <td class="tg-ig71">Weekly Lab Assignments</td>
+      <td class="tg-ig71"> 15% </td>
+    </tr>
+    <tr>
+      <td class="tg-sabo">Midsemester Progress Review </td>
+      <td class="tg-sabo">5%</td>
+    </tr>
+    <tr>
+      <td class="tg-ig71">Final Interview</td>
+      <td class="tg-ig71">15%</td>
+    </tr>
+    <tr>
+      <td class="tg-sabo">Project Deliverables </td>
+      <td class="tg-sabo">20%</td>
+    </tr>
+    <tr>
+      <td class="tg-ig71">Smart Energy Challenge (Optional)</td>
+      <td class="tg-ig71">2%</td>
+    </tr>
+  </tbody>
+</table>
+
+---
+name: S19
+
+# Tests, Lecture Quizzes & Labs
+
+- The two 20% tests will be conducted during weeks 5 and 10 of the semester
+ - The written part of the tests will assess your understanding of fundamental concepts 
+ - The simulation component of the 1st test will be conducted using LTspice
+ - The simulation component of the 2nd test will be conducted using Atmel Studio and Proteus VSM
+- During each of the 15 lecture, we will conduct a 0.6% live quizzes using Xorro-Q to evaluate your engagement and understanding
+ - Quizzes will be available until midnight the same day and you are allowed a 2nd attempts
+ - The maximum marks you can get will be capped to 5%
+- The 6 lab assignments are designed to guide you through the design and advancing your understanding
+ - Allow plenty of time, especially if you have forgotten the EE202 & CS201 contents 
+ - You can work as a team, but your solutions must be __submitted individually__ 
+ - We will use one of the two weekly lab sessions to help you complete these assignments 
+ - The remaining weekly lab session will be used to assess your solutions (1%), understanding and engagement (1%) and use of digital collaboration tools (0.5%)
 
 
+---
+name: S19
 
-- Assume a load resistor, `\(R_{L}\)`, is connected directly across a pick-up coil, which is coupled to a primary coil 
-- The primary coil is driven by the primary converter generating a current `\(I_{pt}\angle 0\)` at an angular frequency `\(\omega = 2\pi f\)`
-- The current flowing through pick-up coil as well as the load will be
-\\[ I\_{st} = \frac {-V\_{sr}} {R\_{L} + j\omega L\_{st}} = \frac {-\omega MI\_{pt}e^{j\pi/2}} {R\_{L} + j\omega L\_{st}}  \\]
-- The impedance of `\(L_{st}\)` limits the ability to supply current to `\(R_{L}\)`
+# Progress Review, Interview & Deliverables
+
+
+---
+name: S19
+
+# Smart Energy Challenge
+
+
+---
+name: S19
+
+# Digital Collaboration Tools
+
+
+---
+name: S19
+
+# Resources
+
+- Duleepa Thrimawithana (course director), Su Tang and Andrew Austin, from the academic staff, will be looking after this course
+ - Felix Marattukalam is your technical facilitator 
+- Teaching assistance (TAs) will be available during the lab sessions to help 
+ - Victor Wang (EE), Patrick Lawton (EE), Vahid Zahiri (EE), Tharindu Dharmakeerthi (EE), Jagmeet Singh (EE), Cody Liu (EE), Osama Almulla (EE), Bilal Ahmed (EE), Kai Sun (EE), Tomas Antune (CS), Logan Kenwright (CS), Ryan Smith (CS), Ross Porter (CS) and Jeremy Towers (EE) are your TAs
+- We will communicate all course related information via Canvas 
+- In addition to getting support during the dedicated lab sessions shown on the lab planner you may  
+ - Use Piazza, Slack and Zoom/Hangouts to seek support remotely
+ - Seek additional staff assisted evening support/tutorial sessions 
+- All software needed for this course can be accessed from home 
+- Recorded media will be provided to support your learning 
+
+---
+name: S19
+
+# Enrolment 
+
 
 ---
 exclude: true
