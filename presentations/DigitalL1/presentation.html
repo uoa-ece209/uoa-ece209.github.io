@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Introduction to ELECTENG 209</title>
+    <title>Introduction to Digital Design</title>
     <meta charset="utf-8">
     <style>
       @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
@@ -77,6 +77,18 @@
      
       .right-column {
         width: 30%;
+        float: right;
+        word-wrap: break-word;
+      }
+
+      .left-column-s {
+        width: 75%;
+        float: left;
+        word-wrap: break-word;
+      }
+     
+      .right-column-s {
+        width: 20%;
         float: right;
         word-wrap: break-word;
       }
@@ -162,8 +174,8 @@ count: false
 .logo-title[]
 
 ## ELECTENG 209
-# Analogue & Embedded Software Design 
-### An Introduction to the Course
+# Embedded Software Design 
+### An Introduction
 
 .TitleAuthor[Duleepa J Thrimawithana]
 
@@ -179,40 +191,79 @@ name: template_slide
 
 name: S1
 
-# Background
+# Learning Objectives
 
-- High reliance on fossil fuels and associated issues have become increasingly more evident over the last two decades
- - Human-made climate change due to emissions is one of the most alarming concerns
+- Why do we use a digital processor in your design?
+- What should be the functionality of your digital design?
+- What are the differences between microcontrollers and reconfigurable integrated circuits?
+- Reasons for using a microcontroller in your design
+- Features that needs to be considered when selecting a microcontroller
+- Key features of an ATmega328P microcontroller 
+- Revising C programing basics
+ - Variable and data types
+ - Operators and expressions
+ - Control statements and loops
+- Using GPIO on an ATmega328P to interact with external circuitry
 
-.center[
-<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/Gz_L6KuqvFI?start=0&end=84" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-]
+---
+
+class: title-slide
+layout: false
+count: false
+.logo-title[]
+
+# Software for the Wireless Energy Monitor
+### Functional Specifications 
+
+---
+
+layout: true
+name: template_slide
+
+.logo-slide[]
+.footer[[Duleepa J Thrimawithana](https://www.linkedin.com/in/duleepajt), Department of Electrical, Computer and Software Engineering (2020)]
 
 ---
 
 name: S2
 
-# Renewable Energy
+# How Does an Energy Monitor Works?
 
-- Increasing emphasis on renewable generation, efficient conversion, sustainable utilization and electrification of transportation 
- - Many countries have pledged to reduce emissions 
+.center[<img src="img/System.png" height="275">]
 
-.center[
-<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/1kUE0BZtTRc?start=0&end=135" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-]
+- To implement the core energy monitor functionalities we have to
+ - Measure the load current and voltage
+ - Perform computations on these measurements to calculate the power and energy used by the load
+- To implement a suitable user interface we need to
+ - Control a display to show the voltage, current, power and energy measurements to the user(s)
+ - Communicate these measurements wirelessly with a smart devices
+ - Communicate these measurements through USB with a PC
 
 ---
 
 name: S3
 
-# Distributed Generation
+# How Can we Build an Energy Monitor?
 
-- Decentralized energy generation (DEG) is gaining popularity due to social, economical and environmental benifits it offers
- - Energy is generated locally at or near point of consumption using micro-scale renewable systems 
-
-.center[
-<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/dA76xquzQFo?" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+.left-column-s[
+- Can we build the energy monitor using hardware only?
+ - For example, electromechanical energy meters have been used in the past
+ - Significant design effort required to produce the required complex electronic circuits
+ - Modifying the system will most likely be very difficult and costly
+- We can’t build an energy monitor using only software
+ - Must interact with the physical world to measure voltage and current 
+ - Have to produce electrical signals to drive display and USB
+ - Electromagnetic waves needed for wireless communication 
+- A solution using a mixture of software and hardware is likely to be the best
+ - Simpler to build, cheaper, and can be easily iterated to improve the design
+ - Hardware is used for interaction with the physical world
+ - Software is used to perform computation and control
 ]
+
+.right-column-s[
+
+]
+
 
 ---
 
@@ -362,7 +413,7 @@ name: S13
 .center[
 <img src="img/EE734_2018.png" height="325">
 .credits[
-Prizegiving (left) & finalists (right) showcasing their final designs (2018).
+Prizegiving (left) & Finalists (right) showcasing their final designs (2018).
 ]
 .credits[
 Sumant, Kunal and a few other engineers from Apple attended the event.
@@ -415,7 +466,7 @@ AC source
 .center[<img src="img/System.png" height="275">]
 
 ---
-name: S16
+name: S15
 
 # Key Design Specifications
 
@@ -437,7 +488,7 @@ name: S16
     </tr>
     <tr>
       <td class="tg-sabo">Source Frequency </td>
-      <td class="tg-sabo"> 50 Hz &plusmn 2% </td>
+      <td class="tg-sabo"> 50 Hz &plusmn 10% </td>
     </tr>
     <tr>
       <td class="tg-ig71">Load Range</td>
@@ -465,7 +516,7 @@ name: S16
     </tr>
     <tr>
       <td class="tg-ig71">LCD Scroll Rate</td>
-      <td class="tg-ig71">1 s</td>
+      <td class="tg-ig71">0.5 s</td>
     </tr>
     <tr>
       <td class="tg-sabo">UART Baud Rate</td>
@@ -477,7 +528,7 @@ name: S16
     </tr>
     <tr>
       <td class="tg-096r">PCB Size</td>
-      <td class="tg-096r">20000 mm&sup2 </td>
+      <td class="tg-096r">150 cm&sup2 </td>
     </tr>
     <tr>
       <td class="tg-jayl">PCB Technology</td>
@@ -492,7 +543,7 @@ name: S16
 
 
 ---
-name: S17
+name: S14A
 
 # Demo of Expected Final Design
 
@@ -501,7 +552,7 @@ name: S17
 ]
 
 ---
-name: S18
+name: S15
 
 # Working in Teams
 
@@ -522,7 +573,7 @@ name: S18
 
 
 ---
-name: S19
+name: S16
 
 # Course Calendar
 
@@ -530,7 +581,7 @@ name: S19
 .center[<img src="img/2020Calendar.png" height="430">]
 
 ---
-name: S20
+name: S17
 
 # Top Designs from the Past (PI)
 
@@ -544,7 +595,7 @@ SMT designs with a digitally controlled gain stage (left) & a LCD screen (right)
 ]
 
 ---
-name: S21
+name: S17
 
 # Top Designs from the Past (PII)
 
@@ -558,7 +609,7 @@ A couple of the SMT designs that were developed by teams in 2018.
 ]
 
 ---
-name: S22
+name: S18
 
 # Top Designs from the Past (PIII)
 
@@ -570,7 +621,7 @@ A [web application](https://rabadunk.github.io/group26/) developed by a team in 
 ]
 
 ---
-name: S23
+name: S19
 
 # Course Feedback
 
@@ -579,14 +630,13 @@ name: S23
 ]
 
 ---
-exclude: true
-name: S24
+name: S20
 
 # Entry Performance
 
 
 ---
-name: S25
+name: S21
 
 # Past Grades
 
@@ -595,24 +645,25 @@ name: S25
 ]
 
 ---
-name: S26
+name: S22
 
 # How to Get an Excellent Grade
 
 - Is the project challenging?
  - Yes, because this is your first real-world engineering design project
- - Due to lack of experience it is common to encounter unforeseen design and integration issues when developing a system, especially with a hardware-software interface
+ - Due to lack of experience it is common to encounter unforeseen design and integration issues when developing a system, especially with hardware-software interface
 - What are the most challenging aspects?
  - Time management, planing and team work are the key challenges
- - As in a real life project, resources are limited (time, teams' availability, lab space, equipment, software licenses, etc.) and therefore last minute frantic endeavour will not help
+ - As in a real life project, resources are limited (time, teams' availability, lab space, equipment, etc.) and therefore last minute frantic endeavour will not help
 - How could I get an excellent grade?
  - Enjoy designing a real-world product and be passionate about your design (this is the key ingredient)
  - Plan and manage your and your team members' time well
- - Throughout the semester you are expected to spend about 12 hours a week on the project 
+ - Throughout the semester you are expected to spend about 10 hours a week on the project 
  - Make full use of all lab sessions and staff support provided (there will be in average of about 10 support hours a week)
 
+
 ---
-name: S27
+name: S23
 
 # Poor Exemplars - Last Minute Endeavour (PI)
 
@@ -624,7 +675,7 @@ Undergraduate laboratories just a day before the due date - taken by a student a
 ]
 
 ---
-name: S28
+name: S24
 
 # Poor Exemplars - Last Minute Endeavour (PII)
 
@@ -654,7 +705,7 @@ name: template_slide
 .footer[[Duleepa J Thrimawithana](https://www.linkedin.com/in/duleepajt), Department of Electrical, Computer and Software Engineering (2020)]
 
 ---
-name: S29
+name: S25
 
 # Assessment Components
 
@@ -707,7 +758,7 @@ name: S29
 </table>
 
 ---
-name: S30
+name: S26
 
 # Tests, Lecture Quizzes & Labs
 
@@ -715,10 +766,10 @@ name: S30
  - The written part of the tests will assess your understanding of fundamental concepts 
  - The simulation component of the 1st test will be conducted using LTspice
  - The simulation component of the 2nd test will be conducted using Atmel Studio and Proteus VSM
-- During each of the 15 lecture, we will conduct a 0.6% quizzes using Xorro-Q (or Canvas) to evaluate your engagement and understanding
+- During each of the 15 lecture, we will conduct a 0.6% live quizzes using Xorro-Q to evaluate your engagement and understanding
  - Quizzes will be available for 24 hours and you are allowed multiple attempts
  - The maximum marks you can get will be capped to 5%
-- The 6 lab assignments are designed to guide you through the design and advance your understanding
+- The 6 lab assignments are designed to guide you through the design and advancing your understanding
  - Allow plenty of time, especially if you have forgotten the EE202, EE210 & CS201 contents 
  - You can work as a team, but your solutions must be __submitted individually__ 
  - We will use one of the two weekly lab sessions to help you complete these assignments 
@@ -726,7 +777,7 @@ name: S30
 
 
 ---
-name: S31
+name: S27
 
 # Progress Review, Interview & Deliverables
 
@@ -738,10 +789,10 @@ name: S31
  - Design will be evaluated based on functionality (5%), measurement accuracy (5%) and quality (4%) 
  - You are required to submit a short technical report with details of your design (4%)
  - We will check how well you have used Trello, GitHub and Slack to plan, manage and document the work (2%)
- - Theoretical and practical knowledge of electronics (7.5%) and programming (7.5%) concepts you gained during the project will be assessed __individually__ during the interview 
+ - Theoretical and practical knowledge of electronic (7.5%) and programming (7.5%) concepts you gained during the project will be assessed __individually__ during the interview 
 
 ---
-name: S32
+name: S28
 
 # Smart Energy Challenge & Industry Judging
 
@@ -759,7 +810,7 @@ name: S32
 .center[<img src="img/datamars.png" height="80">]
 
 ---
-name: S33
+name: S29
 
 # Digital Collaboration Tools
 
@@ -774,7 +825,7 @@ name: S33
  - We will regularly check how you use these tools as part of the assessment process
 
 ---
-name: S34
+name: S30
 
 # Resources & Flexible Learning
 
@@ -786,10 +837,10 @@ name: S34
  - You may also request additional staff assisted evening support/tutorial sessions (online or on-campus)
  - All software needed for this course can be accessed from home if you prefer to work remotely
 - Recorded media will be provided to support your learning 
-- We will communicate all course related information via Canvas (and post them also on Slack)
+- We will communicate all course related information via Canvas (and post them in also on Slack)
 
 ---
-name: S35
+name: S19
 
 # Enrolment & Software Installation
 
@@ -798,27 +849,10 @@ name: S35
 - Students are also expected to have passed ELECTENG 101 and ELECTENG 210
  - ELECTENG 209 heavily relies on the knowledge you should have gained from core ECSE papers (i.e. ELECTENG 101, ELECTENG 202, ELECTENG 210 and COMPSYS 201)
  - To help you revise, teaching material from these courses are also made available through the Canvas page for ELECTENG 209
-- In some cases, even if you do not meet the prerequisites, after an interview, we may allow you to continue with the course, but we will have to partner you with a suitable group 
+- In some cases you may be able to continue with the course, but we will have to partner you with a suitable group 
  - Email Su with a copy to Duleepa for more information
-- Follow details on the EE209 Canvas Homepage to get setup on Piazza, Slack and GitHub
-- Guides detailing how to obtain and install your personal copy of the software we will use in this course (Atmel Studio, Proteus VSM, Altium Designer, LTspice, GitHub Desktop, etc.) are available on Canvas
-
----
-name: S36
-
-# Building a Prototype
-
-- All practical components associated with the project are optional 
- - This includes breadboarding, assembling PCBs, testing hardware, building final prototype, etc.
- - This is because of the possibility of a lock-down due to COVID-19
-- If you wish to develop a prototype, we will provide you the resources and the support needed
- - Contact Duleepa for further information (ideally you should be doing this as a team)
-- The lab benches in MDLS 5 and MDLS 6 will be equipped with low-voltage AC power sources and variable load banks
- - The sources generate a 14 V<sub>RMS</sub>, 500 Hz AC voltage
- - The variable resistor in the load can be used to change the VA drawn by it between 2.5VA and 7.5VA
-- You will be given an Xplained Mini 328PB to use as your digital controller
- - The ATmega328PB on it is configured to operate at a 16 MHz system clock
-- Minor changes need to be made to your hardware and software designs, which you developed and tested with LTspice and Proteus 
+- If you are not automatically enrolled in Piazza, Slack or GitHub email Duleepa with your details
+- Guides detailing how to obtain and install your personal copy of the software (Atmel Stuido, Proteus VSM, Altium Designer, LTspice, GitHub tools) we will use in this course are available on Canvas
 
 ---
 
