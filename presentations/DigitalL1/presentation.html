@@ -122,6 +122,11 @@
         font-family: 'Droid Serif'; 
       }
 
+      .codes {
+        
+        line-height: 20px !important;
+      }
+
       .zoom175 {
         transition: transform .2s; /* Animation */
       }
@@ -687,23 +692,32 @@ name: S22
 
 # Assignment and Arithmetic Operators 
 
+.codes[
 ```c
-static volatile uint8_t global_variable_1;              //Declaring a global variable (initialized to 0 at start)
-
+static volatile char glob_var1, glob_var2, glob_var3;   
+                                            //Declaring global variables (initialized to 0 at start)              
 main(void)
 {
-  uint8_t local_variable_1 = 5;                         //Declaring and initializing the a variable to 5
+  uint8_t loc_var1 = 5;                    //Declaring and initializing the a variable to 5
+  uint8_t loc_var2 = 300;                  //Value of loc_var2 will be 45!!!
 
-  //Multiply and module operators 
-  uint8_t local_variable_2 = local_variable_1 * 2;      //Value of local_variable_2 will be 10
-  uint8_t local_variable_2 = local_variable_1 % 10;     //Value of local_variable_2 will be 5
+  //Multiply and modulo operators 
+  uint8_t loc_var3 = loc_var1 * 2;        //Value of loc_var3 will be 10
+  uint8_t loc_var4 = loc_var1 % 10;       //Value of loc_var4 will be 5
 
   //Importance of type casting
-  float local_variable_3 = local_variable_1 / 4;        //Value of local_variable_3 will be 1!
-  float local_variable_3 = (float)local_variable_1 / 4; //Now local_variable_3 will be 1.25
+  float loc_var5 = loc_var1 / 4;          //Value of loc_var5 will be 1!!!
+  float loc_var6 = (float)loc_var1 / 4;   //Now loc_var6 will be 1.25
+  uint16_t loc_var7 = (uint16_t)loc_var1 * 10 + 100;
+                                          //Upcasting loc_var1 as (loc_var1 * 10) > 255
 
+  //Assigning characters, hex and binary values
+  glob_var1 = 'A';                        //Value of glob_var1 will be 65
+  glob_var2 = 0x41;                       //Value of glob_var2 will be 65
+  glob_var3 = 0b01000001;                 //Value of glob_var3 will be 65
 }
 ```
+]
 
 ---
 
@@ -712,7 +726,8 @@ layout: false
 count: false
 .logo-title[]
 
-# End
+# Acknowledgments 
+#### These slides are adapted from material prepared by Travis Scott & Muhammad Nadeem
 
 
 
@@ -773,6 +788,7 @@ count: false
           // Alternatives: true
           click: false,
         },
+        
       });
 
       MathJax.Hub.Config({
