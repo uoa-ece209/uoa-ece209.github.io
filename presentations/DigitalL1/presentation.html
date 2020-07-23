@@ -687,7 +687,23 @@ name: S22
 
 # Assignment and Arithmetic Operators 
 
-- The most commonly used variable types are
+```c
+static volatile uint8_t global_variable_1;              //Declaring a global variable (initialized to 0 at start)
+
+main(void)
+{
+  uint8_t local_variable_1 = 5;                         //Declaring and initializing the a variable to 5
+
+  //Multiply and module operators 
+  uint8_t local_variable_2 = local_variable_1 * 2;      //Value of local_variable_2 will be 10
+  uint8_t local_variable_2 = local_variable_1 % 10;     //Value of local_variable_2 will be 5
+
+  //Importance of type casting
+  float local_variable_3 = local_variable_1 / 4;        //Value of local_variable_3 will be 1!
+  float local_variable_3 = (float)local_variable_1 / 4; //Now local_variable_3 will be 1.25
+
+}
+```
 
 ---
 
