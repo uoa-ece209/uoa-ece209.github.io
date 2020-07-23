@@ -117,8 +117,8 @@
       }
       
       .credits {
-        font-size: 14px;
-        line-height: 4px !important;
+        font-size: 12px;
+        line-height: 10px !important;
         font-family: 'Droid Serif'; 
       }
 
@@ -155,9 +155,9 @@
       /* Table Style */
       .tg  {border-collapse:collapse;border-color:#9ABAD9;border-spacing:0;}
       .tg td{background-color:#EBF5FF;border-color:#9ABAD9;border-style:solid;border-width:1px;color:#444;
-        font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:3px 10px;word-break:normal;}
+        font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:2px 10px;word-break:normal;}
       .tg th{background-color:#409cff;border-color:#9ABAD9;border-style:solid;border-width:1px;color:#fff;
-        font-family:Arial, sans-serif;font-size:14px;font-weight:normal;overflow:hidden;padding:3px 10px;word-break:normal;}
+        font-family:Arial, sans-serif;font-size:14px;font-weight:normal;overflow:hidden;padding:2px 10px;word-break:normal;}
       .tg .tg-dzaw{background-color:#4F81BD;color:#FFF;font-weight:bold;text-align:left;vertical-align:top}
       .tg .tg-sabo{background-color:#ebf5ff;color:#000000;text-align:left;vertical-align:top}
       .tg .tg-096r{color:#000000;text-align:left;vertical-align:top}
@@ -213,7 +213,7 @@ count: false
 .logo-title[]
 
 # Software for the Wireless Energy Monitor
-### Functional Specifications 
+### Functional Requirements 
 
 ---
 
@@ -229,15 +229,15 @@ name: S2
 
 # How Does an Energy Monitor Works?
 
-.center[<img src="img/System.png" height="275">]
+.center[<img src="img/System.png" height="190">]
 
 - To implement the core energy monitor functionalities we have to
  - Measure the load current and voltage
- - Perform computations on these measurements to calculate the power and energy used by the load
-- To implement a suitable user interface we need to
+ - Process these measurements to calculate the power and energy used by the load
+- To implement a suitable user interface we may need to
  - Control a display to show the voltage, current, power and energy measurements to the user(s)
  - Communicate these measurements wirelessly with a smart devices
- - Communicate these measurements through USB with a PC
+ - Communicate these measurements through serial with a computer
 
 ---
 
@@ -246,444 +246,330 @@ name: S3
 # How Can we Build an Energy Monitor?
 
 .left-column-s[
-- Can we build the energy monitor using hardware only?
- - For example, electromechanical energy meters have been used in the past
- - Significant design effort required to produce the required complex electronic circuits
- - Modifying the system will most likely be very difficult and costly
-- We can’t build an energy monitor using only software
+- Can we build an energy monitor using hardware only?
+ - Electromechanical & analog energy meters have been used in the past
+ - Significant design effort required to produce the complex electronic circuits for processing
+ - Difficult and costly to modifying the system
+- We cannot build an energy monitor using only software
  - Must interact with the physical world to measure voltage and current 
- - Have to produce electrical signals to drive display and USB
+ - Have to produce electrical signals to drive display and serial
  - Electromagnetic waves needed for wireless communication 
 - A solution using a mixture of software and hardware is likely to be the best
  - Simpler to build, cheaper, and can be easily iterated to improve the design
  - Hardware is used for interaction with the physical world
- - Software is used to perform computation and control
+ - Software is used to process, control and communicate
 ]
 
 .right-column-s[
-
+.center[<img src="img/meter2.png" width="185px">
+.credits[
+An electro-mechanical meter [[1]](https://en.wikipedia.org/wiki/Electricity_meter)
+]
+]
+.center[<img src="img/meter1.png" width="185px">
+.credits[
+The construction [[2]](https://circuitglobe.com/energy-meter.html)
+]
+]
 ]
 
-
 ---
-
 name: S4
 
-# Energy Management
+# The Recommended Design
 
-.left-column[
-- Managing energy flow in a DEG systems is very challenging
- - Many distributed sources, loads and storage systems need to be concurrently managed
-- A smarter grid with many smart sensors that monitor the flow of energy is a key solution
- - Enables making smart decisions to effectively manage the generation, utilization, storage and retrieval of energy 
- - Smart appliances, storage systems and controllers use this information to control the energy flow 
-- Many smart metering/monitoring solutions have been developed
- - Smart meters report house-hold consumption to retailer 
- - Smart energy monitors can monitor energy consumed by a specific load
-]
+.center[<img src="img/System2.png" height="170">]
 
-.right-column[
-.center[<img src="img/monitors.png" width="190px">]
-]
-
----
-
-class: title-slide
-layout: false
-count: false
-.logo-title[]
-
-# Renewable Energy Research at UoA
-### A Few Examples
-
----
-
-layout: true
-name: template_slide
-
-.logo-slide[]
-.footer[[Duleepa J Thrimawithana](https://www.linkedin.com/in/duleepajt), Department of Electrical, Computer and Software Engineering (2020)]
+- Hardware is used to sense the AC voltage & current and then condition them
+ - Produce level-shifted & filtered AC voltage signals that correspond to source voltage and current
+ - Produce rising and falling edges that correspond to zero crossings of source voltage (and current)
+- The embedded system (i.e. hardware modules in a microcontroller together with software running on it) process the information and generate control and communication signals  
+ - Require developing drivers to interact with hardware modules (e.g. UART, ADC and timers)  
+ - Require developing software algorithms to process information and generate outputs
+- Off the shelf modules are used for display, Bluetooth and serial
 
 ---
 name: S5
 
-# Research Groups
+# Embedded Systems
 
-- Across UoA, specially in FoE, there are many research groups working on various renewable energy related research projects
- - Power electronics research group at ECSE is at the forefront of this research 
-
-.center[<img src="img/RenewableResearch.png" height="300px">]
-
+- An embedded system employs a combination of hardware and software to perform a set of specific functions
+ - In our design we use the hardware modules on a microcontroller together with software running on it to process the signals representing voltage and current and generate outputs
+- Embedded systems have the following general characteristics
+ - Have limited resources  
+ - Usually reactive and time-constrained
+ - Often part of a larger system
+- Resource and timing constraints are the major challenges to developing embedded software
+ - Code size should be minimized and algorithms should be optimized
+ - Hardware peripherals need to be carefully configured to avoid unpredictable behavior 
+ - Interrupts need to be short and carefully consider their priorities as well as nested operation 
+- Though a real-time operating system (RTOS) may be used, often designs require custom solutions
 
 ---
 name: S6
 
-# The Power Electronics Research Group
+# Functional Requirements  
 
-.center[<img src="img/PEGROUP.gif" height="430">]
+- Configure the Digital I/O, ADC, UART and Timer peripherals of the microcontroller with appropriate settings for the project
+- Take ADC samples of signals representing source current and voltage
+ - Samples need to be taken every 1ms or slower using a timer to meet our design specifications
+ - First sample taken need to be synchronized with the zero crossing of the voltage signal
+ - Aim to collect 50 samples of each signal 
+- Use the samples collected to calculate peak current, RMS voltage, power and energy
+ - Search for the maximum value in the samples collected to determine peak current
+ - Perform numeric calculations using rectangular rule to determine the RMS voltage and power 
+ - Sum the power at regular intervals to determine the energy consumption 
+- Every 1s send latest data over the UART
+ - Data should be in the format "Parameter = XXXX Unit \n" (e.g. Vrms = 14.50 V)
+- Using Digital I/O, control the 7-segment display to show new data every 1s 
+ - Refresh the digits at a rate of at least 30 Hz with the aid of a timer
+
+---
+
+class: title-slide
+layout: false
+count: false
+.logo-title[]
+
+# Microcontrollers
+### An Introduction
+
+---
+
+layout: true
+name: template_slide
+
+.logo-slide[]
+.footer[[Duleepa J Thrimawithana](https://www.linkedin.com/in/duleepajt), Department of Electrical, Computer and Software Engineering (2020)]
 
 ---
 name: S7
 
-# Pioneers in Wireless Power Transfer (WPT)
+# What is a Microprocessor?
 
-.center[
-<iframe width="784" height="441" src="https://www.youtube-nocookie.com/embed/G1q1HZLQ528?" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-]
+.center[<img src="img/MPU.png" height="275">]
+
+- Microprocessor is a central processing unit (CPU) on a single IC 
+- Microprocessor must have external memories and peripheral I/Os to interact with outside world 
+- Peripherals are connected to microprocessor through data and address buses
+- The CPU executes software (code) written by a programmer
 
 ---
 name: S8
 
-# WPT Research Facilities & Postgraduates
+# What is a Microcontroller?
 
-.center[
-<iframe width="784" height="441" src="https://www.youtube-nocookie.com/embed/RWi0JvKrcLY" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-]
+.center[<img src="img/MCU.png" height="275">]
+
+- Microcontrollers (MCUs) combine program memory, RAM, hardware I/O peripherals, and a microprocessor in a single IC
+- They have fixed hardware which executes software (code)
+- By modifying the software executed by the microprocessor we can modify its behavior
 
 ---
 name: S9
 
-# ECSE 2nd Years Undertaking Research 
+# What are Reconfigurable Integrated Circuits?
 
-.center[
-<img src="img/PatrinBashar.png" height="375">
-.credits[
-Bashar Dawood (left) & Patrin Illenberger (right) showcasing their summer research projects (2012).
-]
-.credits[
-Currently Bashar works as the Managing Director at NGen Automation and Dr. Illenberger works as a hardware engineer at Apple.
-]
-]
+.center[<img src="img/FPGA.png" height="275">]
+
+- Field-Programmable Gate Arrays (FPGAs) and Complex Programmable Logic Devices (CPLDs) provide generic logic elements which can be configured to perform arbitrary logic
+- The reconfigurable hardware they have is described by software
+- By modifying the software which describes the hardware we can modify the behavior of the circuit
 
 ---
 name: S10
 
-# ECSE 3rd Years Undertaking Research 
+# MCUs vs FPGAs/CPLDs
 
-.center[
-<img src="img/RyanWynand.png" height="375">
-.credits[
-Ryan Kurte (left) & Wynand Malan (right) showcasing their summer research projects (2012).
-]
-.credits[
-Currently Ryan works as a R&D engineer at Datamars and Dr. Malan works as a Power Systems Design & Integration Engineer at Apple.
-]
-]
+- Lets explore the differences between MCUs and FPGAs/CPLDs to understand why an MCU is the better option for our project
+
+<table class="tg" style="undefined;table-layout: fixed; width: 650px; margin-left:auto; margin-right:auto;">
+  <colgroup>
+  <col style="width: 325px">
+  <col style="width: 325px">
+  </colgroup>
+  <thead>
+    <tr>
+      <th class="tg-dzaw"><span style="color:white">MCUs</span></th>
+      <th class="tg-dzaw"><span style="color:white">FPGAs & CPLDs</span></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="tg-jayl">Fixed circuitry</td>
+      <td class="tg-jayl">Flexible circuitry</td>
+    </tr>
+    <tr>
+      <td class="tg-sabo">Executes software</td>
+      <td class="tg-sabo">Described by software</td>
+    </tr>
+    <tr>
+      <td class="tg-ig71">Sequential</td>
+      <td class="tg-ig71">Parallel</td>
+    </tr>
+    <tr>
+      <td class="tg-sabo">Low processing power</td>
+      <td class="tg-sabo">High processing power</td>
+    </tr>
+    <tr>
+      <td class="tg-ig71">General applications</td>
+      <td class="tg-ig71">Specific applications</td>
+    </tr>
+    <tr>
+      <td class="tg-sabo"><b>Low power consumption</b></td>
+      <td class="tg-sabo">High power consumption</td>
+    </tr>
+    <tr>
+      <td class="tg-ig71"><b>Cheap & widespread</b></td>
+      <td class="tg-ig71">Expensive but becoming more widely used</td>
+    </tr>
+    <tr>
+      <td class="tg-sabo"><b>Cheaper development tools</b></td>
+      <td class="tg-sabo">Expensive development tools</td>
+    </tr>
+    <tr>
+      <td class="tg-ig71"><b>Easier to get started</b></td>
+      <td class="tg-ig71">Harder to get started</td>
+    </tr>
+  </tbody>
+</table>
+
+- It is possible to implement a microcontroller on many reconfigurable hardware devices
+- Some of the newer microcontrollers now also have integrated reconfigurable hardware modules
 
 ---
 name: S11
 
-# ECSE Final Years Undertaking Research 
+# What to Consider when Selecting an MCU (PI)?
 
-.center[
-<iframe width="672" height="378" src="https://www.youtube.com/embed/o9-tELjV1wQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-.credits[
-Hamish O'Neill & Roman Amor showcasing their final year research project (2018).
-]
-.credits[
-Currently Hamish works as a hardware engineer at Apple and Roman works as a firmware engineer at Apple.
-]
+- There are three core resources which must be considered when selecting an MCU for our project
+ - Computational Power
+ - Program Memory
+ - RAM
+- Computational Power
+ - This is a measure of how quickly the processor can perform a given task
+ - The more computation you need to perform in a given time, the more computational power you need
+ - It is a function of clock speed (how quickly an instruction is executed), and the Instruction Set Architecture (how much computation is performed by a given instruction)
+ - Different architectures target different levels of computational performance
+ - ATmega 328P vs ARM Cortex-A7
+ - Measured in Millions-of-Instructions-Per-Second (MIPS), but this is only a guide
+ - ATmega 328P – 20 MIPS vs Intel Core I7 – 200,000 MIPS
 
-]
 
 ---
 name: S12
 
-# Intro to Power Electronics (ELECTENG 734) 
+# What to Consider when Selecting an MCU (PII)?
 
-.center[
-<iframe width="672" height="378" src="https://www.youtube-nocookie.com/embed/bP4099oz7KU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-.credits[
-Students design and develop the power electronics required to wireleslly power a RC car. The best teams compete on the last day 
-]
-.credits[
-of the semester each year to find a winner. This is the final race, in 2018, where the top 2 teams were equally matched.
-]
-
-]
-
+- Program Memory (Flash)
+ - This is where your code to execute is stored
+ - More tasks your program performs, the more code you will require, and the more flash you will need
+ - For microcontrollers it is usually measured in kilobytes (KB), or megabytes (MB) (e.g. an ATmega328P has 32 KB of program memory)
+- Random Access Memory (RAM)
+ - This is where data being processed by the microprocessor is stored, as well as the current microprocessor state
+ - The more data you need to store or operate on at a given time, the more RAM you will require
+ - For microcontrollers it is usually measured in kilobytes (KB), or megabytes (MB) (e.g. an ATmega328P has 2048 B of RAM)
+- Different designs require a different mix of computational power, program memory, and RAM
+ - Our design task is simple, and our resource requirements are limited
 
 ---
 name: S13
 
-# ELECTENG 734 Prizegiving
+# What MCU I/O Peripherals are Important?
 
-&nbsp
-
-.center[
-<img src="img/EE734_2018.png" height="325">
-.credits[
-Prizegiving (left) & Finalists (right) showcasing their final designs (2018).
-]
-.credits[
-Sumant, Kunal and a few other engineers from Apple attended the event.
-]
-]
-
----
-
-class: title-slide
-layout: false
-count: false
-.logo-title[]
-
-# Design of a Smart Energy Monitor
-### Project Information
-
----
-
-layout: true
-name: template_slide
-
-.logo-slide[]
-.footer[[Duleepa J Thrimawithana](https://www.linkedin.com/in/duleepajt), Department of Electrical, Computer and Software Engineering (2020)]
+- Microcontrollers come with a wide range of I/O peripheral to perform different tasks
+- The most common ones, which we will cover in more detail during the course, are
+ - General Purpose Input Output (GPIO): Allows generating/reading high or low (digital) signals
+ - UART (Universal Asynchronous Receiver Transmitter): Sends and receives binary data using a simple serial protocol
+ - Analogue to Digital Converters (ADC): Converts an analogue voltage into a digital value
+ - Timers: allow real-time measurements and executing realtime tasks   
+- The above listed common I/O peripherals are generally sufficient for simple projects like ours
+- There are many more I/O peripherals that we won’t cover but can be important for more complicated projects and these include
+ - Communication peripheral such as I2C, SPI, CAN, USB, and Ethernet
+ - Digital to Analog Converter (DAC)
+ - UI peripheral such as LCD drivers, capacitive touch sensors and audio encoders
+ - AES encryption, brown out protection, watchdog timers and low voltage detection
 
 ---
 name: S14
 
-# The Project
+# Other Important Requirements
 
-- What is this course about and what should you expect to learn?
- - Gives you an opportunity to put in to practice some of the theories (analogue electronics & embedded software development) you learnt to design and engineer a solution to a 'real life problem'
- - During this process you will gain fundamental knowledge, experience, skill-set and professional behavior needed to succeed in the more challenging design projects you will engage
- in the future
-- What would you design and engineer during this course?
- - An energy monitor to measure and display the amount of energy consumed by a household appliance
-- How would you achieve this task?
- - The voltage and current at the input to appliance is measured using __analogue circuitry__ consisting of sensors, amplifiers and filters 
- - An __embedded software program__ executed on a microcontroller converts the analogue signals to digital form and calculates the energy consumption together with other important information
- - The information is shown on a __local LCD display__ and also communicated __wirelessly using Bluetooth__ with other smart devices
-
----
-name: S15
-
-# System to Implement
-
-- To simplify the design, we will consider a scaled-down system, which uses a low-voltage
-AC source 
-  - An AC load, consisting of a variable resistor in series with a fixed inductor, is used to emulate an house-hold appliance 
-
-.center[<img src="img/System.png" height="275">]
+- There are a number of other functional and non-functional requirements to consider when selecting a MCU 
+ - Power consumption
+ - Operating voltage range
+ - Operating temperature range
+ - Packages available (the size and shape of the actual chip)
+ - Compiler support
+ - Development tools required
+ - Programming tools required
+ - Available software libraries
+ - Certifications (automotive, aerospace, and military are common ones)
+- Typically most important requirements are cost, availability, lead-time and minimum-order-quantity (MoQ)
+ - Cost of the devices themselves as well as licenses for tools and software need to be considered
 
 ---
 name: S15
 
-# Key Design Specifications
+# Why are We Using an ATmega328P?
 
-<table class="tg" style="undefined;table-layout: fixed; width: 647px; margin-left:auto; margin-right:auto;">
-  <colgroup>
-  <col style="width: 333px">
-  <col style="width: 314px">
-  </colgroup>
-  <thead>
-    <tr>
-      <th class="tg-dzaw"><span style="color:white">Parameter</span></th>
-      <th class="tg-dzaw"><span style="color:white">Value</span></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td class="tg-jayl">Source Voltage</td>
-      <td class="tg-jayl"> 14 V<sub>RMS</sub> &plusmn 10% </td>
-    </tr>
-    <tr>
-      <td class="tg-sabo">Source Frequency </td>
-      <td class="tg-sabo"> 50 Hz &plusmn 10% </td>
-    </tr>
-    <tr>
-      <td class="tg-ig71">Load Range</td>
-      <td class="tg-ig71"> 2.5 VA to 7.5 VA </td>
-    </tr>
-    <tr>
-      <td class="tg-sabo">Load Power Factor</td>
-      <td class="tg-sabo">0.75 to 0.99</td>
-    </tr>
-    <tr>
-      <td class="tg-ig71">Measurement Accuracy</td>
-      <td class="tg-ig71">5% of full-scale reading</td>
-    </tr>
-    <tr>
-      <td class="tg-sabo">ADC Conversion Rate</td>
-      <td class="tg-sabo">1 kHz or slower</td>
-    </tr>
-    <tr>
-      <td class="tg-ig71">LCD Display Information</td>
-      <td class="tg-ig71">Voltage, Current, Power and Energy</td>
-    </tr>
-    <tr>
-      <td class="tg-sabo">LCD Display Units</td>
-      <td class="tg-sabo">V<sub>RMS</sub>, A<sub>pk</sub>, W and W.min</td>
-    </tr>
-    <tr>
-      <td class="tg-ig71">LCD Scroll Rate</td>
-      <td class="tg-ig71">0.5 s</td>
-    </tr>
-    <tr>
-      <td class="tg-sabo">UART Baud Rate</td>
-      <td class="tg-sabo">9600 Baud</td>
-    </tr>
-    <tr>
-      <td class="tg-jayl">Information Transferred Via UART</td>
-      <td class="tg-jayl">Voltage, Current, Power and Energy</td>
-    </tr>
-    <tr>
-      <td class="tg-096r">PCB Size</td>
-      <td class="tg-096r">150 cm&sup2 </td>
-    </tr>
-    <tr>
-      <td class="tg-jayl">PCB Technology</td>
-      <td class="tg-jayl">Double Layer with PTH</td>
-    </tr>
-    <tr>
-      <td class="tg-096r">Device Technology </td>
-      <td class="tg-096r">TH or SMT</td>
-    </tr>
-  </tbody>
-</table>
-
-
----
-name: S14A
-
-# Demo of Expected Final Design
-
-.center[
-<iframe width="784" height="441" src="https://www.youtube-nocookie.com/embed/5MTaWPhhueY" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-]
-
----
-name: S15
-
-# Working in Teams
-
-- You will work in a team of 4 
- - You can chose your team members and register your group details on Canvas by the end of 1st week
- - All team members should be from the same lab stream (NB: There are two lab streams)
-- Throughout the project work as a team and aim to support each other
- - This is an important part of preparing to be a professional engineer
- - You depend on each other to do well in this course
-- Plan your work, document your work and communicate regularly with your team members
- - Use [Trello](https://trello.com) to plan and manage the work as well as to document design notes and team discussions 
- - Use [Slack](https://slack.com/intl/en-nz/) and [Zoom](https://zoom.us)/[Hangouts](https://hangouts.google.com) for team communications
- - Use [GitHub](https://github.com) and [G Suite](https://gsuite.google.com)/[Office 365](https://www.library.auckland.ac.nz/services/it-essentials/computer-facilities/software-personal-use/microsoft-student-advantage-office-365) products to collaborate with team members
-- Be patient with your team members even if they are not making much progress during the initial stage
- - If things are not working out, after about 3 weeks, let us know
- - If a member is not engaging in team work we will ask that person to work alone
-
-
+- To select an appropriate microcontroller for our project we need to estimate the functional requirements for the parameters we looked at
+ - Determining for example the required I/O peripherals and operating voltage are somewhat straightforward as they come from the functional requirements (or the flow diagram)
+ - Memory and computational power requirements for example are harder to estimate and often our experience with similar previous projects is needed to do make a good estimate 
+- As discussed previously there are many non-functional aspects to think about
+ - Cost, availability and support (e.g. application notes, tutorials, books, development tools, libraries, etc.) are very important
+ - In many situations we may prefer a familiar device or a device that is easier to use and has a shorter learning curve since development time is a big part of the project cost
+- The ATmega328P has all the peripherals we need and has sufficient memory and computational power but also more importantly it is one of the easiest to use, we are familiar with it (learnt in COMPSYS 201) and there is ample support (e.g. https://community.atmel.com)
 
 ---
 name: S16
 
-# Course Calendar
+# What Other MCUs Can We Use?
 
+- Popular microcontroller vendors include STMicroelectronics, NXP, Renesas, Texas Instruments, Microchip and Silicon Labs and there are thousands of devices to select from
 
-.center[<img src="img/2020Calendar.png" height="430">]
+.center[<img src="img/MCUOptions.png" height="360">]
+
 
 ---
 name: S17
 
-# Top Designs from the Past (PI)
+# The ATmega328P MCU & Tools
 
-&nbsp
-
-.center[
-<img src="img/2016Designs.png" height="325">
-.credits[
-SMT designs with a digitally controlled gain stage (left) & a LCD screen (right) developed by teams in 2016.
-]
-]
-
----
-name: S17
-
-# Top Designs from the Past (PII)
-
-&nbsp
-
-.center[
-<img src="img/2018Designs.png" height="325">
-.credits[
-A couple of the SMT designs that were developed by teams in 2018.
-]
-]
+- The ATmega328P offers the following 
+ - 8-bit processor implementing the Atmel AVR RISC architecture
+ - 16 MIPS throughput at 16MHz clock
+ - 32 KB of program memory (flash) which is programmable in-system (the ability of microcontrollers to be programmed while installed in a complete system)
+ - 2 KB of RAM
+ - 3 timers, 8 channel 10-bit SAR type ADC, a USART, and 23 GPIO
+ - External and internal interrupt sources
+ - Operates from 2.7V to 5.5V from -40°C to 125°C 
+- As with COMPSYS 201 we will use the Atmel Studio IDE for development
+- We will use the ATmega328PB Xplained Mini evaluation kit to avoid having to build additional circuitry
+ - Code written for the ATmega328P is forward compatible with ATmega328PB
+- When getting started the most important resource available is the [ATmega328P](http://ww1.microchip.com/downloads/en/DeviceDoc/Atmel-7810-Automotive-Microcontrollers-ATmega328P_Datasheet.pdf) datasheet
+ - Lists all of the parameters and explains how the I/O peripherals work and how to use them
 
 ---
 name: S18
 
-# Top Designs from the Past (PIII)
+# ATmega328P Block Diagram & Pinout
 
 .center[
-<img src="img/2018Designs2.png" height="400">
-.credits[
-A [web application](https://rabadunk.github.io/group26/) developed by a team in 2018 to log information.
-]
+<img src="img/328PBlock.png" height="450">
+<img src="img/328PPins.png" height="450">
 ]
 
 ---
 name: S19
 
-# Course Feedback
+# Your Energy Monitor Implementation
+
+- To implement the energy monitor you need to design a PCB that will contain the analogue hardware, an ATmega328PB Xplained Mini and the provided 7-segment display as well as HM-10 BLE modules 
+ - To make a compact design you can replace the Xplained Mini with an ATmega328P IC and the support circuitry required for the ATmega328P
 
 .center[
-<img src="img/CourseSurvey.png" height="450">
-]
-
----
-name: S20
-
-# Entry Performance
-
-
----
-name: S21
-
-# Past Grades
-
-.center[
-<img src="img/PastGrades.png" height="450">
-]
-
----
-name: S22
-
-# How to Get an Excellent Grade
-
-- Is the project challenging?
- - Yes, because this is your first real-world engineering design project
- - Due to lack of experience it is common to encounter unforeseen design and integration issues when developing a system, especially with hardware-software interface
-- What are the most challenging aspects?
- - Time management, planing and team work are the key challenges
- - As in a real life project, resources are limited (time, teams' availability, lab space, equipment, etc.) and therefore last minute frantic endeavour will not help
-- How could I get an excellent grade?
- - Enjoy designing a real-world product and be passionate about your design (this is the key ingredient)
- - Plan and manage your and your team members' time well
- - Throughout the semester you are expected to spend about 10 hours a week on the project 
- - Make full use of all lab sessions and staff support provided (there will be in average of about 10 support hours a week)
-
-
----
-name: S23
-
-# Poor Exemplars - Last Minute Endeavour (PI)
-
-.center[
-<img src="img/PoorEg1.png" height="390">
-.credits[
-Undergraduate laboratories just a day before the due date - taken by a student at about 11.50 PM (2014).
-]
-]
-
----
-name: S24
-
-# Poor Exemplars - Last Minute Endeavour (PII)
-
-.center[
-<img src="img/PoorEg2.png" height="390">
-.credits[
-Consequences of last minute work.
-]
+<img src="img/FinalDesign.png" height="275">
 ]
 
 ---
@@ -693,8 +579,8 @@ layout: false
 count: false
 .logo-title[]
 
-# Assessment Components
-### Details on How to Prepare
+# C Programming Language
+### Review of Fundamentals
 
 ---
 
@@ -705,154 +591,103 @@ name: template_slide
 .footer[[Duleepa J Thrimawithana](https://www.linkedin.com/in/duleepajt), Department of Electrical, Computer and Software Engineering (2020)]
 
 ---
-name: S25
+name: S20
 
-# Assessment Components
+# Programming the ATmega328P
 
-- All assessment components except the Smart Energy Challenge are compulsory
- - It is compulsory to satisfactorily complete all components except the Smart Energy Challenge to obtain a passing grade
- - To be eligible for the bonus marks you must satisfactorily complete the entire project
- - Although this project will be undertaken in design teams of 4, you will be assessed individually
+- We will use C, which is extremely common, to develop our embedded software program 
+- Using Atmel Studio IDE, we will then compile the program to generate machine code 
+- The *ELF* file generated during compiling will be simulated in Proteus to validate our design
+ - Prior to this we can also use the debugger available on Atmel Studio to validate our software modules 
+- Once we have validated the functionality of the software, we then download *HEX* file onto the MCU program memory
+- You will start noticing the benefits of using software as you can iterate through the design much faster in comparison to the time required to iterate hardware
+- Your first lab will focus on setting up your development environment and getting a simple program running on Proteus
+ - You could also try to run the same program on an Xplained Mini
+- The lab will walk you through all of the steps required, so don’t worry if it doesn’t all make sense just yet
+ - There are many steps involved in compiling code, debugging on Atmel Studio, simulating on Proteus and finally programming the MCU
 
-<table class="tg" style="undefined;table-layout: fixed; width: 647px; margin-left:auto; margin-right:auto;">
+---
+name: S21
+
+# Variables
+
+- The most commonly used variable types are
+
+<table class="tg" style="undefined;table-layout: fixed; width: 1075px; margin-left:auto; margin-right:auto;">
   <colgroup>
-  <col style="width: 383px">
-  <col style="width: 264px">
+  <col style="width: 150px">
+  <col style="width: 375px">
+  <col style="width: 25px">
+  <col style="width: 150px">
+  <col style="width: 375px">
   </colgroup>
   <thead>
     <tr>
-      <th class="tg-dzaw"><span style="color:white">Component</span></th>
-      <th class="tg-dzaw"><span style="color:white">Weighting</span></th>
+      <th class="tg-dzaw"><span style="color:white">Type</span></th>
+      <th class="tg-dzaw"><span style="color:white">Properties</span></th>
+      <th class="tg-dzaw"><span style="color:white"></span></th>
+      <th class="tg-dzaw"><span style="color:white">Type</span></th>
+      <th class="tg-dzaw"><span style="color:white">Properties</span></th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td class="tg-jayl">Test 1 & 2 (Written and Simulation Components)</td>
-      <td class="tg-jayl"> 40% </td>
+      <td class="tg-jayl">char</td>
+      <td class="tg-jayl">8 bit variable with -128 to 127 range</td>
+      <td class="tg-jayl"></td>
+      <td class="tg-jayl">unsigned char</td>
+      <td class="tg-jayl">8 bit variable with 0 to 255 range</td>
     </tr>
     <tr>
-      <td class="tg-sabo">Lecture Quizzes (Available for 24 Hrs) </td>
-      <td class="tg-sabo"> 5% </td>
+      <td class="tg-sabo">int8_t</td>
+      <td class="tg-sabo">8 bit variable with -128 to 127 range</td>
+      <td class="tg-sabo"></td>
+      <td class="tg-sabo">uint8_t</td>
+      <td class="tg-sabo">8 bit variable with 0 to 255 range</td>
     </tr>
     <tr>
-      <td class="tg-ig71">Weekly Lab Assignments</td>
-      <td class="tg-ig71"> 15% </td>
+      <td class="tg-jayl">int</td>
+      <td class="tg-jayl">16 bit variable with -32768 to 32767 range</td>
+      <td class="tg-jayl"></td>
+      <td class="tg-jayl">unsigned int</td>
+      <td class="tg-jayl">16 bit variable with 0 to 65535 range</td>
     </tr>
     <tr>
-      <td class="tg-sabo">Midsemester Progress Review </td>
-      <td class="tg-sabo">5%</td>
+      <td class="tg-ig67">int16_t</td>
+      <td class="tg-ig67">16 bit variable with -32768 to 32767 range</td>
+      <td class="tg-ig67"></td>
+      <td class="tg-ig67">uint16_t</td>
+      <td class="tg-ig67">16 bit variable with 0 to 65535 range</td>
     </tr>
     <tr>
-      <td class="tg-ig71">Final Interview</td>
-      <td class="tg-ig71">15%</td>
+      <td class="tg-jayl">int32_t</td>
+      <td class="tg-jayl">32 bit variable with -2147483648 to -2147483647 range</td>
+      <td class="tg-jayl"></td>
+      <td class="tg-jayl">uint32_t</td>
+      <td class="tg-jayl">16 bit variable with 0 to 4294967295 range</td>
     </tr>
     <tr>
-      <td class="tg-sabo">Project Deliverables </td>
-      <td class="tg-sabo">20%</td>
-    </tr>
-    <tr>
-      <td class="tg-ig71">Smart Energy Challenge (Optional)</td>
-      <td class="tg-ig71">2%</td>
+      <td class="tg-ig67">bit</td>
+      <td class="tg-ig67">1 bit variable with 0 to 1 range</td>
+      <td class="tg-ig67"></td>
+      <td class="tg-ig67">bool</td>
+      <td class="tg-ig67">1 bit variable (need stdbool.h)</td>
     </tr>
   </tbody>
 </table>
 
----
-name: S26
-
-# Tests, Lecture Quizzes & Labs
-
-- The two 20% tests will be conducted during weeks 5 and 10 of the semester
- - The written part of the tests will assess your understanding of fundamental concepts 
- - The simulation component of the 1st test will be conducted using LTspice
- - The simulation component of the 2nd test will be conducted using Atmel Studio and Proteus VSM
-- During each of the 15 lecture, we will conduct a 0.6% live quizzes using Xorro-Q to evaluate your engagement and understanding
- - Quizzes will be available for 24 hours and you are allowed multiple attempts
- - The maximum marks you can get will be capped to 5%
-- The 6 lab assignments are designed to guide you through the design and advancing your understanding
- - Allow plenty of time, especially if you have forgotten the EE202, EE210 & CS201 contents 
- - You can work as a team, but your solutions must be __submitted individually__ 
- - We will use one of the two weekly lab sessions to help you complete these assignments 
- - The remaining weekly lab session will be used to assess your solutions (1%), understanding and engagement (1%) and use of digital collaboration tools (0.5%)
-
+- Variables can be declared to have either a local or a global scope
+- Variables can be declared as static, extern and/or volatile 
+ - A static variable is initialized to 0 at the start of the program and if in a function value is retained after exiting the function
+ - Volatile modifier is used to ensure the compiler doesn't optimize away a variable
+- Type casting is used to temporarily change the type/size of a variable
 
 ---
-name: S27
+name: S22
 
-# Progress Review, Interview & Deliverables
+# Assignment and Arithmetic Operators 
 
-- Just before the midsemester break we will review your progress
- - An analogue circuit that meets all the needs of the project needs to be successfully designed, simulated and validated
- - An embedded software program that can transmit data from the ATmega328P via UART to a terminal should be successfully implemented, simulated and validated
- - A short interview will be held to assess your circuit (2%), software (1%) and your understanding (2%)
-- During the last week of the semester there will be an interview to evaluate your design as well as your understanding of the subject matter
- - Design will be evaluated based on functionality (5%), measurement accuracy (5%) and quality (4%) 
- - You are required to submit a short technical report with details of your design (4%)
- - We will check how well you have used Trello, GitHub and Slack to plan, manage and document the work (2%)
- - Theoretical and practical knowledge of electronic (7.5%) and programming (7.5%) concepts you gained during the project will be assessed __individually__ during the interview 
-
----
-name: S28
-
-# Smart Energy Challenge & Industry Judging
-
-- The optional *Smart Energy Challenge* is focused on implementing a web-based data-logging system 
- - It should record and display the data collected from the energy monitor 
- - You may use an IoT platform like ThingSpeak to simplify this task
-- Before attempting the *Smart Energy Challenge* you must complete all other tasks
- - You can get up to 1 bonus marks for successfully completing the *Smart Energy Challenge*
-- Based on the performance throughout the semester the top 4 design teams will be selected 
-- Industry judges from [DATAMARS](https://datamars.com) will interview the top 4 teams 
- - These judges will deliver a seminar during the 6th week of the semester along with vital information about the interviews
- - They will decide the winners of the *2020 Smart Energy Challenge*
- - The winners will get up to 1 bonus marks and a certificate 
-
-.center[<img src="img/datamars.png" height="80">]
-
----
-name: S29
-
-# Digital Collaboration Tools
-
-- To be a good engineer you also need to develop a number of *soft-skills*
- - Some of the key skills you should aim to develop are management, teamwork and communication 
-- One of the primary responsibilities you will have as an engineer is to tell other engineers how to build, service, use and update a product you have been involved in designing/developing/building/testing/etc.
- - Thus, engineers are expected to document all details about their work in a logbook 
- - The information recorded in a logbook include, design notes, design decisions, calculations, software flow diagrams, schematics, meeting minutes, etc. 
-- In industry, many different digital tools are used to help with managing teamwork work, communicating with team members and documenting details of the project
- - Trello, Slack and GitHub are a few such most commonly used and simple to use tools 
-- In this project all students are expected to use Trello, Slack and GitHub to effectively plan, manage and document the work
- - We will regularly check how you use these tools as part of the assessment process
-
----
-name: S30
-
-# Resources & Flexible Learning
-
-- Duleepa Thrimawithana (course director), Su Tang and Andrew Austin, from the academic staff, will be looking after this course
- - Felix Marattukalam and Wai Yeung are your technical facilitators 
-- Teaching assistance (TAs) will be available to help with lab assignments and the project
- - Victor Wang (EE), Patrick Lawton (EE), Vahid Zahiri (EE), Tharindu Dharmakeerthi (EE), Jagmeet Singh (EE), Cody Liu (EE), Osama Almulla (EE), Bilal Ahmed (EE), Kai Sun (EE), Tomas Antune (CS), Logan Kenwright (CS), Ryan Smith (CS), Ross Porter (CS) and Jeremy Towers (EE) are your TAs
-- You could either get support in-person during the dedicated lab sessions shown on the lab planner or seek support remotely using Piazza, Slack and Zoom/Hangouts if preferred working off-site
- - You may also request additional staff assisted evening support/tutorial sessions (online or on-campus)
- - All software needed for this course can be accessed from home if you prefer to work remotely
-- Recorded media will be provided to support your learning 
-- We will communicate all course related information via Canvas (and post them in also on Slack)
-
----
-name: S19
-
-# Enrolment & Software Installation
-
-- Prerequisite for this course are ELECTENG 202 and COMPSYS 201
- - If you have failed any of these courses, please contact us to check if your enrolment is still valid
-- Students are also expected to have passed ELECTENG 101 and ELECTENG 210
- - ELECTENG 209 heavily relies on the knowledge you should have gained from core ECSE papers (i.e. ELECTENG 101, ELECTENG 202, ELECTENG 210 and COMPSYS 201)
- - To help you revise, teaching material from these courses are also made available through the Canvas page for ELECTENG 209
-- In some cases you may be able to continue with the course, but we will have to partner you with a suitable group 
- - Email Su with a copy to Duleepa for more information
-- If you are not automatically enrolled in Piazza, Slack or GitHub email Duleepa with your details
-- Guides detailing how to obtain and install your personal copy of the software (Atmel Stuido, Proteus VSM, Altium Designer, LTspice, GitHub tools) we will use in this course are available on Canvas
+- The most commonly used variable types are
 
 ---
 
