@@ -696,10 +696,10 @@ name: S22
 ```c
 static volatile char glob_var1, glob_var2, glob_var3;   
                                             //Declaring global variables (initialized to 0 at start)              
-main(void)
+int main(void)
 {
   uint8_t loc_var1 = 5;                    //Declaring and initializing the a variable to 5
-  uint8_t loc_var2 = 300;                  //Value of loc_var2 will be 45!!!
+  uint8_t loc_var2 = 300;                  //Value of loc_var2 will be 44!!!
 
   //Multiply and modulo operators 
   uint8_t loc_var3 = loc_var1 * 2;        //Value of loc_var3 will be 10
@@ -708,7 +708,7 @@ main(void)
   //Importance of type casting
   float loc_var5 = loc_var1 / 4;          //Value of loc_var5 will be 1!!!
   float loc_var6 = (float)loc_var1 / 4;   //Now loc_var6 will be 1.25
-  uint16_t loc_var7 = (uint16_t)loc_var1 * 10 + 100;
+  uint16_t loc_var7 = (uint16_t)loc_var1 * 100 + 100;
                                           //Upcasting loc_var1 as (loc_var1 * 10) > 255
 
   //Assigning characters, hex and binary values
@@ -718,6 +718,26 @@ main(void)
 }
 ```
 ]
+---
+name: S23
+
+# Bitwise, Logical and Rational Operators 
+
+```c
+//Bitwise operators: Ones Complement (~), AND (&), XOR (^), OR (|), Left Shift (<<), Right Shift (>>)
+uint8_t var1 = 0b00110011;        //Value of var1 will be 0x33 or 51 in decimal
+uint8_t var1 ^= 0b00001111;       //XOR each bit of var1 with corresponding bit of 0b00001111
+                                  //result is assign back to var1 making it 0b00111100
+uint8_t var2 = 0b11001100 << 2;   //Shift to left by making var2 = 0b00110000 (each Left Shift == x2)
+uint8_t var3 = 0x53 & 0x0F;       //Masking - can be used to mask off last 4-bits (var3 = 0x03)
+//Logical operators: AND (&&), OR (||)
+bool var4 = 4 && 2;               //var4 will be 0 (False)
+bool var5 = 4 & 2;                //var5 will be 1 (True)
+
+//Rational operators: Equal (==), Not Equal (!=), Less Than (<), Less Than or Equal (<=), 
+//More Than (>), More Than or Equal (>=)
+bool var6 = 5 >= 10;            //var6 will be 1 (True)
+```
 
 ---
 
