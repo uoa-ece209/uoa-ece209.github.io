@@ -828,10 +828,108 @@ name: template_slide
 .footer[[Duleepa J Thrimawithana](https://www.linkedin.com/in/duleepajt), Department of Electrical, Computer and Software Engineering (2020)]
 
 ---
-name: S20
+name: S26
 
 # Memory Mapped Peripherals
 
+.left-column[
+- The ATmega328P peripherals are what are known as “memory mapped” peripherals
+ - They share the same address space as the register file and RAM
+- A specific address is used to access registers which control the peripheral, and contain the input/output data from the peripheral
+- This means we can write to them in code just like any other variable!
+ - The manufacturer provides files with macros for the address of each peripheral
+ - Using these we can refer to peripherals by name (e.g. DDRB), rather than their address (e.g. 0x0424)
+ - In our case *#inlcude <span>&#60;</span>avr/io.h<span>&#62;</span>* defines the peripheral names we will use
+]
+.right-column[
+.center[
+&nbsp;
+
+&nbsp;
+<img src="img/DataMemory.png" width="350">
+]
+]
+
+---
+name: S27
+
+# General Purpose I/O
+
+- As discussed, we use the I/O peripherals provided to interface with external hardware
+ - As an embedded software developer, you need to write drivers to effectively use the peripherals 
+- We will start with the simplest I/O peripheral – General Purpose Input/Output (GPIO)
+ - Most pins on the ATmega328P can be used as GPIO
+- GPIO have two states, logic high (1), and logic low (0)
+ - When used as an output they produce a logic high or logic low signal on the pin
+ - When used as an input they read a signal applied to the pin as logic high or logic low
+ - Internally, the logic level is represented by a single bit
+ - Externally, logic low is 0V and logic high is represented by MCU supply voltage (e.g. 5V)
+
+.center[<img src="img/LogicV.png" height="150">]
+
+---
+name: S28
+
+# ATmega328P GPIO Registers
+
+- The ATmega328P has 23 GPIO pins separated into PORTB, PORTC and PORTD (e.g. PB0-PB7)
+- There are 3 registers associated with each GPIO port
+
+<table class="tg" style="undefined;table-layout: fixed; width: 650px; margin-left:auto; margin-right:auto;">
+  <colgroup>
+  <col style="width: 250px">
+  <col style="width: 400px">
+  </colgroup>
+  <thead>
+    <tr>
+      <th class="tg-dzaw"><span style="color:white">Register</span></th>
+      <th class="tg-dzaw"><span style="color:white">Function</span></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="tg-jayl">DDRX</td>
+      <td class="tg-jayl">Data Direction Register of Port 'X' where 'X' is B or C or D</td>
+    </tr>
+    <tr>
+      <td class="tg-sabo">PORTX</td>
+      <td class="tg-sabo">Data Out Register for Port 'X' where 'X' is B or C or D</td>
+    </tr>
+    <tr>
+      <td class="tg-jayl">PINX</td>
+      <td class="tg-jayl">Data In Register for Port 'X' where 'X' is B or C or D</td>
+    </tr>
+  </tbody>
+</table>
+
+- From the datasheet we can see that the direction for each pin is set by setting/clearing the corresponding bits in the DDRX register
+ - 0 represents an input while 1 represents an output
+- To set the output value of a pin we use the corresponding bit of the PORTX register
+ - Setting to 1, will generate a high signal (e.g. 5V) at output while a 0 will generate 0V
+- To read the input value of a pin we use the corresponding bit of the PINX register
+ - If the voltage is 0V a logic low will be read while a high signal (e.g. 5V) will be read as logic high
+
+---
+name: S29
+
+# GPIO Register Description 
+
+.center[
+<img src="img/DDRX.png" width="600">
+<img src="img/PORTX.png" width="600">
+<img src="img/PINX.png" width="600">
+]
+
+- For example, the first bit of DDRB, PORTB and PINB registers are associated with pin 0 of PORTB (i.e. DDRB0, PORTB0 and PINB0 bits corresponds to PB0)
+
+---
+name: S29
+
+# GPIO Implementation
+
+.center[
+<img src="img/GPIOImplement.png" width="450">
+]
 
 ---
 
