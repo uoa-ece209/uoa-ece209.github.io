@@ -206,8 +206,9 @@ name: S1
 - Key features of an ATmega328P microcontroller 
 - Revising C programing basics
  - Variable and data types
- - Operators and expressions
- - Control statements and loops
+ - Operators 
+ - Control statements
+ - Functions
 - Using GPIO on an ATmega328P to interact with external circuitry
 
 ---
@@ -695,9 +696,9 @@ name: S22
 .codes[
 ```c
 static volatile char glob_var1, glob_var2, glob_var3;   
-                                            //Declaring global variables (initialized to 0 at start)              
-int main(void)
-{
+                                            //Declaring global variables (initialized to 0 at start)    
+
+int main(void){
   uint8_t loc_var1 = 5;                    //Declaring and initializing the a variable to 5
   uint8_t loc_var2 = 300;                  //Value of loc_var2 will be 44!!!
 
@@ -718,11 +719,13 @@ int main(void)
 }
 ```
 ]
+
 ---
 name: S23
 
 # Bitwise, Logical and Rational Operators 
 
+.codes[
 ```c
 //Bitwise operators: Ones Complement (~), AND (&), XOR (^), OR (|), Left Shift (<<), Right Shift (>>)
 uint8_t var1 = 0b00110011;            //Value of var1 will be 0x33 or 51 in decimal
@@ -741,6 +744,74 @@ bool var7 = 3 & 2;                    //var7 will be 1 (True)
 //More Than (>), More Than or Equal (>=)
 bool var8 = 5 >= 10;                  //var8 will be 0 (False)
 ```
+]
+
+- A variable, lets say *var1*, can be also pre or post increment/decrement, using for example *++var1* or *var1++*, respectively
+- Compound assignment operators (e.g. * var1 += var2; *) may also be used
+
+---
+name: S24
+
+# Control Statements 
+
+.codes[
+```c
+#define NUMTOCHECK  7                //#define is a preprocessor directive
+
+int main(void){
+  uint8_t cnt1 = 0, is_prime = 1;    //Initializing a cnt1 to 0 and is_prime to 1
+
+  //WHILE & FOR loops
+  while(cnt1<4){
+    cnt1++;                          //Code inside this while loop will be executed 4 times 
+  }
+
+  for(uint8_t cnt2 =0; cnt2 < 4; cnt2++){
+    cnt1++;                         //Code executed 4 times (cnt2 is not visible outside this loop)
+  }
+
+  //IF-ELSE statements - E.g. Checking if NUMTOCHECK is a prime number
+  for(uint8_t cnt2 =2; cnt2 < NUMTOCHECK; cnt2++){
+    if( (NUMTOCHECK % cnt2) == 0 ){ //If NUMTOCHECK can be divided by a nummber less than that its not a prime
+      is_prime = 0;                 //Clears the flag
+      break;                        //Breaks the FOR loop as no need to continue
+    }
+  }
+}
+
+```
+]
+
+
+---
+name: S25
+
+# Functions 
+
+
+---
+
+class: title-slide
+layout: false
+count: false
+.logo-title[]
+
+# ATmega328P GPIO
+### Configuring and Using GPIO
+
+---
+
+layout: true
+name: template_slide
+
+.logo-slide[]
+.footer[[Duleepa J Thrimawithana](https://www.linkedin.com/in/duleepajt), Department of Electrical, Computer and Software Engineering (2020)]
+
+---
+name: S20
+
+# Memory Mapped Peripherals
+
 
 ---
 
