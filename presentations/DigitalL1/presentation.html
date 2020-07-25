@@ -617,7 +617,7 @@ name: S21
 
 # Variables
 
-- The most commonly used variable types are
+- The most commonly used variable types are 
 
 <table class="tg" style="undefined;table-layout: fixed; width: 1075px; margin-left:auto; margin-right:auto;">
   <colgroup>
@@ -652,13 +652,6 @@ name: S21
       <td class="tg-sabo">8 bit variable with 0 to 255 range</td>
     </tr>
     <tr>
-      <td class="tg-jayl">int</td>
-      <td class="tg-jayl">16 bit variable with -32768 to 32767 range</td>
-      <td class="tg-jayl"></td>
-      <td class="tg-jayl">unsigned int</td>
-      <td class="tg-jayl">16 bit variable with 0 to 65535 range</td>
-    </tr>
-    <tr>
       <td class="tg-sabo">int16_t</td>
       <td class="tg-sabo">16 bit variable with -32768 to 32767 range</td>
       <td class="tg-sabo"></td>
@@ -682,6 +675,7 @@ name: S21
   </tbody>
 </table>
 
+- Its good practice to use use explicit variable sizes in your code (size of *int* is platform dependent)
 - Variables can be declared to have either a local or a global scope
 - Variables can be declared as static, extern and/or volatile 
  - A static variable is initialized to 0 at the start of the program and if in a function value is retained after exiting the function
