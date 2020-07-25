@@ -459,7 +459,7 @@ name: S11
  - Different architectures target different levels of computational performance
  - ATmega 328P vs ARM Cortex-A7
  - Measured in Millions-of-Instructions-Per-Second (MIPS), but this is only a guide
- - ATmega 328P – 20 MIPS vs Intel Core I7 – 200,000 MIPS
+ - ATmega 328P – 16 MIPS vs Intel Core I7 – 200,000 MIPS
 
 
 ---
@@ -605,7 +605,7 @@ name: S20
 - Using Atmel Studio IDE, we will then compile the program to generate machine code 
 - The *ELF* file generated during compiling will be simulated in Proteus to validate our design
  - Prior to this we can also use the debugger available on Atmel Studio to validate our software modules 
-- Once we have validated the functionality of the software, we then download *HEX* file onto the MCU program memory
+- Once we have validated the functionality of the software, we then download *ELF* or *HEX* file onto the MCU program memory
 - You will start noticing the benefits of using software as you can iterate through the design much faster in comparison to the time required to iterate hardware
 - Your first lab will focus on setting up your development environment and getting a simple program running on Proteus
  - You could also try to run the same program on an Xplained Mini
@@ -782,6 +782,32 @@ name: S25
 
 # Functions 
 
+.codes[
+```c
+#define NUMTOCHECK  7               //#define is a preprocessor directive
+
+bool check_prime(uint8_t chk_no);   //Function prototype
+
+int main(void){
+
+  //Call function check_prime() to check if NUMTOCHECK is a prime
+  //The function takes uint8_t type parameter and returns a bool
+  bool is_prime = check_prime(NUMTOCHECK);
+  
+  while(1){
+  }
+}
+
+bool check_prime(uint8_t chk_no){ //Function returns true if chk_no is a prime
+  for(uint8_t cnt1=2; cnt1 < chk_no; cnt1++){
+    if( (chk_no % cnt1) == 0){    //If chk_no can be divided by a nummber less than that its not a prime
+      return false;               //Return false to the function caller
+    }
+  }
+  return true;                    //If chk_no cannot be divided by a nummber less than that its a prime
+}
+```
+]
 
 ---
 
