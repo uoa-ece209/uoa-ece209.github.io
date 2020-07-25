@@ -320,7 +320,7 @@ name: S6
 - Take ADC samples of signals representing source current and voltage
  - Samples need to be taken every 1ms or slower using a timer to meet our design specifications
  - First sample taken need to be synchronized with the zero crossing of the voltage signal
- - Aim to collect 50 samples of each signal 
+ - Aim to collect 20 or more samples of each signal 
 - Use the samples collected to calculate peak current, RMS voltage, power and energy
  - Search for the maximum value in the samples collected to determine peak current
  - Perform numeric calculations using rectangular rule to determine the RMS voltage and power 
