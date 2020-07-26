@@ -965,7 +965,7 @@ int main(void)
   while (1){	
 
     if ( (PINB & (1 << 7)) == 0 ){  //If PB7 is reading 0V (i.e. logic 0)
-      PORTB |= (1 << 5)             //Turn-on the LED
+      PORTB |= (1 << 5);            //Turn-on the LED
       //This statement is equivalent to writing *port_b_address_ptr |= (1 << 5);
     } 
     else{                           //Else PB7 should be logic 1
