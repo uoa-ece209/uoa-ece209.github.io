@@ -211,11 +211,13 @@ name: S1
 - Features that needs to be considered when selecting a microcontroller
 - Key features of an ATmega328P microcontroller 
 - Revising C programing basics
- - Variable and data types
+ - Variables and data types
  - Operators 
- - Control statements
- - Functions
+ - Control statements & functions
 - Using GPIO on an ATmega328P to interact with external circuitry
+ - Control registers associated with GPIOs
+ - Generating a digital output signal and reading a digital input signal
+ - Using Proteus to validate your code 
 
 ---
 
@@ -239,7 +241,7 @@ name: template_slide
 
 name: S2
 
-# How Does an Energy Monitor Works?
+# How Does an Energy Monitor Work?
 
 .center[<img src="img/System.png" height="190">]
 
@@ -248,7 +250,7 @@ name: S2
  - Process these measurements to calculate the power and energy used by the load
 - To implement a suitable user interface we may need to
  - Control a display to show the voltage, current, power and energy measurements to the user(s)
- - Communicate these measurements wirelessly with a smart devices
+ - Communicate these measurements wirelessly with smart devices
  - Communicate these measurements through serial with a computer
 
 ---
@@ -363,7 +365,7 @@ name: S7
 
 - Microprocessor is a central processing unit (CPU) on a single IC 
 - Microprocessor must have external memories and peripheral I/Os to interact with outside world 
-- Peripherals are connected to microprocessor through data and address buses
+- Peripherals interact with the microprocessor through data and address buses
 - The CPU executes software (code) written by a programmer
 
 ---
@@ -476,11 +478,11 @@ name: S12
 - Program Memory (Flash)
  - This is where your code to execute is stored
  - More tasks your program performs, the more code you will require, and the more flash you will need
- - For microcontrollers it is usually measured in kilobytes (KB), or megabytes (MB) (e.g. an ATmega328P has 32 KB of program memory)
+ - For microcontrollers it is usually measured in kilobytes (KB), or megabytes (MB) (e.g. an ATmega328P has 32KB of program memory)
 - Random Access Memory (RAM)
  - This is where data being processed by the microprocessor is stored, as well as the current microprocessor state
  - The more data you need to store or operate on at a given time, the more RAM you will require
- - For microcontrollers it is usually measured in kilobytes (KB), or megabytes (MB) (e.g. an ATmega328P has 2048 B of RAM)
+ - For microcontrollers it is usually measured in kilobytes (KB), or megabytes (MB) (e.g. an ATmega328P has 2048B of RAM)
 - Different designs require a different mix of computational power, program memory, and RAM
  - Our design task is simple, and our resource requirements are limited
 
@@ -499,7 +501,7 @@ name: S13
 - There are many more I/O peripherals that we won’t cover but can be important for more complicated projects and these include
  - Communication peripheral such as I2C, SPI, CAN, USB, and Ethernet
  - Digital to Analog Converter (DAC)
- - UI peripheral such as LCD drivers, capacitive touch sensors and audio encoders
+ - UI peripheral such as LCD drivers, capacitive touch and audio encoders
  - AES encryption, brown out protection, watchdog timers and low voltage detection
 
 ---
@@ -516,7 +518,7 @@ name: S14
  - Development tools required
  - Programming tools required
  - Available software libraries
- - Certifications (automotive, aerospace, and military are common ones)
+ - Certifications (automotive, aerospace and military are common ones)
 - Typically most important requirements are cost, availability, lead-time and minimum-order-quantity (MoQ)
  - Cost of the devices themselves as well as licenses for tools and software need to be considered
 
@@ -525,8 +527,8 @@ name: S15
 
 # Why are We Using an ATmega328P?
 
-- To select an appropriate microcontroller for our project we need to estimate the functional requirements for the parameters we looked at
- - Determining for example the required I/O peripherals and operating voltage are somewhat straightforward as they come from the functional requirements (or the flow diagram)
+- To select an appropriate microcontroller for our project we need to estimate the requirements for the functional parameters we looked at
+ - Determining for example the required I/O peripherals and operating voltage are somewhat straightforward 
  - Memory and computational power requirements for example are harder to estimate and often our experience with similar previous projects is needed to do make a good estimate 
 - As discussed previously there are many non-functional aspects to think about
  - Cost, availability and support (e.g. application notes, tutorials, books, development tools, libraries, etc.) are very important
@@ -559,7 +561,7 @@ name: S17
 - As with COMPSYS 201 we will use the Atmel Studio IDE for development
 - We will use the ATmega328PB Xplained Mini evaluation kit to avoid having to build additional circuitry
  - Code written for the ATmega328P is forward compatible with ATmega328PB
-- When getting started the most important resource available is the [ATmega328P](http://ww1.microchip.com/downloads/en/DeviceDoc/Atmel-7810-Automotive-Microcontrollers-ATmega328P_Datasheet.pdf) datasheet
+- When getting started, the most important resource available is the [ATmega328P](http://ww1.microchip.com/downloads/en/DeviceDoc/Atmel-7810-Automotive-Microcontrollers-ATmega328P_Datasheet.pdf) datasheet
  - Lists all of the parameters and explains how the I/O peripherals work and how to use them
 
 ---
@@ -577,7 +579,7 @@ name: S19
 
 # Your Energy Monitor Implementation
 
-- To implement the energy monitor you need to design a PCB that will contain the analogue hardware, an ATmega328PB Xplained Mini and the provided 7-segment display as well as HM-10 BLE modules 
+- To implement the energy monitor you need to design a PCB that will contain the analogue hardware, an ATmega328PB Xplained Mini and the provided 7-segment display as well as HM-10 BLE module 
  - To make a compact design you can replace the Xplained Mini with an ATmega328P IC and the support circuitry required for the ATmega328P
 
 .center[
@@ -710,7 +712,7 @@ int main(void){
   float loc_var5 = loc_var1 / 4;          //Value of loc_var5 will be 1!!!
   float loc_var6 = (float)loc_var1 / 4;   //Now loc_var6 will be 1.25
   uint16_t loc_var7 = (uint16_t)loc_var1 * 100 + 100;
-                                          //Upcasting loc_var1 as (loc_var1 * 10) > 255
+                                          //Upcasting loc_var1 as (loc_var1 * 100) > 255
 
   //Assigning characters, hex and binary values
   glob_var1 = 'A';                        //Value of glob_var1 will be 65
@@ -731,8 +733,8 @@ name: S23
 uint8_t var1 = 0b00110011;            //Value of var1 will be 0x33 or 51 in decimal
 var1 ^= 0b00001111;                   //XOR each bit of var1 with corresponding bit of 0b00001111
                                       //result is assign back to var1 making it 0b00111100
-uint8_t var2 = 0b11001100 << 2;       //Shift to left by making var2 = 0b00110000 (each Left Shift == x2)
-uint8_t var3 = 0x53 & 0x0F;           //Masking - can be used to mask off last 4-bits (var3 = 0x03)
+uint8_t var2 = 0b11001100 << 2;       //Shift to left makes var2 = 0b00110000 (each Left Shift == x2)
+uint8_t var3 = 0x53 & 0x0F;           //Masking - used to mask off last 4-bits (var3 = 0x03)
 uint8_t var4 = 0x33 & (1<<1 | 1<<2);  //Selecting 2nd and 3rd bits of 0x33 making var4 = 0x02
 
 //Logical operators: AND (&&), OR (||)
@@ -746,7 +748,7 @@ bool var8 = 5 >= 10;                  //var8 will be 0 (False)
 ```
 ]
 
-- A variable, lets say *var1*, can be also pre or post increment/decrement, using for example *++var1* or *var1++*, respectively
+- A variable, lets say *var1*, can be also pre or post incremented/decremented, using for example *++var1* or *var1++*, respectively
 - Compound assignment operators (e.g. * var1 += var2; *) may also be used
 
 ---
@@ -759,7 +761,7 @@ name: S24
 #define NUMTOCHECK  7                //#define is a preprocessor directive
 
 int main(void){
-  uint8_t cnt1 = 0, is_prime = 1;    //Initializing a cnt1 to 0 and is_prime to 1
+  uint8_t cnt1 = 0, is_prime = 1;    //Initializing cnt1 to 0 and is_prime to 1
 
   //WHILE & FOR loops
   while(cnt1<4){
@@ -842,9 +844,9 @@ name: S26
 - The ATmega328P peripherals are what are known as “memory mapped” peripherals
  - They share the same address space as the register file and RAM
 - A specific address is used to access registers which control the peripheral, and contain the input/output data from the peripheral
-- This means we can write to them in code just like any other variable!
+- This means we can write to them in code just like any other variable
  - The manufacturer provides files with macros for the address of each peripheral
- - Using these we can refer to peripherals by name (e.g. DDRB), rather than their address (e.g. 0x0424)
+ - Using these we can refer to peripherals by name (e.g. DDRB), rather than their address (e.g. 0x0024)
  - In our case *#inlcude <span>&#60;</span>avr/io.h<span>&#62;</span>* defines the peripheral names we will use
 ]
 .right-column[
@@ -862,10 +864,10 @@ name: S27
 # General Purpose I/O
 
 - As discussed, we use the I/O peripherals provided to interface with external hardware
- - As an embedded software developer, you need to write drivers to effectively use the peripherals 
+ - As a developer, you need to write software drivers to effectively interact with the peripherals 
 - We will start with the simplest I/O peripheral – General Purpose Input/Output (GPIO)
  - Most pins on the ATmega328P can be used as GPIO
-- GPIO have two states, logic high (1), and logic low (0)
+- GPIOs have two states, logic high (1), and logic low (0)
  - When used as an output they produce a logic high or logic low signal on the pin
  - When used as an input they read a signal applied to the pin as logic high or logic low
  - Internally, the logic level is represented by a single bit
@@ -926,7 +928,7 @@ name: S29
 <img src="img/PINX.png" width="600">
 ]
 
-- For example, the first bit of DDRB, PORTB and PINB registers are associated with pin 0 of PORTB (i.e. DDRB0, PORTB0 and PINB0 bits corresponds to PB0)
+- For example, the first bit of DDRB, PORTB and PINB registers are associated with pin 0 of PORTB (i.e. DDRB0, PORTB0 and PINB0 bits correspond to PB0)
 
 ---
 name: S30
@@ -940,10 +942,14 @@ name: S30
 ---
 name: S31
 
-# Example: Reading GPIO Input & Driving LED (PI)
+# Example: Reading Input & Driving LED (PI)
 
 .questions[
-Develop a program to read the input from a push-button and turn-on a yellow LED when if the push-button is pressed. One end of the push-button is connected PB7 on ATmega328P while the other end is connected to the ground. The pull-up resistor, `\( R_1 \)`, ensures the voltage at PB7 is pulled to 5V (i.e. VCC supplied to the MCU) when the push-button is released. The filter capacitor, `\( C_1 \)`, is used to debounce the push-button. When the push-button is pressed it creates 0V at PB7, when the push-button is released PB7 will be 5V. LED is connected to PB5 through a current limiting resistor, `\( R_2 \)`. Generating 5V at PB5 will therefore create a current to flow through the LED (i.e. `\( I_{LED} =  \left ( 5 - V_{f} \right ) / R_2 \)` where `\( V_f \)` is approximately 2V for a yellow LED), turning it on. Setting PB5 to 0V will turn-off the LED. 
+Develop a program to read the input from a push-button and control an LED. As shown by the Proteus schematic below, one end of the push-button is connected PB7 on ATmega328P while the other end is connected to the ground. The pull-up resistor, `\( R_1 \)`, ensures the voltage at PB7 is pulled to 5V (i.e. VCC supplied to the MCU) when the push-button is released. The filter capacitor, `\( C_1 \)`, is used for debouncing. When the push-button is pressed it creates 0V at PB7, when released PB7 will be 5V. LED is connected to PB5 through a current limiting resistor, `\( R_2 \)`. Generating 5V at PB5 will create a current to flow turning-on the LED (i.e. `\( I_{LED} =  \left ( 5 - V_{f} \right ) / R_2 \)` where `\( V_f \approx 2V\)` for a yellow LED). Setting PB5 to 0V will turn-off the LED. 
+]
+
+.center[
+<img src="img/LEDDemo.png" width="750">
 ]
 
 ---
@@ -960,7 +966,7 @@ int main(void)
   DDRB |= (1 << 5);   //Set the PB5 (connected to LED) as an output 	
   DDRB &= ~(1 << 7);  //Set the PB7 (connected to push-button) as an input
   //If we weren't using the macros, we could access the registers by address 
-  //E.g. uint16_t* port_b_address_ptr = 0x25;
+  //E.g. uint16_t* port_b_address_ptr = 0x0025;
 	
   while (1){	
 
@@ -972,7 +978,7 @@ int main(void)
       PORTB &= ~(1 << 5);           //Turn-off the LED
       //This statement is equivalent to writing *port_b_address_ptr &= ~(1 << 5);
     }
-    
+    //Equally PORTB = (PORTB | (1 << 5)) & ~(PINB >> 2); can be used instead of IF-ELSE above
   }
 }
 ```
