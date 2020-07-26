@@ -127,6 +127,12 @@
         line-height: 20px !important;
       }
 
+      .questions {
+        font-size: 20px;
+        line-height: 28px !important;
+        font-family: 'Droid Serif'; 
+      }
+
       .zoom175 {
         transition: transform .2s; /* Animation */
       }
@@ -923,12 +929,53 @@ name: S29
 - For example, the first bit of DDRB, PORTB and PINB registers are associated with pin 0 of PORTB (i.e. DDRB0, PORTB0 and PINB0 bits corresponds to PB0)
 
 ---
-name: S29
+name: S30
 
 # GPIO Implementation
 
 .center[
-<img src="img/GPIOImplement.png" width="450">
+<img src="img/GPIOImplement.png" width="440">
+]
+
+---
+name: S31
+
+# Example: Reading GPIO Input & Driving LED (PI)
+
+.questions[
+Develop a program to read the input from a push-button and turn-on a yellow LED when if the push-button is pressed. One end of the push-button is connected PB7 on ATmega328P while the other end is connected to the ground. The pull-up resistor, `\( R_1 \)`, ensures the voltage at PB7 is pulled to 5V (i.e. VCC supplied to the MCU) when the push-button is released. The filter capacitor, `\( C_1 \)`, is used to debounce the push-button. When the push-button is pressed it creates 0V at PB7, when the push-button is released PB7 will be 5V. LED is connected to PB5 through a current limiting resistor, `\( R_2 \)`. Generating 5V at PB5 will therefore create a current to flow through the LED (i.e. `\( I_{LED} =  \left ( 5 - V_{f} \right ) / R_2 \)` where `\( V_f \)` is approximately 2V for a yellow LED), turning it on. Setting PB5 to 0V will turn-off the LED. 
+]
+
+---
+name: S32
+
+# Example: Reading GPIO Input & Driving LED (PII)
+
+.codes[
+```c
+#include <avr/io.h>   //Macros for register addresses for peripherals (e.g. PORTB)
+
+int main(void)
+{
+  DDRB |= (1 << 5);   //Set the PB5 (connected to LED) as an output 	
+  DDRB &= ~(1 << 7);  //Set the PB7 (connected to push-button) as an input
+  //If we weren't using the macros, we could access the registers by address 
+  //E.g. uint16_t* port_b_address_ptr = 0x25;
+	
+  while (1){	
+
+    if ( (PINB & (1 << 7)) == 0 ){  //If PB7 is reading 0V (i.e. logic 0)
+      PORTB |= (1 << 5)             //Turn-on the LED
+      //This statement is equivalent to writing *port_b_address_ptr |= (1 << 5);
+    } 
+    else{                           //Else PB7 should be logic 1
+      PORTB &= ~(1 << 5);           //Turn-off the LED
+      //This statement is equivalent to writing *port_b_address_ptr &= ~(1 << 5);
+    }
+    
+  }
+}
+```
 ]
 
 ---
