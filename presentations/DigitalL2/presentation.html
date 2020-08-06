@@ -141,6 +141,10 @@
         transform: scale(1.75) translateY(-20%) translateX(-20%); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
       }
 
+      .color-grey{
+        color: #919191;
+      }
+
     </style>
 
     <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
@@ -240,7 +244,7 @@ name: S2
 
 # Why Communicate?
 
-.center[<img src="img/System.png" height="190">]
+.center[<img src="img/CommsGen.png" height="200">]
 
 - A microcontroller seldom works in isolation
 - In a typical system, a microcontroller is expected to share information with other devices around it
@@ -253,309 +257,72 @@ name: S3
 
 # What are Communication Protocols?
 
-.center[<img src="img/System.png" height="190">]
-
 - Communication with a microcontroller can be implemented in different ways
 - To communicate the transmitter and receiver must agree on a specific communication protocol
  - Analogous to a spoken language, a protocol defines how information is communicated by varying a physical quantity, called the transmission medium
-- Transmission mediums could include voltage, current, light, electromagnetic waves, acoustic waves, etc.
-- Protocols can be implemented in software or hardware
+ - Protocols can be implemented in software or hardware
+- Transmission mediums could include voltage, current, light, RF waves, acoustic waves, etc.
+
+.center[<img src="img/Mediums.png" height="220">]
 
 ---
 name: S4
 
-# Protocol Categorization 
+# Data Transmission Modes 
 
-.center[<img src="img/System.png" height="190">]
+- Transmission modes can be broadly categorized as simplex/duplex, synchronous/asynchronous and serial/parallel
+- In simplex implementations data is transferred from A to B only while in full-duplex implementations data is transferred from A to B and B to A simultaneously
+ - In half-duplex implementations data is transferred from A to B or B to A, but not simultaneously
+ - Duplex implementations allow bidirectional communication, but could require more channels (e.g. a wire each for send and receive)
 
-- Protocols can be broadly categorized as digital/analog, simplex/duplex, synchronous/asynchronous and serial/parallel
--
-
+.center[<img src="img/Duplex.png" height="200">]
 
 
 ---
 name: S5
 
-# Embedded Systems
-
-- An embedded system employs a combination of hardware and software to perform a set of specific functions
- - In our design we use the hardware modules on a microcontroller together with software running on it to process the signals representing voltage and current and generate outputs
-- Embedded systems have the following general characteristics
- - Have limited resources  
- - Usually reactive and time-constrained
- - Often part of a larger system
-- Resource and timing constraints are the major challenges to developing embedded software
- - Code size should be minimized and algorithms should be optimized
- - Hardware peripherals need to be carefully configured to avoid unpredictable behavior 
- - Interrupts need to be short and carefully consider their priorities as well as nested operation 
-- Though a real-time operating system (RTOS) may be used, often designs require custom solutions
+# Synchronous vs Asynchronous Transmission
+&nbsp;
+.center[<img src="img/Sync.png" height="140">]
+&nbsp;
+- In synchronous mode a separate signal is used to indicate the start of each piece of data being transmitted 
+ - Often this signal is called a clock signal, like the clock used in synchronous digital circuits
+ - Require more channels (e.g. separate clock wire) but have lower overhead and higher throughput
+- In asynchronous mode a special “sync” event is transmitted on the data line to provide a reference point in time
+ - Need to have a common understanding of time, and therefore are vulnerable to variations
 
 ---
 name: S6
 
-# Functional Requirements  
-
-- Configure the Digital I/O, ADC, UART and Timer peripherals of the microcontroller with appropriate settings for the project
-- Take ADC samples of signals representing source current and voltage
- - Samples need to be taken every 1ms or slower using a timer to meet our design specifications
- - First sample taken need to be synchronized with the zero crossing of the voltage signal
- - Aim to collect 20 or more samples of each signal 
-- Use the samples collected to calculate peak current, RMS voltage, power and energy
- - Search for the maximum value in the samples collected to determine peak current
- - Perform numeric calculations using rectangular rule to determine the RMS voltage and power 
- - Sum the power at regular intervals to determine the energy consumption 
-- Every 1s send latest data over the UART
- - Data should be in the format "Parameter = XXXX Unit \n" (e.g. Vrms = 14.50 V)
-- Using Digital I/O, control the 7-segment display to show new data every 1s 
- - Refresh the digits at a rate of at least 30 Hz with the aid of a timer
-
----
-
-class: title-slide
-layout: false
-count: false
-.logo-title[]
-
-# Microcontrollers
-### An Introduction
-
----
-
-layout: true
-name: template_slide
-
-.logo-slide[]
-.footer[[Duleepa J Thrimawithana](https://www.linkedin.com/in/duleepajt), Department of Electrical, Computer and Software Engineering (2020)]
+# Serial vs Parallel Transmission
+&nbsp;
+.center[<img src="img/SerialParallel.png" height="90">]
+&nbsp;
+- In serial mode only one symbol is sent at a time while in parallel multiple symbols are sent simultaneously
+ - Parallel mode can send more data at a time, but require more channels (e.g. one wire per bit)
+- A “symbol” is the data sent each time interval
+ - In a digital (binary) system there are only two symbols, ‘0’ and ‘1’, which are referred to as bits
+- There are many different communication protocols and each follow different data transmission modes
+ - For example a certain protocol could implement half-duplex, synchronous, parallel communication
 
 ---
 name: S7
 
-# What is a Microprocessor?
+# Common Communication Protocols
 
-.center[<img src="img/MPU.png" height="275">]
-
-- Microprocessor is a central processing unit (CPU) on a single IC 
-- Microprocessor must have external memories and peripheral I/Os to interact with outside world 
-- Peripherals interact with the microprocessor through data and address buses
-- The CPU executes software (code) written by a programmer
-
----
-name: S8
-
-# What is a Microcontroller?
-
-.center[<img src="img/MCU.png" height="275">]
-
-- Microcontrollers (MCUs) combine program memory, RAM, hardware I/O peripherals, and a microprocessor in a single IC
-- They have fixed hardware which executes software (code)
-- By modifying the software executed by the microprocessor we can modify its behavior
-
----
-name: S9
-
-# What are Reconfigurable Integrated Circuits?
-
-.center[<img src="img/FPGA.png" height="275">]
-
-- Field-Programmable Gate Arrays (FPGAs) and Complex Programmable Logic Devices (CPLDs) provide generic logic elements which can be configured to perform arbitrary logic
-- The reconfigurable hardware they have is described by software
-- By modifying the software which describes the hardware we can modify the behavior of the circuit
-
----
-name: S10
-
-# MCUs vs FPGAs/CPLDs
-
-- Lets explore the differences between MCUs and FPGAs/CPLDs to understand why an MCU is the better option for our project
-
-<table class="tg" style="undefined;table-layout: fixed; width: 650px; margin-left:auto; margin-right:auto;">
-  <colgroup>
-  <col style="width: 325px">
-  <col style="width: 325px">
-  </colgroup>
-  <thead>
-    <tr>
-      <th class="tg-dzaw"><span style="color:white">MCUs</span></th>
-      <th class="tg-dzaw"><span style="color:white">FPGAs & CPLDs</span></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td class="tg-jayl">Fixed circuitry</td>
-      <td class="tg-jayl">Flexible circuitry</td>
-    </tr>
-    <tr>
-      <td class="tg-sabo">Executes software</td>
-      <td class="tg-sabo">Described by software</td>
-    </tr>
-    <tr>
-      <td class="tg-ig71">Sequential</td>
-      <td class="tg-ig71">Parallel</td>
-    </tr>
-    <tr>
-      <td class="tg-sabo">Low processing power</td>
-      <td class="tg-sabo">High processing power</td>
-    </tr>
-    <tr>
-      <td class="tg-ig71">General applications</td>
-      <td class="tg-ig71">Specific applications</td>
-    </tr>
-    <tr>
-      <td class="tg-sabo"><b>Low power consumption</b></td>
-      <td class="tg-sabo">High power consumption</td>
-    </tr>
-    <tr>
-      <td class="tg-ig71"><b>Cheap & widespread</b></td>
-      <td class="tg-ig71">Expensive but becoming more widely used</td>
-    </tr>
-    <tr>
-      <td class="tg-sabo"><b>Cheaper development tools</b></td>
-      <td class="tg-sabo">Expensive development tools</td>
-    </tr>
-    <tr>
-      <td class="tg-ig71"><b>Easier to get started</b></td>
-      <td class="tg-ig71">Harder to get started</td>
-    </tr>
-  </tbody>
-</table>
-
-- It is possible to implement a microcontroller on many reconfigurable hardware devices
-- Some of the newer microcontrollers now also have integrated reconfigurable hardware modules
-
----
-name: S11
-
-# What to Consider when Selecting an MCU (PI)?
-
-- There are three core resources which must be considered when selecting an MCU for our project
- - Computational Power
- - Program Memory
- - RAM
-- Computational Power
- - This is a measure of how quickly the processor can perform a given task
- - The more computation you need to perform in a given time, the more computational power you need
- - It is a function of clock speed (how quickly an instruction is executed), and the Instruction Set Architecture (how much computation is performed by a given instruction)
- - Different architectures target different levels of computational performance
- - ATmega 328P vs ARM Cortex-A7
- - Measured in Millions-of-Instructions-Per-Second (MIPS), but this is only a guide
- - ATmega 328P – 16 MIPS vs Intel Core I7 – 200,000 MIPS
-
-
----
-name: S12
-
-# What to Consider when Selecting an MCU (PII)?
-
-- Program Memory (Flash)
- - This is where your code to execute is stored
- - More tasks your program performs, the more code you will require, and the more flash you will need
- - For microcontrollers it is usually measured in kilobytes (KB), or megabytes (MB) (e.g. an ATmega328P has 32KB of program memory)
-- Random Access Memory (RAM)
- - This is where data being processed by the microprocessor is stored, as well as the current microprocessor state
- - The more data you need to store or operate on at a given time, the more RAM you will require
- - For microcontrollers it is usually measured in kilobytes (KB), or megabytes (MB) (e.g. an ATmega328P has 2048B of RAM)
-- Different designs require a different mix of computational power, program memory, and RAM
- - Our design task is simple, and our resource requirements are limited
-
----
-name: S13
-
-# What MCU I/O Peripherals are Important?
-
-- Microcontrollers come with a wide range of I/O peripheral to perform different tasks
-- The most common ones, which we will cover in more detail during the course, are
- - General Purpose Input Output (GPIO): Allows generating/reading high or low (digital) signals
- - UART (Universal Asynchronous Receiver Transmitter): Sends and receives binary data using a simple serial protocol
- - Analogue to Digital Converters (ADC): Converts an analogue voltage into a digital value
- - Timers: allow real-time measurements and executing realtime tasks   
-- The above listed common I/O peripherals are generally sufficient for simple projects like ours
-- There are many more I/O peripherals that we won’t cover but can be important for more complicated projects and these include
- - Communication peripheral such as I2C, SPI, CAN, USB, and Ethernet
- - Digital to Analog Converter (DAC)
- - UI peripheral such as LCD drivers, capacitive touch and audio encoders
- - AES encryption, brown out protection, watchdog timers and low voltage detection
-
----
-name: S14
-
-# Other Important Requirements
-
-- There are a number of other functional and non-functional requirements to consider when selecting a MCU 
- - Power consumption
- - Operating voltage range
- - Operating temperature range
- - Packages available (the size and shape of the actual chip)
- - Compiler support
- - Development tools required
- - Programming tools required
- - Available software libraries
- - Certifications (automotive, aerospace and military are common ones)
-- Typically most important requirements are cost, availability, lead-time and minimum-order-quantity (MoQ)
- - Cost of the devices themselves as well as licenses for tools and software need to be considered
-
----
-name: S15
-
-# Why are We Using an ATmega328P?
-
-- To select an appropriate microcontroller for our project we need to estimate the requirements for the functional parameters we looked at
- - Determining for example the required I/O peripherals and operating voltage are somewhat straightforward 
- - Memory and computational power requirements for example are harder to estimate and often our experience with similar previous projects is needed to do make a good estimate 
-- As discussed previously there are many non-functional aspects to think about
- - Cost, availability and support (e.g. application notes, tutorials, books, development tools, libraries, etc.) are very important
- - In many situations we may prefer a familiar device or a device that is easier to use and has a shorter learning curve since development time is a big part of the project cost
-- The ATmega328P has all the peripherals we need and has sufficient memory and computational power but also more importantly it is one of the easiest to use, we are familiar with it (learnt in COMPSYS 201) and there is ample support (e.g. https://community.atmel.com)
-
----
-name: S16
-
-# What Other MCUs Can We Use?
-
-- Popular microcontroller vendors include STMicroelectronics, NXP, Renesas, Texas Instruments, Microchip and Silicon Labs and there are thousands of devices to select from
-
-.center[<img src="img/MCUOptions.png" height="360">]
-
-
----
-name: S17
-
-# The ATmega328P MCU & Tools
-
-- The ATmega328P offers the following 
- - 8-bit processor implementing the Atmel AVR RISC architecture
- - 16 MIPS throughput at 16MHz clock
- - 32 KB of program memory (flash) which is programmable in-system (the ability of microcontrollers to be programmed while installed in a complete system)
- - 2 KB of RAM
- - 3 timers, 8 channel 10-bit SAR type ADC, a USART, and 23 GPIO
- - External and internal interrupt sources
- - Operates from 2.7V to 5.5V from -40°C to 125°C 
-- As with COMPSYS 201 we will use the Atmel Studio IDE for development
-- We will use the ATmega328PB Xplained Mini evaluation kit to avoid having to build additional circuitry
- - Code written for the ATmega328P is forward compatible with ATmega328PB
-- When getting started, the most important resource available is the [ATmega328P](http://ww1.microchip.com/downloads/en/DeviceDoc/Atmel-7810-Automotive-Microcontrollers-ATmega328P_Datasheet.pdf) datasheet
- - Lists all of the parameters and explains how the I/O peripherals work and how to use them
-
----
-name: S18
-
-# ATmega328P Block Diagram & Pinout
-
-.center[
-<img src="img/328PBlock.png" height="450">
-<img src="img/328PPins.png" height="450">
-]
-
----
-name: S19
-
-# Your Energy Monitor Implementation
-
-- To implement the energy monitor you need to design a PCB that will contain the analogue hardware, an ATmega328PB Xplained Mini and the provided 7-segment display as well as HM-10 BLE module 
- - To make a compact design you can replace the Xplained Mini with an ATmega328P IC and the support circuitry required for the ATmega328P
-
-.center[
-<img src="img/FinalDesign.png" height="275">
-]
+- There are many more parameters which define a communication protocol
+ - We have just looked at some of the major ones
+- The embedded industry has adopted a number of common communication protocols
+- Serial Peripheral Interface (SPI)
+ - Implements full-duplex, serial and synchronous communication
+- Inter-Integrated Circuit (I2C)
+ - Implements half-duplex, serial and synchronous communication
+- Controller Area Network (CAN)
+ - Implements half-duplex, serial and asynchronous communication
+- Universal Asynchronous Receiver Transmitter (UART)
+ - Implements full-duplex, serial and asynchronous communication
+- Universal Serial Bus (USB)
+ - Implements full or half duplex, serial and asynchronous communication
 
 ---
 
@@ -564,8 +331,8 @@ layout: false
 count: false
 .logo-title[]
 
-# C Programming Language
-### Review of Fundamentals
+# UART Communication
+### Fundamentals Principles
 
 ---
 
@@ -576,224 +343,412 @@ name: template_slide
 .footer[[Duleepa J Thrimawithana](https://www.linkedin.com/in/duleepajt), Department of Electrical, Computer and Software Engineering (2020)]
 
 ---
-name: S20
+name: S8
 
-# Programming the ATmega328P
+# Universal Asynchronous Receiver Transmitter
 
-- We will use C, which is extremely common, to develop our embedded software program 
-- Using Atmel Studio IDE, we will then compile the program to generate machine code 
-- The *ELF* file generated during compiling will be simulated in Proteus to validate our design
- - Prior to this we can also use the debugger available on Atmel Studio to validate our software modules 
-- Once we have validated the functionality of the software, we then download *ELF* or *HEX* file onto the MCU program memory
-- You will start noticing the benefits of using software as you can iterate through the design much faster in comparison to the time required to iterate hardware
-- Your first lab will focus on setting up your development environment and getting a simple program running on Proteus
- - You could also try to run the same program on an Xplained Mini
-- The lab will walk you through all of the steps required, so don’t worry if it doesn’t all make sense just yet
- - There are many steps involved in compiling code, debugging on Atmel Studio, simulating on Proteus and finally programming the MCU
+- UART protocol is considered one of the simplest, cheapest and widely used
+ - Commonly used for low data-rate applications like GPS, sensors, modems, etc.
+- Data goes out on the transmit (TX) line and comes in on the receive (RX) line
+ - The TX on microcontroller connects to RX on the device it is communicating with
+ - Implements full-duplex, serial and asynchronous communication
+- The microcontroller and the device connected using 3 lines/wires (TX, RX and a ground) 
+ - If only needing simplex communication, 2 lines/wires are sufficient (ground, and TX/RX)
+- There are extensions to the protocol which add flow control and synchronous transmission (i.e. USART)
+
+.center[<img src="img/UARTConnection.png" height="150">]
 
 ---
-name: S21
+name: S9
 
-# Variables
+# UART Communication in Your Project
 
-- The most commonly used variable types are 
+.center[<img src="img/System.png" height="220">]
 
-<table class="tg" style="undefined;table-layout: fixed; width: 1075px; margin-left:auto; margin-right:auto;">
+- Your energy monitor need to communicate with a PC and smart phone
+ - A USB module connects the energy monitor with a PC
+ - A BLE radio transceiver module is used to communication with smart phone 
+- Both these module communicate with the microcontroller via UART 
+ - Data you send to these modules will be received by the PC and smart phone in UART format
+ - Received data can be viewed using a terminal program (or developing your own application)
+
+---
+name: S10
+
+# Transmitting Data using UART
+
+- When microcontroller is transmitting data through UART, it takes a byte (8-bits) and transmits each bit at a time in a sequential fashion along the wire/line that connects its TX to RX of the device receiving the information 
+ - A shift registers is used to convert the byte into individual bits to send during each time interval
+ - The Least-Significant-Bit (LSB) is transmitted first
+- UART on the receiving device receives each bit in sequence and reassembles them into the original byte
+
+.center[<img src="img/UARTDataTx.png" height="225">]
+
+
+---
+name: S11
+
+# UART Frame Format
+
+- Each data byte transmitted is preceded by a start-bit, which is indicated by a logic "0"
+ - The start-bit (“sync” bit) tells the receiver when to expect a data byte from the microcontroller 
+- Each data byte transmitted is ended with at least one stop bit, which is indicated by a logic "0"
+ - The stop bit(s) ensures the receiver can detect the next start bit
+- The “idle” state (i.e. when not sending any data) of the line is logic "1"
+ - This is historical from using UARTs for telegraphy
+- An optional parity bit may be included before the stop-bit(s)
+ - The parity bit allows the receiver to detect some instances of corruption
+- “[data bits]n[stop bits] [parity type if any]” naming scheme used
+ - E.g. “8N1 with odd parity” means 8 data bits are sent then an odd parity bit and 1 stop bits
+
+.center[<img src="img/UARTFrame.png" height="100">]
+
+---
+name: S12
+
+# UART Waveforms (PI)
+
+.center[<img src="img/UARTWaveform.png" height="310">]
+
+- A UART “frame” or “packet” composes of a start bit, data bits, parity bit (if used), and a stop bit (or 2)
+ - Bits are represented by voltage levels VCC (for logic "1") and 0V (for logic "0")
+ - Least-Significant-Bit (LSB) is transmitted first 
+
+---
+name: S13
+
+# UART Waveforms (PII)
+
+
+.center[<img src="img/UARTByte.png" height="310">]
+
+- A UART “frame” or “packet” composes of a start bit, data bits, parity bit (if used), and a stop bit (or 2)
+ - Bits are represented by voltage levels VCC (for logic "1") and 0V (for logic "0")
+ - Least-Significant-Bit (LSB) is transmitted first 
+
+---
+name: S14
+
+# UART Baud Rate
+
+.center[<img src="img/UARTUBRR.png" height="230">]
+
+- The amount of time between each bit being transmitted is determined by the baud rate
+\\[ \text{Time per Bit} = \frac{1}{\text{Baud Rate}} \\]
+- Standard baud rates are 4800, 9600, 19200 etc
+ - Technically you can use any baud rate but not all are supported by a given devices
+
+
+---
+name: S15
+
+# Baud Rate vs Data Rate
+
+- The time taken to send one bit is set by the baud rate
+- The total number of bits sent per frame include the start bit, data bits, parity bit (if used), and a stop bit (or 2)
+- As example, consider an 8N1 with no parity scheme 
+ - The UART frame would consist of 1 start bit, 8 data bits and 1 stop bit 
+ - Therefore, we would need to send 10 bits per frame of which only 8 are data bits
+- The data rate in bits per second (bps) when using UART communication is therefore
+\\[ \text{Data Rate} = \frac{\text{Data Bits per Frame}}{\text{Total Bits per Frame}} \times \text{Baud Rate} \\]
+- The time taken to transmit a certain number of data bits is therefore
+\\[ \text{Transmission Time} = \frac{\text{Data Bits to Transmit}}{\text{Data Rate}} \\]
+
+
+---
+name: S16
+
+# Example: Sending 80 Bytes Over UART
+
+.questions[
+The UART of a microcontroller is setup to transmit data using 9600 baud, 8N1, with parity. The microcontroller transmits 80 bytes of data consecutively through this UART to a computer. Determine the following,
+- Time take to send a bit in a UART frame
+- Number of bits transmitted per UART frame
+- Data rate in bps
+- Time taken to send 80 bytes of data
+]
+
+---
+name: S17
+
+# UART Specifications for Project
+
+<table class="tg" style="undefined;table-layout: fixed; width: 500px; margin-left:auto; margin-right:auto;">
   <colgroup>
-  <col style="width: 150px">
-  <col style="width: 375px">
-  <col style="width: 25px">
-  <col style="width: 150px">
-  <col style="width: 375px">
+  <col style="width: 250px">
+  <col style="width: 250px">
   </colgroup>
   <thead>
     <tr>
-      <th class="tg-dzaw"><span style="color:white">Type</span></th>
-      <th class="tg-dzaw"><span style="color:white">Properties</span></th>
-      <th class="tg-dzaw"><span style="color:white"></span></th>
-      <th class="tg-dzaw"><span style="color:white">Type</span></th>
-      <th class="tg-dzaw"><span style="color:white">Properties</span></th>
+      <th class="tg-dzaw"><span style="color:white">Parameter</span></th>
+      <th class="tg-dzaw"><span style="color:white">Setting</span></th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td class="tg-jayl">char</td>
-      <td class="tg-jayl">8 bit variable with -128 to 127 range</td>
-      <td class="tg-jayl"></td>
-      <td class="tg-jayl">unsigned char</td>
-      <td class="tg-jayl">8 bit variable with 0 to 255 range</td>
+      <td class="tg-jayl">Baud Rate</td>
+      <td class="tg-jayl">9600</td>
     </tr>
     <tr>
-      <td class="tg-sabo">int8_t</td>
-      <td class="tg-sabo">8 bit variable with -128 to 127 range</td>
-      <td class="tg-sabo"></td>
-      <td class="tg-sabo">uint8_t</td>
-      <td class="tg-sabo">8 bit variable with 0 to 255 range</td>
+      <td class="tg-sabo">Parity</td>
+      <td class="tg-sabo">None</td>
     </tr>
     <tr>
-      <td class="tg-jayl">int16_t</td>
-      <td class="tg-jayl">16 bit variable with -32768 to 32767 range</td>
-      <td class="tg-jayl"></td>
-      <td class="tg-jayl">uint16_t</td>
-      <td class="tg-jayl">16 bit variable with 0 to 65535 range</td>
+      <td class="tg-jayl">Stop Bits</td>
+      <td class="tg-jayl">1</td>
     </tr>
     <tr>
-      <td class="tg-sabo">int32_t</td>
-      <td class="tg-sabo">32 bit variable with -2147483648 to -2147483647 range</td>
-      <td class="tg-sabo"></td>
-      <td class="tg-sabo">uint32_t</td>
-      <td class="tg-sabo">16 bit variable with 0 to 4294967295 range</td>
-    </tr>
-    <tr>
-      <td class="tg-jayl">float</td>
-      <td class="tg-jayl">32 bit variable with ±1.175e-38 to ±3.402e38 range</td>
-      <td class="tg-jayl"></td>
-      <td class="tg-jayl">bool</td>
-      <td class="tg-jayl">1 bit variable (need #include <span>&#60;</span>stdbool.h<span>&#62;</span>) </td>
+      <td class="tg-sabo">Transmission Mode</td>
+      <td class="tg-sabo">Asynchronous</td>
     </tr>
   </tbody>
 </table>
 
-- Its good practice to use use explicit variable sizes in your code (size of *int* is platform dependent)
-- Variables can be declared to have either a local or a global scope
-- Variables can be declared as static, extern and/or volatile 
- - A static variable is initialized to 0 at the start of the program and if in a function value is retained after exiting the function
- - Volatile modifier is used to ensure the compiler doesn't optimize away a variable
-- Type casting is used to temporarily change the type/size of a variable
+- The HM10 BLE module used in the project only accepts 9600 baud, 8N1, with no parity
+- The UART on the ATmega328P should therefore also use 9600 baud, 8N1, with no parity
+- The terminal program running on PC should also be configured to use 9600 baud, 8N1, with no parity
+ - The USB module uses an FTDI IC to convert the UART transmission to a USB transmission that is sent over to the PC and decoded to recover the UART transmission 
+ 
+.center[<img src="img/UARTWiring.png" height="110">]
+
+
+---
+name: S18
+
+# UART Demonstration
+
+- A UART transmission sent from the ATmega328P is captured using an oscilloscope 
+ - The ATmega328P is transmitting “01011101” (0x5D) 
+ - It is setup to use 9600 baud, 8N1, with no parity
+
+
+.center[<img src="img/MCUOptions.png" height="360">]
+
+---
+
+class: title-slide
+layout: false
+count: false
+.logo-title[]
+
+# The ATmeage328P UART 
+### Configuring and Using
+
+---
+
+layout: true
+name: template_slide
+
+.logo-slide[]
+.footer[[Duleepa J Thrimawithana](https://www.linkedin.com/in/duleepajt), Department of Electrical, Computer and Software Engineering (2020)]
+
+---
+name: S19
+
+# ATmega328P UART Peripherals
+
+- Supports full duplex operation
+- Asynchronous or synchronous communication
+- Has a high resolution baud rate generator
+- Supports 5, 6, 7, 8, or 9 data bits
+- Supports 1 or 2 stop bits
+- Odd or even parity generation and checking supported in hardware
+- Data over-run and framing error detection
+- Noise filtering including false start bit detection
+- Transmit (TX) complete, TX ready, and Receive (RX) complete interrupts
+- When using a 16MHz system clock, supports up to 1M baud 
+
+---
+name: S20
+
+# ATmega328P USART Pins
+
+- In the ATmega328P the UART0 Receive (RX) and Transmit (TX) pins are fixed
+ - RX pin is PD0 (pin 30) while TX pin is PD1 (pin 31)
+- By default the bits of the DDRD register that corresponds to these two pins are configured in the correct mode (input for RX, output for TX) when we enable the UART peripheral
+
+.center[<img src="img/328PPins.png" width="300">]
+
+---
+name: S21
+
+# ATmega328P USART Implementation
+
+.center[<img src="img/328PUART.png" width="420">]
 
 ---
 name: S22
 
-# Overlooking Variable Types - Issues? 
+# ATmega328P USART Registers
 
-.center[<img src="img/VariableIssue.png" width="1030">]
+- The ATmega328P only has one USART and this is named USART0 
+ - Since we use asynchronous mode, in lectures we will refer to USART0 as UART0
+- There are 5 registers associated with UART0
+
+<table class="tg" style="undefined;table-layout: fixed; width: 600px; margin-left:auto; margin-right:auto;">
+  <colgroup>
+  <col style="width: 200px">
+  <col style="width: 400px">
+  </colgroup>
+  <thead>
+    <tr>
+      <th class="tg-dzaw"><span style="color:white">Register</span></th>
+      <th class="tg-dzaw"><span style="color:white">Functionality</span></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="tg-jayl">UDR0</td>
+      <td class="tg-jayl">UART0 Input/Output Data Register</td>
+    </tr>
+    <tr>
+      <td class="tg-sabo">UCSR0A</td>
+      <td class="tg-sabo">UART0 Control and Status Register A</td>
+    </tr>
+    <tr>
+      <td class="tg-jayl">UCSR0B</td>
+      <td class="tg-jayl">UART0 Control and Status Register B</td>
+    </tr>
+    <tr>
+      <td class="tg-sabo">UCSR0C</td>
+      <td class="tg-sabo">UART0 Control and Status Register C</td>
+    </tr>
+    <tr>
+      <td class="tg-jayl">UBRR0</td>
+      <td class="tg-jayl">UART0 Baud Rate Register</td>
+    </tr>
+  </tbody>
+</table>
+
+- UDR0 register contains the UART data 
+- The remaining four registers are used to control the peripheral
+ - Some fields are set by the user to control the operation
+ - Some fields are set by the UART to indicate its current state
 
 ---
 name: S23
 
-# Assignment and Arithmetic Operators 
+# UDR0 Register
 
-.codes[
-```c
-static volatile char glob_tom, glob_harry, glob_will;   
-                                            //Declaring global variables (initialized to 0 at start)    
+.center[<img src="img/UDR0.png" width="600">]
 
-int main(void){
-  uint8_t loc_tom = 5;                    //Declaring and initializing the variable to 5
-  uint8_t loc_harry = 300;                //Value of loc_harry will be 44!!!
-
-  //Multiply and modulo operators 
-  uint8_t mult = loc_tom * 2;             //Value of mult will be 10
-  uint8_t modu = loc_tom % 10;            //Value of modu will be 5
-
-  //Importance of type casting
-  float bad_dev = loc_tom / 4;            //Value of bad_dev will be 1!!!
-  float good_dev = (float)loc_tom / 4;    //Now good_dev will be 1.25
-  uint16_t reslt_is_16bit = (uint16_t)loc_tom * 100 + 100;
-                                          //Upcasting loc_tom as (loc_tom * 100) > 255
-
-  //Assigning characters, hex and binary values
-  glob_tom = 'A';                         //Value of glob_tom will be 65
-  glob_harry = 0x41;                      //Value of glob_harry will be 65
-  glob_will = 0b01000001;                 //Value of glob_will will be 65
-}
-```
-]
+- The transmit data buffer (TXB) and receive data buffer (RXB) registers share the same address
+ - The register accessed depends on whether a read or write is executed by the code
+- When setup to transmit data 
+ - The code loads the data byte to transmit to the TXB register 
+ - When the transmit shift register is empty the data in TXB register will be loaded automatically into the transmit shift register 
+ - Each bit in the transmit shift register will be automatically transmitted one at a time as [we learnt previously](#S10)
+- When setup to receive data
+ - Once the receive shift register receive a data byte, it is automatically copied into the RXB register 
 
 ---
 name: S24
 
-# Bitwise, Logical and Rational Operators 
+# UCSR0A Register
 
-.codes[
-```c
-//Bitwise operators: Ones Complement (~), AND (&), XOR (^), OR (|), Left Shift (<<), Right Shift (>>)
-uint8_t in_binary = 0b00110011;       //Value will be 0x33 in hex or 51 in decimal
-in_binary ^= 0b00001111;              //XOR each bit of in_binary with corresponding bit of 0b00001111
-                                      //result is assign back to in_binary making it 0b00111100
-uint8_t left_shft = 0b11001100 << 2;  //Shift to left makes left_shft = 0b00110000 (each Left Shift == x2)
-uint8_t maskd = 0x53 & 0x0F;          //Masking - used to mask off last 4-bits (maskd = 0x03)
-uint8_t slctd = 0x33 & (1<<1 | 1<<2); //Selecting 2nd and 3rd bits of 0x33 making slctd = 0x02
+.center[<img src="img/UCSR0A.png" width="600">]
 
-//Logical operators: AND (&&), OR (||)
-bool log_and = 4 && 2;                //log_and will be 1 (True)
-bool bit_and1 = 4 & 2;                //bit_and1 will be 0 (False)
-bool bit_and2 = 3 & 2;                //bit_and2 will be 1 (True)
-
-//Rational operators: Equal (==), Not Equal (!=), Less Than (<), Less Than or Equal (<=), 
-//More Than (>), More Than or Equal (>=)
-bool chck_greater = 5 >= 10;          //chck_greater will be 0 (False)
-```
-]
-
-- A variable, lets say *counter*, can be also pre or post incremented/decremented, using for example *++counter* or *counter++*, respectively
-- Compound assignment operators (e.g. * total_cost += new_item_cost; *) may also be used
+- .color-grey[RXC0:	*Receive Complete* flag is set when a new data frame is received]
+- TXC0:	*Transmit Complete* flag is set after transmitting a data frame   
+- UDRE0: *Data Register Empty* flag when set indicates if UDR0 is ready to be loaded with new data
+- .color-grey[FE0: *Frame Error*]
+- .color-grey[DOR0:	*Data Over-Run*]
+- .color-grey[UPE0:	*Parity Error*]
+- .color-grey[U2X0:	*Double Transmission Speed*]
+- .color-grey[MPCM0: *Multi-Processor Communication Mode*]
 
 ---
 name: S25
 
-# Control Statements 
+# UCSR0B Register
+
+.center[<img src="img/UCSR0B.png" width="600">]
+
+- .color-grey[RXCIE0:	*Receive Complete Interrupt Enable*]
+- .color-grey[TXCIE0:	*Transmit Complete Interrupt Enable*]
+- .color-grey[UDRIE0: *Data Register Empty Interrupt Enable*]
+- .color-grey[RXEN0:	*Receiver Enable*]
+- TXEN0:	*Transmitter Enable*
+- UCSZ02:	*Character Size*
+- .color-grey[RXB80:	*Receive Data Bit 8* when using a UART frame with 9 data bits]
+- .color-grey[TXB80:	*Transmit Data Bit 8* when using a UART frame with 9 data bits]
+
+---
+name: S26
+
+# UCSR0C Register
+
+.center[<img src="img/UCSR0C.png" width="600">]
+
+- UMSEL0[1..0]:	*Mode Select* where 00 = UART, 01 = USART, 10 = Reserved, 11 = SPI
+- UPM0[1..0]:	*Parity Mode* where 00 = Disabled, 01 = Reserved, 10 = Even, 11 = Odd
+- USBS0: *Stop Bit Select* where 0 = 1-bit, 1 = 2-bit
+- UCSZ0[1..0]: *Character Size* where 00 = 5 Bits, 01 = 6 Bits, 10 = 7 Bits, 11 = 8 Bits while UCSZ02 is set to 0
+- .color-grey[UCPOL0:	*USART Clock Polarity* when operating in synchronous mode]
+
+---
+name: S27
+
+# UBRR0 Register 
+
+.center[<img src="img/UBRR0B.png" width="600">]
+.center[<img src="img/UBRR0A.png" width="600">]
+
+- UBRR0[12..0]:	*Baud Rate Register* value sets the baud rate by prescaling the system clock to generate a clock source for the UART
+
+---
+name: S28
+
+# Calculating Value of UBRR0
+
+.center[<img src="img/UARTClock.png" width="500">]
+
+- The UBRR0 value defines the prescaler applied to used to the system clock (f<sub>osc</sub>) to obtain the UART clock (i.e. UART clock = (f<sub>osc</sub> / (UBRR0 + 1))
+- Under normal operation the UART clock needs to be 16 times the baud rate and therefore
+\\[ \text{Baud Rate} = \frac{f\_{osc}} {16 \times \left( UBRR0 + 1 \right) } \quad \text {or} \quad UBRR0 = \frac {f\_{osc}} {\left( \text {Baud Rate} \right) \times 16}  - 1\\]
+
+---
+name: S29
+
+# Configuring the UART
+
+- First we need to configure the UART as per our specifications (9600 baud, 8N1, with no parity)
+ - Need to set the bits of the [UCSR0A](#S24), [UCSR0B](#S25), [UCSR0C](#S26) and [UBRR0](#S27) registers that were not greyed out (on the previous slides)
+ - Have to configure the bits of the DDRD register associated with TX and RX pins (done by default)
+ - Do this in an initialization function
 
 .codes[
 ```c
-#define NUMTOCHECK  7                //#define is a preprocessor directive
-
-int main(void){
-  uint8_t cnt1 = 0, is_prime = 1;    //Initializing cnt1 to 0 and is_prime to 1
-
-  //WHILE & FOR loops
-  while(cnt1<4){
-    cnt1++;                          //Code inside this while loop will be executed 4 times 
-  }
-
-  for(uint8_t cnt2 =0; cnt2 < 4; cnt2++){
-    cnt1++;                         //Code executed 4 times (cnt2 is not visible outside this loop)
-  }
-
-  //IF-ELSE statements - E.g. Checking if NUMTOCHECK is a prime number
-  for(uint8_t cnt2 =2; cnt2 < NUMTOCHECK; cnt2++){
-    if( (NUMTOCHECK % cnt2) == 0 ){ //If NUMTOCHECK can be divided by a nummber less than that its not a prime
-      is_prime = 0;                 //Clears the flag
-      break;                        //Breaks the FOR loop as no need to continue
-    }
-  }
+// This function configures the UART to 9600 baud, 8N1, with no parity
+static void uart_init(uint32_t baud_rate){
+  UCSR0A = 0b00000000;    //None of the settings here are used
+  UCSR0B = 0b00001000;    //Set TXEN0 bit to 1 (enable transmit) and UCSZ02 bit to 0 (8 data bits)
+  UCSR0C = 0b00000110;    //UMSEL0[1..0]=00 (UART mode), UPM0[1..0]=00 (no parity), 
+                          //USBS0=0 (1 stop-bit), UCSZ0[1..0]=11 (8 data bits)
+  UBRR0 = 16000000 / (16 * baud_rate) - 1;
+                          //Set UBRR0 as per baud rate formula
 }
-
 ```
 ]
 
 
 ---
-name: S26
+name: S30
 
-# Functions 
+# Transmitting a Data Byte
 
-.codes[
-```c
-#define NUMTOCHECK  7               //#define is a preprocessor directive
+- We also know how to use the UART registers to transmit data
+ - We send data by loading the data byte to be sent into the UDR0 register
+ - UDR0 needs to be ready for the new data byte and this can be checked by making sure the UDRE0 bit in the UCSR0A register is set
+ - We typically do the above in a function dedicated to transmitting a byte
 
-bool check_prime(uint8_t chk_no);   //Function prototype
+---
+name: S30
 
-int main(void){
+# Transmitting an Array of Bytes
 
-  //Call function check_prime() to check if NUMTOCHECK is a prime
-  //The function takes uint8_t type parameter and returns a bool
-  bool is_prime = check_prime(NUMTOCHECK);
-  
-  while(1){
-  }
-}
-
-bool check_prime(uint8_t chk_no){ //Function returns true if chk_no is a prime
-  for(uint8_t cnt1=2; cnt1 < chk_no; cnt1++){
-    if( (chk_no % cnt1) == 0){    //If chk_no can be divided by a nummber less than that its not a prime
-      return false;               //Return false to the function caller
-    }
-  }
-  return true;                    //If chk_no cannot be divided by a nummber less than that its a prime
-}
-```
-]
+- We can also write a function that can transmit an array of bytes 
+ - We need to transmit one byte at a time by calling the function we wrote to transmit a byte in a loop
 
 ---
 
@@ -814,7 +769,7 @@ name: template_slide
 .footer[[Duleepa J Thrimawithana](https://www.linkedin.com/in/duleepajt), Department of Electrical, Computer and Software Engineering (2020)]
 
 ---
-name: S27
+name: S273
 
 # Memory Mapped Peripherals
 
