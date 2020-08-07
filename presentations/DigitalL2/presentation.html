@@ -518,9 +518,9 @@ name: S18
 # UART Demonstration
 
 - A UART transmission sent from the ATmega328P is captured using an oscilloscope 
- - The ATmega328P is transmitting “01011101” (0x5D) 
- - It is setup to use 9600 baud, 8N1, with no parity
+ - The ATmega328P is transmitting “01011101” (0x5D) using 9600 baud, 8N1, with no parity
 
+.center[<img src="img/Scope.png" width="550">]
 
 ---
 
@@ -756,7 +756,7 @@ void uart_transmit_byte(char byte){
 ] 
 
 ---
-name: S30
+name: S31
 
 # Transmitting an Array of Bytes
 
@@ -796,7 +796,7 @@ name: template_slide
 .footer[[Duleepa J Thrimawithana](https://www.linkedin.com/in/duleepajt), Department of Electrical, Computer and Software Engineering (2020)]
 
 ---
-name: S31
+name: S32
 
 # Why Do We Need Character Encoding?
 
@@ -812,14 +812,14 @@ name: S31
  - For example, 0x48 is used to represent the character ‘A’
 
 ---
-name: S32
+name: S33
 
 # The ASCII Table
 
 .center[<img src="img/ASCII.jpg" width="700">]
 
 ---
-name: S33
+name: S34
 
 # Completing the UART Code
 
@@ -851,7 +851,7 @@ int main(void){
 ]
 
 ---
-name: S33
+name: S35
 
 # Using *printf* and *sprintf* (PI)
 
@@ -879,7 +879,7 @@ int main(void)
 ]
 
 ---
-name: S34
+name: S36
 
 # Using *printf* and *sprintf* (PII)
 
@@ -907,9 +907,33 @@ printf("Color %s, Number %d, Hex %X","Red", 125, 125);
  - An example of using *sprintf* is provided in the UART lab
 - The main drawback of using *printf* and *sprintf* is the overhead they add in a very resource limited environment
 
+---
+name: S37
+
+# Developing Modular Software
+
+- At this stage you should be learning to develop modular software
+ - For example, all code relating each peripheral can be in a separate .c file, with a corresponding .h
+ - Allows code reuse, manageable and readable, easy to collaborate, easy to test and validate
+- As an example, lets consider the code developed to use the UART
+ - Use a separate C source file called *uart.c* a corresponding header file called *uart.h*, which will hold function prototypes for all functions in *uart.c*
+ - The *uart.h* should **#include** as few other .h files as possible and it should be protected against multiple **#include**
+ - **#include "uart.h"** in *uart.c* together with any necessary .h files
+ - **#include "uart.h"** in *main.c* so that we can access our UART functions
+- You may also want a shared .h such as *common.h* for global **#define** for example **#define F_CPU**
+ - Avoid sharing global variables between .c files by declaring them as *static* 
 
 ---
-name: S35
+name: S38
+
+# Adding Source & Header Files to Project
+
+- To add the *uart.c* C source file and *uart.h* header file to the project right-click on project name in solution explorer and *Add* followed by *New Item*
+
+.center[<img src="img/NewFiles.png" width="900">]
+
+---
+name: S39
 
 # Things To Note
 
