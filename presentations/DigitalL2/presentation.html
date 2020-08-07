@@ -720,9 +720,10 @@ name: S29
 .codes[
 ```c
 // This function configures the UART to 9600 baud, 8N1, with no parity
-static void uart_init(uint32_t baud_rate){
+void uart_init(uint32_t baud_rate){
   UCSR0A = 0b00000000;    //None of the settings here are used
   UCSR0B = 0b00001000;    //Set TXEN0 bit to 1 (enable transmit) and UCSZ02 bit to 0 (8 data bits)
+                          //To improve readability we should aim to write this in the form "UCSR0B = (1<<TXEN0);"
   UCSR0C = 0b00000110;    //UMSEL0[1..0]=00 (UART mode), UPM0[1..0]=00 (no parity), 
                           //USBS0=0 (1 stop-bit), UCSZ0[1..0]=11 (8 data bits)
   UBRR0 = 16000000 / (16 * baud_rate) - 1;
@@ -742,13 +743,41 @@ name: S30
  - UDR0 needs to be ready for the new data byte and this can be checked by making sure the UDRE0 bit in the UCSR0A register is set
  - We typically do the above in a function dedicated to transmitting a byte
 
+.codes[
+```c
+// This function transmits a single byte via the UART
+void uart_transmit_byte(char byte){	
+  while ((UCSR0A & 0b00100000) == 0){       //UDRE0 bit is checked to see if it is 0 
+  ;                                         //If UDRE0 bit is not 0, wait until it becomes 0	
+  }
+
+  //Put the byte to be sent into the UDR0 register
+  UDR0 = byte;
+}
+```
+] 
+
 ---
 name: S30
 
 # Transmitting an Array of Bytes
 
 - We can also write a function that can transmit an array of bytes 
- - We need to transmit one byte at a time by calling the function we wrote to transmit a byte in a loop
+ - In a loop, we need to transmit one byte at a time by calling the function we wrote to transmit 
+ - The number of bytes in the array is determined using the method **strlen()** 
+ - To use **strlen()** you need to **#include &lt; string.h &gt;**
+
+.codes[
+```c
+//This function transmits an array of bytes via the UART using uart_transmit_byte(uint8_t byte)function
+void uart_transmit_array(char* msg){
+	//Loop through each byte in the array 
+	for (uint8_t i = 0; i < strlen(msg); i++){		
+		uart_transmit_byte(msg[i]);				//Transmit each byte using uart_transmit_byte(char byte)
+	}	
+}
+```
+] 
 
 ---
 
@@ -757,8 +786,8 @@ layout: false
 count: false
 .logo-title[]
 
-# ATmega328P GPIO
-### Configuring and Using GPIO
+# Character Encoding
+### American Standard Code for Information Interchange (ASCII)
 
 ---
 
@@ -769,153 +798,133 @@ name: template_slide
 .footer[[Duleepa J Thrimawithana](https://www.linkedin.com/in/duleepajt), Department of Electrical, Computer and Software Engineering (2020)]
 
 ---
-name: S273
-
-# Memory Mapped Peripherals
-
-.left-column[
-- The ATmega328P peripherals are what are known as “memory mapped” peripherals
- - They share the same address space as the register file and RAM
-- A specific address is used to access registers which control the peripheral, and contain the input/output data from the peripheral
-- This means we can write to them in code just like any other variable
- - The manufacturer provides files with macros for the address of each peripheral
- - Using these we can refer to peripherals by name (e.g. DDRB), rather than their address (e.g. 0x0024)
- - In our case *#inlcude <span>&#60;</span>avr/io.h<span>&#62;</span>* defines the peripheral names we will use
-]
-.right-column[
-.center[
-&nbsp;
-
-&nbsp;
-<img src="img/DataMemory.png" width="350">
-]
-]
-
----
-name: S28
-
-# General Purpose I/O
-
-- As discussed, we use the I/O peripherals provided to interface with external hardware
- - As a developer, you need to write software drivers to effectively interact with the peripherals 
-- We will start with the simplest I/O peripheral – General Purpose Input/Output (GPIO)
- - Most pins on the ATmega328P can be used as GPIO
-- GPIOs have two states, logic high (1), and logic low (0)
- - When used as an output they produce a logic high or logic low signal on the pin
- - When used as an input they read a signal applied to the pin as logic high or logic low
- - Internally, the logic level is represented by a single bit
- - Externally, logic low is 0V and logic high is represented by MCU supply voltage (e.g. 5V)
-
-.center[<img src="img/LogicV.png" height="150">]
-
----
-name: S29
-
-# ATmega328P GPIO Registers
-
-- The ATmega328P has 23 GPIO pins separated into PORTB, PORTC and PORTD (e.g. PB0-PB7)
-- There are 3 registers associated with each GPIO port
-
-<table class="tg" style="undefined;table-layout: fixed; width: 650px; margin-left:auto; margin-right:auto;">
-  <colgroup>
-  <col style="width: 250px">
-  <col style="width: 400px">
-  </colgroup>
-  <thead>
-    <tr>
-      <th class="tg-dzaw"><span style="color:white">Register</span></th>
-      <th class="tg-dzaw"><span style="color:white">Function</span></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td class="tg-jayl">DDRX</td>
-      <td class="tg-jayl">Data Direction Register of Port 'X' where 'X' is B or C or D</td>
-    </tr>
-    <tr>
-      <td class="tg-sabo">PORTX</td>
-      <td class="tg-sabo">Data Out Register for Port 'X' where 'X' is B or C or D</td>
-    </tr>
-    <tr>
-      <td class="tg-jayl">PINX</td>
-      <td class="tg-jayl">Data In Register for Port 'X' where 'X' is B or C or D</td>
-    </tr>
-  </tbody>
-</table>
-
-- From the datasheet we can see that the direction for each pin is set by setting/clearing the corresponding bits in the DDRX register
- - 0 represents an input while 1 represents an output
-- To set the output value of a pin we use the corresponding bit of the PORTX register
- - Setting to 1, will generate a high signal (e.g. 5V) at output while a 0 will generate 0V
-- To read the input value of a pin we use the corresponding bit of the PINX register
- - If the voltage is 0V a logic low will be read while a high signal (e.g. 5V) will be read as logic high
-
----
-name: S30
-
-# GPIO Register Description 
-
-.center[
-<img src="img/DDRX.png" width="600">
-<img src="img/PORTX.png" width="600">
-<img src="img/PINX.png" width="600">
-]
-
-- For example, the first bit of DDRB, PORTB and PINB registers are associated with pin 0 of PORTB (i.e. DDRB0, PORTB0 and PINB0 bits correspond to PB0)
-
----
 name: S31
 
-# GPIO Implementation
+# Why Do We Need Character Encoding?
 
-.center[
-<img src="img/GPIOImplement.png" width="440">
-]
+- UART communication protocol allows us to successfully transfer data between a microcontroller and an external device
+ - UART can send a single byte of data at a time
+- If we only want to send numbers between 0-255 (or -128 to 127) then this works, but what if we want to send other data types?
+ - For example how to send alphanumeric characters, larger numbers, key-value pairs, etc.
+- We call these desired values our “character set”
+- Encoding determines how our character set is represented by the data we can send
+- There are many types of character encoding systems
+ - ASCII, ANSI, Unicode and UTF are a few common encoding systems
+- ASCII maps letters (upper and lower case), numbers (0-9), and special characters, to the range 0-127
+ - For example, 0x48 is used to represent the character ‘A’
 
 ---
 name: S32
 
-# Example: Reading Input & Driving LED (PI)
+# The ASCII Table
 
-.questions[
-Develop a program to read the input from a push-button and control an LED. As shown by the Proteus schematic below, one end of the push-button is connected PB7 on ATmega328P while the other end is connected to the ground. The pull-up resistor, `\( R_1 \)`, ensures the voltage at PB7 is pulled to 5V (i.e. VCC supplied to the MCU) when the push-button is released. The filter capacitor, `\( C_1 \)`, is used for debouncing. When the push-button is pressed it creates 0V at PB7, when released PB7 will be 5V. LED is connected to PB5 through a current limiting resistor, `\( R_2 \)`. Generating 5V at PB5 will create a current to flow turning-on the LED (i.e. `\( I_{LED} =  \left ( 5 - V_{f} \right ) / R_2 \)` where `\( V_f \approx 2V\)` for a yellow LED). Setting PB5 to 0V will turn-off the LED. 
-]
+.center[<img src="img/ASCII.jpg" width="700">]
 
-.center[
-<img src="img/LEDDemo.png" width="750">
+---
+name: S33
+
+# Completing the UART Code
+
+.codes[
+```c
+#define F_CPU 16000000UL                    //Defining system clock frequency
+
+#include <avr/io.h>                         //Needed for using the macros for register addresses
+#include <string.h>                         //Needed for using strlen()
+#include "util/delay.h"                     //Needed for using _delay_ms()
+
+//Prototypes of functions used
+void uart_init(uint32_t baud_rate);     
+void uart_transmit_byte(char byte);
+void uart_transmit_array(char* msg);
+
+int main(void){
+
+  uart_init(9600);                          //Initializing the UART to 9600 baud, 8N1, with no parity
+
+  while (1){
+    uart_transmit_byte(0x48);               //Transmitting character 'H' - alternatively uart_transmit_byte('A');
+    uart_transmit_array("ello World\n\r");  //Transmitting string "ello World" with newline character '\n'
+                                            //and carriage return character '\r'
+    _delay_ms(1000);                        //Transmit above characters every 1s
+  }
+}
+```
 ]
 
 ---
 name: S33
 
-# Example: Reading GPIO Input & Driving LED (PII)
+# Using *printf* and *sprintf* (PI)
+
+- The *printf* and *sprintf* commands uses ASCII encoding
+ - These commands take an input string, format it, and output it
+- To use *printf* and *sprintf* #include &lt; stdio.h &gt;** 
+- We also need to redirect the output of *printf* to use the UART and to do this we bind a function which transmits a character via the UART
 
 .codes[
 ```c
-#include <avr/io.h>   //Macros for register addresses for peripherals (e.g. PORTB)
+//Creating a stream variable
+static FILE usart_stdout = FDEV_SETUP_STREAM(uart_printf, NULL, _FDEV_SETUP_WRITE);
 
 int main(void)
 {
-  DDRB |= (1 << 5);   //Set the PB5 (connected to LED) as an output 	
-  DDRB &= ~(1 << 7);  //Set the PB7 (connected to push-button) as an input
-  //If we weren't using the macros, we could access the registers by address 
-  //E.g. uint16_t* port_b_address_ptr = 0x0025;
-	
-  while (1){	
-
-    if ( (PINB & (1 << 7)) == 0 ){  //If PB7 is reading 0V (i.e. logic 0)
-      PORTB |= (1 << 5);            //Turn-on the LED
-      //This statement is equivalent to writing *port_b_address_ptr |= (1 << 5);
-    } 
-    else{                           //Else PB7 should be logic 1
-      PORTB &= ~(1 << 5);           //Turn-off the LED
-      //This statement is equivalent to writing *port_b_address_ptr &= ~(1 << 5);
-    }
-    //Equally PORTB = (PORTB | (1 << 5)) & ~(PINB >> 2); can be used instead of IF-ELSE above
+  stdout = &usart_stdout;         //Binding the steam variable to stdout	
+  uart_init(9600);                //Initializing the UART to 9600 baud, 8N1, with no parity
+  
+  while (1){
+    printf("Hello World\r\n");    //Printing "Hello World"
+    _delay_ms(1000);              //Transmit message every 1s
   }
 }
 ```
 ]
+
+---
+name: S34
+
+# Using *printf* and *sprintf* (PII)
+
+- To use *printf* we need a new function called *uart_printf*
+
+.codes[
+```c
+int uart_printf(char var, FILE *stream) {
+	uart_transmit_byte(var);      //Using our original function to transmit UART data
+	return 0;
+}
+```
+]
+
+- Both *printf* and *sprintf* take a format string which defines the output together with a set of arguments
+- Format specifiers stating with % sign tell where to put these arguments and how to format them
+
+.codes[
+```c
+printf("Color %s, Number %d, Hex %X","Red", 125, 125);
+```
+]
+
+- When using sprintf the output is written into a character array
+ - An example of using *sprintf* is provided in the UART lab
+- The main drawback of using *printf* and *sprintf* is the overhead they add in a very resource limited environment
+
+
+---
+name: S35
+
+# Things To Note
+
+- Your transmit function is blocking and your MCU cannot do anything else while transmitting over the UART
+ - It can interfere with code that has timing constraints
+ - DO NOT use UART transmissions from within time critical tasks like interrupts
+- You must understand any examples you use during the lab
+ - Your understanding will be assessed during tests, which include developing an embedded C program as well as the final interview
+ - All team members must therefore understand every part of the design
+- It is critical that you complete the pre-lab of the UART lab before your lab session so that you can get help with the later parts of the lab if required
+ - Please do not waste the opportunity to get support in the labs 
+ - With 160 students in the class, closer to due dates, there will be limited opportunities to ask for help 
+- You need to demonstrate UART transmission during your midsemester review 
 
 ---
 
