@@ -217,8 +217,8 @@ name: S1
 - What do the waveforms for a UART communication look like?
 - How do we configure the UART in the ATmega328P
 - What is encoding and why do we need it?
-- How to write modular software
 - How to develop code to implement UART communication on an ATmega328P
+- How to write modular software
 
 ---
 
@@ -248,7 +248,7 @@ name: S2
 
 - A microcontroller seldom works in isolation
 - In a typical system, a microcontroller is expected to share information with other devices around it
-- To share information, microcontrollers need to communicate with other processors, modules, sensors, displays, etc
+- To share information, microcontrollers need to communicate with other processors, modules, sensors, displays, etc.
 - The communication can be for the functioning of the circuit (e.g. reading a temperature sensor), or for debugging and diagnostics (e.g. logging data to a PC)
 
 ---
@@ -289,7 +289,7 @@ name: S5
  - Often this signal is called a clock signal, like the clock used in synchronous digital circuits
  - Require more channels (e.g. separate clock wire) but have lower overhead and higher throughput
 - In asynchronous mode a special “sync” event is transmitted on the data line to provide a reference point in time
- - Need to have a common understanding of time, and therefore are vulnerable to variations
+ - Need to have a common understanding of time, and therefore is vulnerable to variations
 
 ---
 name: S6
@@ -352,7 +352,7 @@ name: S8
 - Data goes out on the transmit (TX) line and comes in on the receive (RX) line
  - The TX on microcontroller connects to RX on the device it is communicating with
  - Implements full-duplex, serial and asynchronous communication
-- The microcontroller and the device connected using 3 lines/wires (TX, RX and a ground) 
+- The microcontroller and the device are connected using 3 lines/wires (TX, RX and a ground) 
  - If only needing simplex communication, 2 lines/wires are sufficient (ground, and TX/RX)
 - There are extensions to the protocol which add flow control and synchronous transmission (i.e. USART)
 
@@ -365,7 +365,7 @@ name: S9
 
 .center[<img src="img/System.png" height="220">]
 
-- Your energy monitor need to communicate with a PC and smart phone
+- Your energy monitor need to communicate with a PC and a smart phone
  - A USB module connects the energy monitor with a PC
  - A BLE radio transceiver module is used to communication with smart phone 
 - Both these module communicate with the microcontroller via UART 
@@ -392,14 +392,14 @@ name: S11
 
 - Each data byte transmitted is preceded by a start-bit, which is indicated by a logic "0"
  - The start-bit (“sync” bit) tells the receiver when to expect a data byte from the microcontroller 
-- Each data byte transmitted is ended with at least one stop bit, which is indicated by a logic "0"
+- Each data byte transmitted is ended with at least one stop bit, which is indicated by a logic "1"
  - The stop bit(s) ensures the receiver can detect the next start bit
 - The “idle” state (i.e. when not sending any data) of the line is logic "1"
  - This is historical from using UARTs for telegraphy
 - An optional parity bit may be included before the stop-bit(s)
  - The parity bit allows the receiver to detect some instances of corruption
-- “[data bits]n[stop bits] [parity type if any]” naming scheme used
- - E.g. “8N1 with odd parity” means 8 data bits are sent then an odd parity bit and 1 stop bits
+- “[data bits]N[stop bits] [parity type if any]” naming scheme used
+ - E.g. “8N1 with odd parity” means 8 data bits are sent then an odd parity bit and 1 stop bit
 
 .center[<img src="img/UARTFrame.png" height="100">]
 
@@ -435,9 +435,8 @@ name: S14
 
 - The amount of time between each bit being transmitted is determined by the baud rate
 \\[ \text{Time per Bit} = \frac{1}{\text{Baud Rate}} \\]
-- Standard baud rates are 4800, 9600, 19200 etc
+- Standard baud rates are 4800, 9600, 19200 etc.
  - Technically you can use any baud rate but not all are supported by a given devices
-
 
 ---
 name: S15
@@ -446,7 +445,7 @@ name: S15
 
 - The time taken to send one bit is set by the baud rate
 - The total number of bits sent per frame include the start bit, data bits, parity bit (if used), and a stop bit (or 2)
-- As example, consider an 8N1 with no parity scheme 
+- As an example, consider an 8N1 with no parity scheme 
  - The UART frame would consist of 1 start bit, 8 data bits and 1 stop bit 
  - Therefore, we would need to send 10 bits per frame of which only 8 are data bits
 - The data rate in bits per second (bps) when using UART communication is therefore
@@ -461,7 +460,7 @@ name: S16
 # Example: Sending 80 Bytes Over UART
 
 .questions[
-The UART of a microcontroller is setup to transmit data using 9600 baud, 8N1, with parity. The microcontroller transmits 80 bytes of data consecutively through this UART to a computer. Determine the following,
+The UART of a microcontroller is setup to transmit data using 9600 baud, 8N1 with odd parity. The microcontroller transmits 80 bytes of data consecutively through this UART to a computer. Determine the following,
 - Time take to send a bit in a UART frame
 - Number of bits transmitted per UART frame
 - Data rate in bps
@@ -504,9 +503,9 @@ name: S17
   </tbody>
 </table>
 
-- The HM10 BLE module used in the project only accepts 9600 baud, 8N1, with no parity
-- The UART on the ATmega328P should therefore also use 9600 baud, 8N1, with no parity
-- The terminal program running on PC should also be configured to use 9600 baud, 8N1, with no parity
+- The HM10 BLE module used in the project only accepts 9600 baud, 8N1 with no parity
+- The UART on the ATmega328P should therefore also use 9600 baud, 8N1 with no parity
+- The terminal program running on PC should also be configured to use 9600 baud, 8N1 with no parity
  - The USB module uses an FTDI IC to convert the UART transmission to a USB transmission that is sent over to the PC and decoded to recover the UART transmission 
  
 .center[<img src="img/UARTWiring.png" height="110">]
@@ -543,7 +542,7 @@ name: template_slide
 ---
 name: S19
 
-# ATmega328P UART Peripherals
+# ATmega328P USART Peripheral
 
 - Supports full duplex operation
 - Asynchronous or synchronous communication
@@ -561,7 +560,7 @@ name: S20
 
 # ATmega328P USART Pins
 
-- In the ATmega328P the UART0 Receive (RX) and Transmit (TX) pins are fixed
+- In the ATmega328P the USART0 Receive (RX) and Transmit (TX) pins are fixed
  - RX pin is PD0 (pin 30) while TX pin is PD1 (pin 31)
 - By default the bits of the DDRD register that corresponds to these two pins are configured in the correct mode (input for RX, output for TX) when we enable the UART peripheral
 
@@ -633,7 +632,7 @@ name: S23
 - The transmit data buffer (TXB) and receive data buffer (RXB) registers share the same address
  - The register accessed depends on whether a read or write is executed by the code
 - When setup to transmit data 
- - The code loads the data byte to transmit to the TXB register 
+ - The code loads the data byte to transmit into the TXB register through UDR0
  - When the transmit shift register is empty the data in TXB register will be loaded automatically into the transmit shift register 
  - Each bit in the transmit shift register will be automatically transmitted one at a time as [we learnt previously](#S10)
 - When setup to receive data
@@ -710,14 +709,14 @@ name: S29
 
 # Configuring the UART
 
-- First we need to configure the UART as per our specifications (9600 baud, 8N1, with no parity)
- - Need to set the bits of the [UCSR0A](#S24), [UCSR0B](#S25), [UCSR0C](#S26) and [UBRR0](#S27) registers that were not greyed out (on the previous slides)
+- First we need to configure the UART as per our specifications (9600 baud, 8N1 with no parity)
+ - Need to set the bits of the [UCSR0A](#S24), [UCSR0B](#S25), [UCSR0C](#S26) and [UBRR0](#S27) registers 
  - Have to configure the bits of the DDRD register associated with TX and RX pins (done by default)
  - Do this in an initialization function
 
 .codes[
 ```c
-// This function configures the UART to 9600 baud, 8N1, with no parity
+// This function configures the UART to 9600 baud, 8N1 with no parity
 void uart_init(uint32_t baud_rate){
   UCSR0A = 0b00000000;    //None of the settings here are used
   UCSR0B = 0b00001000;    //Set TXEN0 bit to 1 (enable transmit) and UCSZ02 bit to 0 (8 data bits)
@@ -761,13 +760,13 @@ name: S31
 # Transmitting an Array of Bytes
 
 - We can also write a function that can transmit an array of bytes 
- - In a loop, we need to transmit one byte at a time by calling the function we wrote to transmit 
+ - In a loop, we need to transmit one byte at a time by calling the function we wrote to transmit a byte
  - The number of bytes in the array is determined using the method *strlen* 
  - To use *strlen* you need to **#include &lt; string.h &gt;**
 
 .codes[
 ```c
-//This function transmits an array of bytes via the UART using uart_transmit_byte(uint8_t byte)function
+//This function transmits an array of bytes via the UART using uart_transmit_byte(char byte)function
 void uart_transmit_array(char* msg){
 	//Loop through each byte in the array 
 	for (uint8_t i = 0; i < strlen(msg); i++){		
@@ -800,7 +799,7 @@ name: S32
 
 # Why Do We Need Character Encoding?
 
-- UART communication protocol allows us to successfully transfer data between a microcontroller and an external device
+- UART communication protocol allows us to successfully transfer data between a microcontroller and external devices
  - UART can send a single byte of data at a time
 - If we only want to send numbers between 0-255 (or -128 to 127) then this works, but what if we want to send other data types?
  - For example how to send alphanumeric characters, larger numbers, key-value pairs, etc.
@@ -868,7 +867,7 @@ static FILE usart_stdout = FDEV_SETUP_STREAM(uart_printf, NULL, _FDEV_SETUP_WRIT
 int main(void)
 {
   stdout = &usart_stdout;         //Binding the steam variable to stdout	
-  uart_init(9600);                //Initializing the UART to 9600 baud, 8N1, with no parity
+  uart_init(9600);                //Initializing the UART to 9600 baud, 8N1 with no parity
   
   while (1){
     printf("Hello World\r\n");    //Printing "Hello World"
@@ -913,10 +912,10 @@ name: S37
 # Developing Modular Software
 
 - At this stage you should be learning to develop modular software
- - For example, all code relating each peripheral can be in a separate .c file, with a corresponding .h
- - Allows code reuse, manageable and readable, easy to collaborate, easy to test and validate
+ - For example, all code relating each peripheral can be in a separate .c file, with a corresponding .h file
+ - Allows code reuse, manageable and readable code, easy to collaborate, easy to test and validate
 - As an example, lets consider the code developed to use the UART
- - Use a separate C source file called *uart.c* a corresponding header file called *uart.h*, which will hold function prototypes for all functions in *uart.c*
+ - Use a separate C source file called *uart.c* and a corresponding header file called *uart.h*, which will hold function prototypes for all functions in *uart.c*
  - The *uart.h* should **#include** as few other .h files as possible and it should be protected against multiple **#include**
  - **#include "uart.h"** in *uart.c* together with any necessary .h files
  - **#include "uart.h"** in *main.c* so that we can access our UART functions
@@ -928,7 +927,7 @@ name: S38
 
 # Adding Source & Header Files to Project
 
-- To add the *uart.c* C source file and *uart.h* header file to the project right-click on project name in solution explorer and *Add* followed by *New Item*
+- To add the *uart.c* source file and *uart.h* header file to the project right-click on project name in solution explorer and click on *Add* followed by *New Item*
 
 .center[<img src="img/NewFiles.png" width="900">]
 
@@ -940,10 +939,11 @@ name: S39
 - Your transmit function is blocking and your MCU cannot do anything else while transmitting over the UART
  - It can interfere with code that has timing constraints
  - DO NOT use UART transmissions from within time critical tasks like interrupts
-- You must understand any examples you use during the lab
- - Your understanding will be assessed during tests, which include developing an embedded C program as well as the final interview
+- You must understand examples you use during the lab
+ - Your individual understanding will be assessed during all assessments 
+ - During 2nd test you will have to develop a C program yourself and simulate it on Proteus
  - All team members must therefore understand every part of the design
-- It is critical that you complete the pre-lab of the UART lab before your lab session so that you can get help with the later parts of the lab if required
+- It is critical that you complete the pre-lab of the UART lab before your lab session so that you can get help with the later parts of the lab
  - Please do not waste the opportunity to get support in the labs 
  - With 160 students in the class, closer to due dates, there will be limited opportunities to ask for help 
 - You need to demonstrate UART transmission during your midsemester review 
