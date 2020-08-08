@@ -979,6 +979,12 @@ count: false
     </script>
     <script src="terminal.language.js" type="text/javascript"></script>
 
+    <script src="https://kit.fontawesome.com/a405eedf54.js" crossorigin="anonymous"></script>
+    <script src="mark.min.js" type="text/javascript">
+    </script>
+    <link rel="stylesheet" href="remark.search.css">
+    <script src="remark.search.js" type="text/javascript"></script>
+
     <script type="text/javascript">
 
       var options = {};
@@ -1043,6 +1049,9 @@ count: false
         next.parentNode.removeChild(next);
       });
 
+      window.addEventListener('load', function() {
+      RemarkSearch.create({'position': 'top-left', 'caseSensitive' : false, 'showIcon': true, 'autoSearch': true});
+      });
 
 
     </script>
