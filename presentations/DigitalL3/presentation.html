@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Introduction to Digital Design</title>
+    <meta charset="utf-8">
+    <style>
+      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+
+      body { 
+        font-family: 'Droid Serif'; 
+        line-height: 1.6;
+        }
+
+      h1, h2, h3 {
+        font-family: 'Yanone Kaffeesatz';
+        font-weight: bold;
+        color: #00467F;
+      }
+
+      h1{
+        margin-top: 30px !important;
+        margin-bottom: 30px !important;
+      }
+
+      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+
+      .TitleAuthor {
+        color:white; 
+        font-weight: normal;
+      }
+
+      .title-slide .remark-slide-number {
+        display: none;
+      }
+      .title-slide h1, h2, h3, h4 {
+        text-align: left;
+        color:white;
+        line-height: 0.7;
+        font-weight: bold;
+      }
+
+      .title-slide {
+        vertical-align: middle;
+        background-color: #00467F;
+      }
+
+      .logo-title {
+        content: "";
+        position: absolute;
+        top: 15px;
+        right:   15px;
+        height: 88px;
+        width: 267px;
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-image: url(https://cdn.auckland.ac.nz/assets/central/central-services/mediaandmarketing/uoa-logos-2015/uoa-logo-2015-reverse.png);
+      }
+      .logo-slide {
+        content: "";
+        position: absolute;
+        top: 35px;
+        right:   15px;
+        height: 96px;
+        width: 100px;
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-image: url(https://cpb-ap-se2.wpmucdn.com/blogs.auckland.ac.nz/dist/d/79/files/2015/10/uoa-v-colour2.png);
+      }
+
+      .left-column {
+        width: 65%;
+        float: left;
+        word-wrap: break-word;
+      }
+     
+      .right-column {
+        width: 30%;
+        float: right;
+        word-wrap: break-word;
+      }
+
+      .left-column-s {
+        width: 75%;
+        float: left;
+        word-wrap: break-word;
+      }
+     
+      .right-column-s {
+        width: 20%;
+        float: right;
+        word-wrap: break-word;
+      }
+
+      .footer {
+        content: "";
+        position: absolute;
+        bottom: 17px;
+        color:gray;
+        font-size: 10pt;
+      }
+      
+      @page {
+        size: 1210px 681px;
+        margin: 0;
+      }
+
+      @media print {
+        .remark-slide-scaler {
+          width: 100% !important;
+          height: 100% !important;
+          transform: scale(1) !important;
+          top: 0 !important;
+          left: 0 !important;
+        }
+      }
+      
+      .credits {
+        font-size: 12px;
+        line-height: 10px !important;
+        font-family: 'Droid Serif'; 
+      }
+
+      .codes {
+        
+        line-height: 20px !important;
+      }
+
+      .questions {
+        font-size: 20px;
+        line-height: 28px !important;
+        font-family: 'Droid Serif'; 
+      }
+
+      .zoom175 {
+        transition: transform .2s; /* Animation */
+      }
+
+      .zoom175:hover {
+        transform: scale(1.75) translateY(-20%) translateX(-20%); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+      }
+
+      .color-grey{
+        color: #919191;
+      }
+
+    </style>
+
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
+    <style>
+    .smaller-font { font-size:14px } 
+    </style>
+
+    <!-- KaTeX and Mathjax support refer to below for syntax -->
+    <!-- https://math.meta.stackexchange.com/questions/5020/mathjax-basic-tutorial-and-quick-reference -->
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.1/dist/katex.min.css" integrity="sha384-dbVIfZGuN1Yq7/1Ocstc1lUEm+AT+/rCkibIcC/OmWo5f0EA48Vf8CytHzGrSwbQ" crossorigin="anonymous">
+    
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.1/dist/katex.min.js" integrity="sha384-2BKqo+exmr9su6dir+qCw08N2ZKRucY4PrGQPPWU1A7FtlCGjmEGFqXCv5nyM5Ij" crossorigin="anonymous"></script>
+
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.1/dist/contrib/auto-render.min.js" integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous"
+        onload="renderMathInElement(document.body);"></script>
+    
+    <script type="text/javascript" async
+    src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+
+    <style>
+      /* Table Style */
+      .tg  {border-collapse:collapse;border-color:#9ABAD9;border-spacing:0;}
+      .tg td{background-color:#EBF5FF;border-color:#9ABAD9;border-style:solid;border-width:1px;color:#444;
+        font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:2px 10px;word-break:normal;}
+      .tg th{background-color:#409cff;border-color:#9ABAD9;border-style:solid;border-width:1px;color:#fff;
+        font-family:Arial, sans-serif;font-size:14px;font-weight:normal;overflow:hidden;padding:2px 10px;word-break:normal;}
+      .tg .tg-dzaw{background-color:#4F81BD;color:#FFF;font-weight:bold;text-align:left;vertical-align:top}
+      .tg .tg-sabo{background-color:#ebf5ff;color:#000000;text-align:left;vertical-align:top}
+      .tg .tg-096r{color:#000000;text-align:left;vertical-align:top}
+      .tg .tg-jayl{background-color:#d2e4fc;color:#000000;text-align:left;vertical-align:top}
+      .tg .tg-ig71{background-color:#D2E4FC;color:#000000;text-align:left;vertical-align:top}
+    </style>
+
+  </head>
+  <body>
+    <textarea id="source">
+
+class: title-slide
+count: false
+.logo-title[]
+
+## ELECTENG 209
+# Embedded Software Design 
+### Analogue to Digital Conversion 
+
+.TitleAuthor[Duleepa J Thrimawithana]
+
+---
+
+layout: true
+name: template_slide
+
+.logo-slide[]
+.footer[[Duleepa J Thrimawithana](https://www.linkedin.com/in/duleepajt), Department of Electrical, Computer and Software Engineering (2020)]
+
+---
+
+name: S1
+
+# Learning Objectives
+
+- What are analogue and digital signals?
+- Why do we want to process digital rather than analogue signals?
+- What is an analogue to digital converter (ADC)?
+- Why do we need ADCs?
+- How do we characterize ADCs?
+- Common ADC implementations 
+- Understanding how a successive approximation register (SAR) ADC work
+- Learning to configure the ADC in the ATmega328P
+- Learning to develop code to use the ADC in the ATmega328P
+
+---
+
+class: title-slide
+layout: false
+count: false
+.logo-title[]
+
+# Analogue and Digital Signals
+### Understanding the Differences  
+
+---
+
+layout: true
+name: template_slide
+
+.logo-slide[]
+.footer[[Duleepa J Thrimawithana](https://www.linkedin.com/in/duleepajt), Department of Electrical, Computer and Software Engineering (2020)]
+
+---
+
+name: S2
+
+# Analogue vs Digital Signals
+
+.left-column[
+- Analogue signals are continuous in both time and amplitude
+ - Often sensitive to noise
+ - Most physical signals are analogue
+ - Most electrical sensors produce analogue electrical signals
+ - Can be converted to a digital signal via an analogue to digital converter (ADC)
+- Digital signals are discrete in both time and amplitude
+ - More resistant to noise
+ - Cannot exactly reproduce analogue signals
+ - Some electrical sensors can output a digital signal
+ - Can be converted to an analogue signal via a digital to analogue converter (DAC)
+]
+
+.right-column[
+.center[<img src="img/AnalogDigital.png" width="280">]
+]
+
+---
+
+name: S3
+
+# Sensors and Actuators 
+
+
+- Often the physical signals/quantities we wish to interact with are not electrical
+ - For example, temperature, light, force, torque, etc.
+- An electrical transducer converts a physical signal/quantity into an electrical signal or an electrical signal into a physical signal/quantity
+ - Can be categorized as electrical sensors and electrical actuators 
+- Electrical sensors receive a signal from a physical system, and produce an electrical signal as an output
+ - For example, a temperature sensor concerts temperature into an electrical signal (voltage)
+- Electrical actuators receive an electrical signal as an input, and produce a physical signal as an output
+ - For example, a DC motor converts an electrical signal (current) into mechanical torque
+
+&nbsp;
+.center[<img src="img/SensorsActuators.png" width="950">]
+
+---
+name: S4
+
+# Processing Signals 
+
+- Originally almost all electronics performed analogue signal processing
+ - Used standard components such as resistors, capacitors, transistors
+- Analogue signal processing is often complicated
+ - Usually requires custom hardware
+ - Designing analogue signal processing circuitry takes time and therefore is expensive
+- Specialized application, like fail-safe systems, require analogue signal processing
+- For many general applications it is beneficial to move the processing onto a digital platform like a microcontroller
+ - Multiple different signal processing operations can be performed by the same hardware
+ - It is easy to modify the processing by modifying the code 
+- Since most real-world signals are analogue, we must convert them into digital signals before we can process them using a microcontroller
+ - When converting analogue signals to digital signals we lose some information
+
+---
+name: S5
+
+# Signals in Your Project
+
+.center[<img src="img/System.png" height="200">]
+
+- The smart energy monitor needs to measure voltage and current to determine power drawn by the load
+- Voltage and current are analogue electrical signals and therefore they need to be converted into digital signals in order to use your microcontroller to perform signal processing
+- We will use the ADC peripheral on the ATmega328P to convert analogue electrical signals to digital signals
+ - The ADC only accepts analogue voltage signals that are in the range between 0V and VCC (e.g. 5V)
+ - Because of this you designed circuitry to convert the voltage and current you wish to measure into two analogue voltage signals that falls within this range
+
+---
+
+class: title-slide
+layout: false
+count: false
+.logo-title[]
+
+# Analogue to Digital Converters
+### Fundamentals Principles
+
+---
+
+layout: true
+name: template_slide
+
+.logo-slide[]
+.footer[[Duleepa J Thrimawithana](https://www.linkedin.com/in/duleepajt), Department of Electrical, Computer and Software Engineering (2020)]
+
+---
+name: S6
+
+# Analogue to Digital Conversion
+
+- An analogue to digital converter (ADC) converts an analogue signal to a digital one
+- We know that an analogue signal is continuous in both time and amplitude, whereas a digital signal is not
+- Therefore, the analogue signal needs to be digitized/discretized  
+ - A process known as sampling is used to convert the analogue signal into discrete time steps
+ - A process known as quantization is used to convert the analogue into discrete amplitudes
+- The analogue to digital conversion process introduce error
+ - For example during quantization information is lost
+
+.center[<img src="img/ADCProcess.png" height="180">]
+
+---
+name: S7
+
+# The Sampling Process
+
+- The size of the time intervals the signal is split into, referred to as sample time, is dependent on the sampling frequency (also called sampling rate), measured in hertz
+\\[ t\_{sample} = \frac{1}{f\_{sample}} \\]
+- Higher sampling rates allow the original analogue signal to be captured more accurately
+ - However this requires faster ADC hardware, and more memory to store the digital data
+- To accurately capture a signal the sampling rate must be greater than the Nyquist frequency
+ - Nyquist frequency is equal to twice the highest frequency present in the signal
+
+---
+name: S8
+
+# The Quantization Process
+
+- The full voltage range is broken into discrete levels
+- The number of number of bits available in an ADC to represent the amplitude of a signal determine the number of discrete voltage levels, and the number of levels is simply given by 2<sup>bits</sup>
+- As example, lets consider an ADC with a full voltage range of 5V and examine how it will represent a 3.2V analogue signal if this ADC had 1-bit, 2-bits and 3-bits to represent an analogue signal 
+
+.center[<img src="img/Quantization.png" height="270">]
+
+---
+name: S9
+
+# Characteristics of an ADC
+
+Acquisition Time
+How long it takes for the ADC hardware to acquire the signal to be measured. This includes switching multiplexers, charging internal capacitors, waiting for transients to settle etc
+Conversion Time
+Time taken by the ADC to convert the analogue input signal into a digital output signal
+Total Sampling Time
+This is the sum of both the acquisition time and conversion time
+The maximum sampling rate is limited by the total sampling time
+𝑓_(𝑠𝑎𝑚𝑝𝑙𝑒(𝑚𝑎𝑥))=1/(𝑡_(𝑎𝑐𝑞𝑢𝑖𝑠𝑖𝑡𝑖𝑜𝑛(𝑚𝑖𝑛))+𝑡_(𝑐𝑜𝑛𝑣𝑒𝑟𝑠𝑖𝑜𝑛(𝑚𝑖𝑛)) )
+
+---
+name: S12
+
+# UART Waveforms (PI)
+
+.center[<img src="img/UARTWaveform.png" height="310">]
+
+- A UART “frame” or “packet” composes of a start bit, data bits, parity bit (if used), and a stop bit (or 2)
+ - Bits are represented by voltage levels VCC (for logic "1") and 0V (for logic "0")
+ - Least-Significant-Bit (LSB) is transmitted first 
+
+---
+name: S13
+
+# UART Waveforms (PII)
+
+
+.center[<img src="img/UARTByte.png" height="310">]
+
+- A UART “frame” or “packet” composes of a start bit, data bits, parity bit (if used), and a stop bit (or 2)
+ - Bits are represented by voltage levels VCC (for logic "1") and 0V (for logic "0")
+ - Least-Significant-Bit (LSB) is transmitted first 
+
+---
+name: S14
+
+# UART Baud Rate
+
+.center[<img src="img/UARTUBRR.png" height="230">]
+
+- The amount of time between each bit being transmitted is determined by the baud rate
+\\[ \text{Time per Bit} = \frac{1}{\text{Baud Rate}} \\]
+- Standard baud rates are 4800, 9600, 19200 etc.
+ - Technically you can use any baud rate but not all are supported by a given devices
+
+---
+name: S15
+
+# Baud Rate vs Data Rate
+
+- The time taken to send one bit is set by the baud rate
+- The total number of bits sent per frame include the start bit, data bits, parity bit (if used), and a stop bit (or 2)
+- As an example, consider an 8N1 with no parity scheme 
+ - The UART frame would consist of 1 start bit, 8 data bits and 1 stop bit 
+ - Therefore, we would need to send 10 bits per frame of which only 8 are data bits
+- The data rate in bits per second (bps) when using UART communication is therefore
+\\[ \text{Data Rate} = \frac{\text{Data Bits per Frame}}{\text{Total Bits per Frame}} \times \text{Baud Rate} \\]
+- The time taken to transmit a certain number of data bits is therefore
+\\[ \text{Transmission Time} = \frac{\text{Data Bits to Transmit}}{\text{Data Rate}} \\]
+
+
+---
+name: S16
+
+# Example: Sending 80 Bytes Over UART
+
+.questions[
+The UART of a microcontroller is setup to transmit data using 9600 baud, 8N1 with odd parity. The microcontroller transmits 80 bytes of data consecutively through this UART to a computer. Determine the following,
+- Time take to send a bit in a UART frame
+- Number of bits transmitted per UART frame
+- Data rate in bps
+- Time taken to send 80 bytes of data
+]
+
+---
+name: S17
+
+# UART Specifications for Project
+
+<table class="tg" style="undefined;table-layout: fixed; width: 500px; margin-left:auto; margin-right:auto;">
+  <colgroup>
+  <col style="width: 250px">
+  <col style="width: 250px">
+  </colgroup>
+  <thead>
+    <tr>
+      <th class="tg-dzaw"><span style="color:white">Parameter</span></th>
+      <th class="tg-dzaw"><span style="color:white">Setting</span></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="tg-jayl">Baud Rate</td>
+      <td class="tg-jayl">9600</td>
+    </tr>
+    <tr>
+      <td class="tg-sabo">Parity</td>
+      <td class="tg-sabo">None</td>
+    </tr>
+    <tr>
+      <td class="tg-jayl">Stop Bits</td>
+      <td class="tg-jayl">1</td>
+    </tr>
+    <tr>
+      <td class="tg-sabo">Transmission Mode</td>
+      <td class="tg-sabo">Asynchronous</td>
+    </tr>
+  </tbody>
+</table>
+
+- The HM10 BLE module used in the project only accepts 9600 baud, 8N1 with no parity
+- The UART on the ATmega328P should therefore also use 9600 baud, 8N1 with no parity
+- The terminal program running on PC should also be configured to use 9600 baud, 8N1 with no parity
+ - The USB module uses an FTDI IC to convert the UART transmission to a USB transmission that is sent over to the PC and decoded to recover the UART transmission 
+ 
+.center[<img src="img/UARTWiring.png" height="110">]
+
+
+---
+name: S18
+
+# UART Demonstration
+
+- A UART transmission sent from the ATmega328P is captured using an oscilloscope 
+ - The ATmega328P is transmitting “01011101” (0x5D) using 9600 baud, 8N1, with no parity
+
+.center[<img src="img/Scope.png" width="550">]
+
+---
+
+class: title-slide
+layout: false
+count: false
+.logo-title[]
+
+# The ATmeage328P UART 
+### Configuring and Using
+
+---
+
+layout: true
+name: template_slide
+
+.logo-slide[]
+.footer[[Duleepa J Thrimawithana](https://www.linkedin.com/in/duleepajt), Department of Electrical, Computer and Software Engineering (2020)]
+
+---
+name: S19
+
+# ATmega328P USART Peripheral
+
+- Supports full duplex operation
+- Asynchronous or synchronous communication
+- Has a high resolution baud rate generator
+- Supports 5, 6, 7, 8, or 9 data bits
+- Supports 1 or 2 stop bits
+- Odd or even parity generation and checking supported in hardware
+- Data over-run and framing error detection
+- Noise filtering including false start bit detection
+- Transmit (TX) complete, TX ready, and Receive (RX) complete interrupts
+- When using a 16MHz system clock, supports up to 1M baud 
+
+---
+name: S20
+
+# ATmega328P USART Pins
+
+- In the ATmega328P the USART0 Receive (RX) and Transmit (TX) pins are fixed
+ - RX pin is PD0 (pin 30) while TX pin is PD1 (pin 31)
+- By default the bits of the DDRD register that corresponds to these two pins are configured in the correct mode (input for RX, output for TX) when we enable the UART peripheral
+
+.center[<img src="img/328PPins.png" width="300">]
+
+---
+name: S21
+
+# ATmega328P USART Implementation
+
+.center[<img src="img/328PUART.png" width="420">]
+
+---
+name: S22
+
+# ATmega328P USART Registers
+
+- The ATmega328P only has one USART and this is named USART0 
+ - Since we use asynchronous mode, in lectures we will refer to USART0 as UART0
+- There are 5 registers associated with UART0
+
+<table class="tg" style="undefined;table-layout: fixed; width: 600px; margin-left:auto; margin-right:auto;">
+  <colgroup>
+  <col style="width: 200px">
+  <col style="width: 400px">
+  </colgroup>
+  <thead>
+    <tr>
+      <th class="tg-dzaw"><span style="color:white">Register</span></th>
+      <th class="tg-dzaw"><span style="color:white">Functionality</span></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="tg-jayl">UDR0</td>
+      <td class="tg-jayl">UART0 Input/Output Data Register</td>
+    </tr>
+    <tr>
+      <td class="tg-sabo">UCSR0A</td>
+      <td class="tg-sabo">UART0 Control and Status Register A</td>
+    </tr>
+    <tr>
+      <td class="tg-jayl">UCSR0B</td>
+      <td class="tg-jayl">UART0 Control and Status Register B</td>
+    </tr>
+    <tr>
+      <td class="tg-sabo">UCSR0C</td>
+      <td class="tg-sabo">UART0 Control and Status Register C</td>
+    </tr>
+    <tr>
+      <td class="tg-jayl">UBRR0</td>
+      <td class="tg-jayl">UART0 Baud Rate Register</td>
+    </tr>
+  </tbody>
+</table>
+
+- UDR0 register contains the UART data 
+- The remaining four registers are used to control the peripheral
+ - Some fields are set by the user to control the operation
+ - Some fields are set by the UART to indicate its current state
+
+---
+name: S23
+
+# UDR0 Register
+
+.center[<img src="img/UDR0.png" width="600">]
+
+- The transmit data buffer (TXB) and receive data buffer (RXB) registers share the same address
+ - The register accessed depends on whether a read or write is executed by the code
+- When setup to transmit data 
+ - The code loads the data byte to transmit into the TXB register through UDR0
+ - When the transmit shift register is empty the data in TXB register will be loaded automatically into the transmit shift register 
+ - Each bit in the transmit shift register will be automatically transmitted one at a time as [we learnt previously](#S10)
+- When setup to receive data
+ - Once the receive shift register receive a data byte, it is automatically copied into the RXB register 
+
+---
+name: S24
+
+# UCSR0A Register
+
+.center[<img src="img/UCSR0A.png" width="600">]
+
+- .color-grey[RXC0:	*Receive Complete* flag is set when a new data frame is received]
+- TXC0:	*Transmit Complete* flag is set after transmitting a data frame   
+- UDRE0: *Data Register Empty* flag when set indicates if UDR0 is ready to be loaded with new data
+- .color-grey[FE0: *Frame Error*]
+- .color-grey[DOR0:	*Data Over-Run*]
+- .color-grey[UPE0:	*Parity Error*]
+- .color-grey[U2X0:	*Double Transmission Speed*]
+- .color-grey[MPCM0: *Multi-Processor Communication Mode*]
+
+---
+name: S25
+
+# UCSR0B Register
+
+.center[<img src="img/UCSR0B.png" width="600">]
+
+- .color-grey[RXCIE0:	*Receive Complete Interrupt Enable*]
+- .color-grey[TXCIE0:	*Transmit Complete Interrupt Enable*]
+- .color-grey[UDRIE0: *Data Register Empty Interrupt Enable*]
+- .color-grey[RXEN0:	*Receiver Enable*]
+- TXEN0:	*Transmitter Enable*
+- UCSZ02:	*Character Size*
+- .color-grey[RXB80:	*Receive Data Bit 8* when using a UART frame with 9 data bits]
+- .color-grey[TXB80:	*Transmit Data Bit 8* when using a UART frame with 9 data bits]
+
+---
+name: S26
+
+# UCSR0C Register
+
+.center[<img src="img/UCSR0C.png" width="600">]
+
+- UMSEL0[1..0]:	*Mode Select* where 00 = UART, 01 = USART, 10 = Reserved, 11 = SPI
+- UPM0[1..0]:	*Parity Mode* where 00 = Disabled, 01 = Reserved, 10 = Even, 11 = Odd
+- USBS0: *Stop Bit Select* where 0 = 1-bit, 1 = 2-bit
+- UCSZ0[1..0]: *Character Size* where 00 = 5 Bits, 01 = 6 Bits, 10 = 7 Bits, 11 = 8 Bits while UCSZ02 is set to 0
+- .color-grey[UCPOL0:	*USART Clock Polarity* when operating in synchronous mode]
+
+---
+name: S27
+
+# UBRR0 Register 
+
+.center[<img src="img/UBRR0B.png" width="600">]
+.center[<img src="img/UBRR0A.png" width="600">]
+
+- UBRR0[12..0]:	*Baud Rate Register* value sets the baud rate by prescaling the system clock to generate a clock source for the UART
+
+---
+name: S28
+
+# Calculating Value of UBRR0
+
+.center[<img src="img/UARTClock.png" width="500">]
+
+- The UBRR0 value defines the prescaler applied to used to the system clock (f<sub>osc</sub>) to obtain the UART clock (i.e. UART clock = (f<sub>osc</sub> / (UBRR0 + 1))
+- Under normal operation the UART clock needs to be 16 times the baud rate and therefore
+\\[ \text{Baud Rate} = \frac{f\_{osc}} {16 \times \left( UBRR0 + 1 \right) } \quad \text {or} \quad UBRR0 = \frac {f\_{osc}} {\left( \text {Baud Rate} \right) \times 16}  - 1\\]
+
+---
+name: S29
+
+# Configuring the UART
+
+- First we need to configure the UART as per our specifications (9600 baud, 8N1 with no parity)
+ - Need to set the bits of the [UCSR0A](#S24), [UCSR0B](#S25), [UCSR0C](#S26) and [UBRR0](#S27) registers 
+ - Have to configure the bits of the DDRD register associated with TX and RX pins (done by default)
+ - Do this in an initialization function
+
+.codes[
+```c
+// This function configures the UART to 9600 baud, 8N1 with no parity
+void uart_init(uint32_t baud_rate){
+  UCSR0A = 0b00000000;    //None of the settings here are used
+  UCSR0B = 0b00001000;    //Set TXEN0 bit to 1 (enable transmit) and UCSZ02 bit to 0 (8 data bits)
+                          //To improve readability we should aim to write this in the form "UCSR0B = (1<<TXEN0);"
+  UCSR0C = 0b00000110;    //UMSEL0[1..0]=00 (UART mode), UPM0[1..0]=00 (no parity), 
+                          //USBS0=0 (1 stop-bit), UCSZ0[1..0]=11 (8 data bits)
+  UBRR0 = 16000000 / (16 * baud_rate) - 1;
+                          //Set UBRR0 as per baud rate formula
+}
+```
+]
+
+
+---
+name: S30
+
+# Transmitting a Data Byte
+
+- We also know how to use the UART registers to transmit data
+ - We send data by loading the data byte to be sent into the UDR0 register
+ - UDR0 needs to be ready for the new data byte and this can be checked by making sure the UDRE0 bit in the UCSR0A register is set
+ - We typically do the above in a function dedicated to transmitting a byte
+
+.codes[
+```c
+// This function transmits a single byte via the UART
+void uart_transmit_byte(char byte){	
+  while ((UCSR0A & 0b00100000) == 0){       //UDRE0 bit is checked to see if it is 0 
+  ;                                         //If UDRE0 bit is not 0, wait until it becomes 0	
+  }
+
+  //Put the byte to be sent into the UDR0 register
+  UDR0 = byte;
+}
+```
+] 
+
+---
+name: S31
+
+# Transmitting an Array of Bytes
+
+- We can also write a function that can transmit an array of bytes 
+ - In a loop, we need to transmit one byte at a time by calling the function we wrote to transmit a byte
+ - The number of bytes in the array is determined using the method *strlen* 
+ - To use *strlen* you need to **#include &lt; string.h &gt;**
+
+.codes[
+```c
+//This function transmits an array of bytes via the UART using uart_transmit_byte(char byte)function
+void uart_transmit_array(char* msg){
+	//Loop through each byte in the array 
+	for (uint8_t i = 0; i < strlen(msg); i++){		
+		uart_transmit_byte(msg[i]);				//Transmit each byte using uart_transmit_byte(char byte)
+	}	
+}
+```
+] 
+
+---
+
+class: title-slide
+layout: false
+count: false
+.logo-title[]
+
+# Character Encoding
+### American Standard Code for Information Interchange (ASCII)
+
+---
+
+layout: true
+name: template_slide
+
+.logo-slide[]
+.footer[[Duleepa J Thrimawithana](https://www.linkedin.com/in/duleepajt), Department of Electrical, Computer and Software Engineering (2020)]
+
+---
+name: S32
+
+# Why Do We Need Character Encoding?
+
+- UART communication protocol allows us to successfully transfer data between a microcontroller and external devices
+ - UART can send a single byte of data at a time
+- If we only want to send numbers between 0-255 (or -128 to 127) then this works, but what if we want to send other data types?
+ - For example how to send alphanumeric characters, larger numbers, key-value pairs, etc.
+- We call these desired values our “character set”
+- Encoding determines how our character set is represented by the data we can send
+- There are many types of character encoding systems
+ - ASCII, ANSI, Unicode and UTF are a few common encoding systems
+- ASCII maps letters (upper and lower case), numbers (0-9), and special characters, to the range 0-127
+ - For example, 0x48 is used to represent the character ‘A’
+
+---
+name: S33
+
+# The ASCII Table
+
+.center[<img src="img/ASCII.jpg" width="700">]
+
+---
+name: S34
+
+# Completing the UART Code
+
+.codes[
+```c
+#define F_CPU 16000000UL                    //Defining system clock frequency
+
+#include <avr/io.h>                         //Needed for using the macros for register addresses
+#include <string.h>                         //Needed for using strlen()
+#include "util/delay.h"                     //Needed for using _delay_ms()
+
+//Prototypes of functions used
+void uart_init(uint32_t baud_rate);     
+void uart_transmit_byte(char byte);
+void uart_transmit_array(char* msg);
+
+int main(void){
+
+  uart_init(9600);                          //Initializing the UART to 9600 baud, 8N1, with no parity
+
+  while (1){
+    uart_transmit_byte(0x48);               //Transmitting character 'H' - alternatively uart_transmit_byte('A');
+    uart_transmit_array("ello World\n\r");  //Transmitting string "ello World" with newline character '\n'
+                                            //and carriage return character '\r'
+    _delay_ms(1000);                        //Transmit above characters every 1s
+  }
+}
+```
+]
+
+---
+name: S35
+
+# Using *printf* and *sprintf* (PI)
+
+- The *printf* and *sprintf* commands uses ASCII encoding
+ - These commands take an input string, format it, and output it
+- To use *printf* and *sprintf* **#include &lt; stdio.h &gt;** 
+- We also need to redirect the output of *printf* to use the UART and to do this we bind a function which transmits a character via the UART
+
+.codes[
+```c
+//Creating a stream variable
+static FILE usart_stdout = FDEV_SETUP_STREAM(uart_printf, NULL, _FDEV_SETUP_WRITE);
+
+int main(void)
+{
+  stdout = &usart_stdout;         //Binding the steam variable to stdout	
+  uart_init(9600);                //Initializing the UART to 9600 baud, 8N1 with no parity
+  
+  while (1){
+    printf("Hello World\r\n");    //Printing "Hello World"
+    _delay_ms(1000);              //Transmit message every 1s
+  }
+}
+```
+]
+
+---
+name: S36
+
+# Using *printf* and *sprintf* (PII)
+
+- To use *printf* we need a new function called *uart_printf*
+
+.codes[
+```c
+int uart_printf(char var, FILE *stream) {
+	uart_transmit_byte(var);      //Using our original function to transmit UART data
+	return 0;
+}
+```
+]
+
+- Both *printf* and *sprintf* take a format string which defines the output together with a set of arguments
+- Format specifiers stating with % sign tell where to put these arguments and how to format them
+
+.codes[
+```c
+printf("Color %s, Number %d, Hex %X","Red", 125, 125);
+```
+]
+
+- When using sprintf the output is written into a character array
+ - An example of using *sprintf* is provided in the UART lab
+- The main drawback of using *printf* and *sprintf* is the overhead they add in a very resource limited environment
+
+---
+name: S37
+
+# Developing Modular Software
+
+- At this stage you should be learning to develop modular software
+ - For example, all code relating each peripheral can be in a separate .c file, with a corresponding .h file
+ - Allows code reuse, manageable and readable code, easy to collaborate, easy to test and validate
+- As an example, lets consider the code developed to use the UART
+ - Use a separate C source file called *uart.c* and a corresponding header file called *uart.h*, which will hold function prototypes for all functions in *uart.c*
+ - The *uart.h* should **#include** as few other .h files as possible and it should be protected against multiple **#include**
+ - **#include "uart.h"** in *uart.c* together with any necessary .h files
+ - **#include "uart.h"** in *main.c* so that we can access our UART functions
+- You may also want a shared .h such as *common.h* for global **#define** for example **#define F_CPU**
+ - Avoid sharing global variables between .c files by declaring them as *static* 
+
+---
+name: S38
+
+# Adding Source & Header Files to Project
+
+- To add the *uart.c* source file and *uart.h* header file to the project right-click on project name in solution explorer and click on *Add* followed by *New Item*
+
+.center[<img src="img/NewFiles.png" width="900">]
+
+---
+name: S39
+
+# Things To Note
+
+- Your transmit function is blocking and your MCU cannot do anything else while transmitting over the UART
+ - It can interfere with code that has timing constraints
+ - DO NOT use UART transmissions from within time critical tasks like interrupts
+- You must understand examples you use during the lab
+ - Your individual understanding will be assessed during all assessments 
+ - During 2nd test you will have to develop a C program yourself and simulate it on Proteus
+ - All team members must therefore understand every part of the design
+- It is critical that you complete the pre-lab of the UART lab before your lab session so that you can get help with the later parts of the lab
+ - Please do not waste the opportunity to get support in the labs 
+ - With 160 students in the class, closer to due dates, there will be limited opportunities to ask for help 
+- You need to demonstrate UART transmission during your midsemester review 
+
+---
+
+class: title-slide
+layout: false
+count: false
+.logo-title[]
+
+# Acknowledgments 
+#### These slides are adapted from material prepared by Travis Scott & Muhammad Nadeem
+
+
+
+    </textarea>
+
+    <!-- 
+    <script src="https://remarkjs.com/downloads/remark-latest.min.js">
+    </script>
+    -->    
+   
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML&delayStartupUntil=configured" type="text/javascript">
+    </script>
+
+
+    <script src="remark/remark.min.js" type="text/javascript">
+    </script>
+
+    <script type="text/javascript">
+      var hljs = remark.highlighter.engine;
+    </script>
+    <script src="remark/terminal.language.js" type="text/javascript"></script>
+
+    <script src="https://kit.fontawesome.com/a405eedf54.js" crossorigin="anonymous"></script>
+    <script src="remark/mark.min.js" type="text/javascript">
+    </script>
+    <link rel="stylesheet" href="remark/remark.search.css">
+    <script src="remark/remark.search.js" type="text/javascript"></script>
+
+    <script type="text/javascript">
+
+      var options = {};
+
+      var renderMath = function() {
+        renderMathInElement(document.body);
+        // or if you want to use $...$ for math,
+        renderMathInElement(document.body, {delimiters: [ // mind the order of delimiters(!?)
+        {left: "$$", right: "$$", display: true},
+        {left: "$", right: "$", display: false},
+        {left: "\\[", right: "\\]", display: true},
+        {left: "\\(", right: "\\)", display: false},
+        ]});
+      }
+
+      var slideshow = remark.create({
+        ratio: '16:9',
+        slideNumberFormat: '%current%',
+        countIncrementalSlides: false,
+        renderMath,
+        highlightLanguage: 'c',
+        highlightStyle: 'github',
+        navigation: {
+          // Enable or disable navigating using scroll
+          // Default: true
+          // Alternatives: false
+          scroll: true,
+
+          // Enable or disable navigation using touch
+          // Default: true
+          // Alternatives: false
+          touch: true,
+
+          // Enable or disable navigation using click
+          // Default: false
+          // Alternatives: true
+          click: false,
+        },
+        
+      });
+
+      MathJax.Hub.Config({
+          tex2jax: {
+          inlineMath: [['$','$'], ['\\(','\\)']],
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+          processEscapes: true
+          }
+      });
+
+      MathJax.Hub.Queue(function() {
+          $(MathJax.Hub.getAllJax()).map(function(index, elem) {
+              return(elem.SourceElement());
+          }).parent().addClass('has-jax');
+      });
+
+      MathJax.Hub.Configured();
+      
+      //Terminal style highligting code
+      var highlighted = document.querySelectorAll("code.terminal span.hljs-ansi");
+      Array.prototype.forEach.call(highlighted, function(next) {
+        next.insertAdjacentHTML("beforebegin", next.textContent);
+        next.parentNode.removeChild(next);
+      });
+
+      window.addEventListener('load', function() {
+      RemarkSearch.create({'position': 'top-left', 'caseSensitive' : false, 'showIcon': true, 'autoSearch': true});
+      });
+
+
+    </script>
+  </body>
+</html>
