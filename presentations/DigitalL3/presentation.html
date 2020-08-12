@@ -358,8 +358,8 @@ name: S8
 
 # The Quantization Process
 
-- The full voltage range is broken into discrete levels
-- The number of number of bits available in an ADC to represent the amplitude of a signal determine the number of discrete voltage levels, and the number of levels is simply given by 2<sup>bits</sup>
+- The full voltage range is broken into discrete intervals
+- The number of number of bits available in an ADC to represent the amplitude of a signal determine the number of discrete voltage intervals, as the number of intervals is equal to 2<sup>bits</sup>
 - As example, lets consider an ADC with a full voltage range of 5V and examine how it will represent a 3.2V analogue signal if this ADC had 1-bit, 2-bits and 3-bits to represent an analogue signal 
 
 .center[<img src="img/Quantization.png" height="270">]
@@ -367,134 +367,79 @@ name: S8
 ---
 name: S9
 
-# Characteristics of an ADC
+# A 3-Bit ADC 
 
-Acquisition Time
-How long it takes for the ADC hardware to acquire the signal to be measured. This includes switching multiplexers, charging internal capacitors, waiting for transients to settle etc
-Conversion Time
-Time taken by the ADC to convert the analogue input signal into a digital output signal
-Total Sampling Time
-This is the sum of both the acquisition time and conversion time
-The maximum sampling rate is limited by the total sampling time
-𝑓_(𝑠𝑎𝑚𝑝𝑙𝑒(𝑚𝑎𝑥))=1/(𝑡_(𝑎𝑐𝑞𝑢𝑖𝑠𝑖𝑡𝑖𝑜𝑛(𝑚𝑖𝑛))+𝑡_(𝑐𝑜𝑛𝑣𝑒𝑟𝑠𝑖𝑜𝑛(𝑚𝑖𝑛)) )
+- Lets examine how a 3-bit ADC would represent a sin wave with an amplitude of 2.5V and an offset of 2.5V
+ - Assume the ADC has a full voltage range of 5V
+ - The analogue signal is sampled every 2ms
+ - A 3-bit ADC can break the full voltage range into 8 different intervals (i.e. 2<sup>3</sup>) 
+ - The analogue voltage samples are represented by digital numbers depending on which voltage interval each samples falls into (e.g. 3.97V is represented by '110' while 4.9V is represented by '111')
+- Higher the bits in the ADC the more accurately we can represent an analogue signal 
+
+.center[<img src="img/3bitADC.png" height="170">]
+
+---
+name: S10
+
+# Characteristics of an ADC (PI)
+
+- Acquisition time
+ - How long it takes for the ADC hardware to acquire a sample of the analogue signal
+ - This includes switching multiplexers, charging internal capacitors, waiting for transients to settle, etc. 
+- Conversion time
+ - Time taken by the ADC to convert the sample of the analogue signal into a digital number
+- Total sampling time
+ - This is the total time taken to make a single ADC reading and is therefore the sum of both the acquisition time and conversion time
+ - The maximum sampling rate is limited by the minimum total sampling time
+\\[ f\_{sample(max)} = \frac{1}{t\_{acquisition(min)} + t\_{conversion(min)}} \\]
+- We will learn more about the acquisition process and the conversion process soon
+
+---
+name: S11
+
+# Characteristics of an ADC (PII)
+
+- Resolution (bits)
+ - This is determined by the number of bits available in the ADC to represent the signal
+ - For example, an ADC that has a 8-bit resolution got 2<sup>8</sup> amplitude intervals
+- Supply voltage (V<sub>adc</sub>)
+ - This is the voltage that is needed to power the internal circuitry of an ADC (e.g. 5V)
+- Reference voltage (V<sub>ref</sub>)
+ - This specifies the voltage which the input signal is compared to (e.g. 5V) and therefore signals larger than the reference voltage cannot be accurately converted
+- Step size (V<sub>step</sub>)
+ - This is the smallest signal that can be determined by the ADC and is a function of both the resolution and the reference voltage
+\\[ V\_{step} = \frac{V\_{ref}}{2^{resolution}} \\]
+
 
 ---
 name: S12
 
-# UART Waveforms (PI)
+# ADC Types
 
-.center[<img src="img/UARTWaveform.png" height="310">]
-
-- A UART “frame” or “packet” composes of a start bit, data bits, parity bit (if used), and a stop bit (or 2)
- - Bits are represented by voltage levels VCC (for logic "1") and 0V (for logic "0")
- - Least-Significant-Bit (LSB) is transmitted first 
+- There are multiple types of ADC, each focusing on different characteristics 
+ - For example faster sampling rate, higher resolution, larger dynamic range, temperature stability, lower error, lower cost, etc. 
+- The most common types include delta-sigma ADC, successive approximation register (SAR) ADC and pipeline ADC
+- Microcontrollers predominantly employ successive approximation register (SAR) ADC
+ - They have a relatively low part count which keeps cost and size low
+ - They have low power consumption
+ - They have an adjustable resolution, and generally have mid-range resolution 
+ - They are generally mid-range for conversion speed
+- The ATmega328P has an SAR ADC
 
 ---
 name: S13
 
-# UART Waveforms (PII)
-
-
-.center[<img src="img/UARTByte.png" height="310">]
-
-- A UART “frame” or “packet” composes of a start bit, data bits, parity bit (if used), and a stop bit (or 2)
- - Bits are represented by voltage levels VCC (for logic "1") and 0V (for logic "0")
- - Least-Significant-Bit (LSB) is transmitted first 
-
----
-name: S14
-
-# UART Baud Rate
-
-.center[<img src="img/UARTUBRR.png" height="230">]
-
-- The amount of time between each bit being transmitted is determined by the baud rate
-\\[ \text{Time per Bit} = \frac{1}{\text{Baud Rate}} \\]
-- Standard baud rates are 4800, 9600, 19200 etc.
- - Technically you can use any baud rate but not all are supported by a given devices
-
----
-name: S15
-
-# Baud Rate vs Data Rate
-
-- The time taken to send one bit is set by the baud rate
-- The total number of bits sent per frame include the start bit, data bits, parity bit (if used), and a stop bit (or 2)
-- As an example, consider an 8N1 with no parity scheme 
- - The UART frame would consist of 1 start bit, 8 data bits and 1 stop bit 
- - Therefore, we would need to send 10 bits per frame of which only 8 are data bits
-- The data rate in bits per second (bps) when using UART communication is therefore
-\\[ \text{Data Rate} = \frac{\text{Data Bits per Frame}}{\text{Total Bits per Frame}} \times \text{Baud Rate} \\]
-- The time taken to transmit a certain number of data bits is therefore
-\\[ \text{Transmission Time} = \frac{\text{Data Bits to Transmit}}{\text{Data Rate}} \\]
-
-
----
-name: S16
-
-# Example: Sending 80 Bytes Over UART
+# Example: Sampling Rate and Resolution
 
 .questions[
-The UART of a microcontroller is setup to transmit data using 9600 baud, 8N1 with odd parity. The microcontroller transmits 80 bytes of data consecutively through this UART to a computer. Determine the following,
-- Time take to send a bit in a UART frame
-- Number of bits transmitted per UART frame
-- Data rate in bps
-- Time taken to send 80 bytes of data
+An ADC is used to convert an analogue signal that is between 0V and 3V to a digital signal. This ADC has a minimum acquisition time of 140ns, and a minimum conversion time of 360ns.   
+- What is the maximum sampling rate for the ADC? 
+- What is the maximum frequency that can be present in a signal such that the ADC could still accurately measure the signal?
+- What should be the minimum reference voltage that could be used in this design? 
+- What should be the minimum supply voltage this ADC should be specified to? 
+- If the ADC should be capable of measuring down to a 10mV signal what should be the minimum resolution of the ADC? Assume the ADC uses the minimum reference voltage needed for this design. 
 ]
 
----
-name: S17
-
-# UART Specifications for Project
-
-<table class="tg" style="undefined;table-layout: fixed; width: 500px; margin-left:auto; margin-right:auto;">
-  <colgroup>
-  <col style="width: 250px">
-  <col style="width: 250px">
-  </colgroup>
-  <thead>
-    <tr>
-      <th class="tg-dzaw"><span style="color:white">Parameter</span></th>
-      <th class="tg-dzaw"><span style="color:white">Setting</span></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td class="tg-jayl">Baud Rate</td>
-      <td class="tg-jayl">9600</td>
-    </tr>
-    <tr>
-      <td class="tg-sabo">Parity</td>
-      <td class="tg-sabo">None</td>
-    </tr>
-    <tr>
-      <td class="tg-jayl">Stop Bits</td>
-      <td class="tg-jayl">1</td>
-    </tr>
-    <tr>
-      <td class="tg-sabo">Transmission Mode</td>
-      <td class="tg-sabo">Asynchronous</td>
-    </tr>
-  </tbody>
-</table>
-
-- The HM10 BLE module used in the project only accepts 9600 baud, 8N1 with no parity
-- The UART on the ATmega328P should therefore also use 9600 baud, 8N1 with no parity
-- The terminal program running on PC should also be configured to use 9600 baud, 8N1 with no parity
- - The USB module uses an FTDI IC to convert the UART transmission to a USB transmission that is sent over to the PC and decoded to recover the UART transmission 
- 
-.center[<img src="img/UARTWiring.png" height="110">]
-
-
----
-name: S18
-
-# UART Demonstration
-
-- A UART transmission sent from the ATmega328P is captured using an oscilloscope 
- - The ATmega328P is transmitting “01011101” (0x5D) using 9600 baud, 8N1, with no parity
-
-.center[<img src="img/Scope.png" width="550">]
 
 ---
 
@@ -503,7 +448,109 @@ layout: false
 count: false
 .logo-title[]
 
-# The ATmeage328P UART 
+# SAR ADC 
+### Operating Principles
+
+---
+
+layout: true
+name: template_slide
+
+.logo-slide[]
+.footer[[Duleepa J Thrimawithana](https://www.linkedin.com/in/duleepajt), Department of Electrical, Computer and Software Engineering (2020)]
+
+---
+name: S14
+
+# The Sampling Process (PI)
+
+- [Recall](#S7) that we want to take samples of the analogue signal at discrete points in time
+- This is because the quantization process takes time as it is not an instantaneous process
+ - During the quantization process we need to keep the signal being converted constant 
+- This is achieved by using a sample and hold circuit to capture a “snapshot” of the analogue signal and store it until the quantization process is completed
+ - The characteristics of the sample and hold circuit are important when designing the analogue circuitry that produce the input signal to the ADC
+ - Ideally the input to the ADC should be coming from a low impedance source
+
+.center[<img src="img/SampleHold.png" height="150">]
+
+---
+name: S15
+
+# The Sampling Process (PII)
+
+- At the start of the conversion the capacitor is connected to the input signal by closing the switch in order to charged it to the input voltage
+ - The length of time the capacitor is charging for is the acquisition time
+- Once charged the capacitor is disconnected by turning the switch off
+- The quantization is done on the capacitor voltage 
+ - Any changes in the input signal does not impact the quantization process as switch is off 
+- The length of time taken for this quantization process is the conversion time
+ - After completing an ADC conversion a new sample is taken and the process repeats 
+
+
+.center[<img src="img/SampleHold.png" height="150">]
+
+---
+name: S16
+
+# The Quantization Process 
+
+- The sample of the analogue signal is converted to a digital number over a series of ADC clock cycles
+ - Hence the name “successive approximation”, an algorithm that dates back to the 1500s
+- At each cycle, the sample of the analogue signal is compared to an internally generated voltage that is half the remaining amplitude interval (starts with half the value of V<sub>ref</sub>)
+ - If sample higher than internal voltage, output bit of this cycle is set to 1, otherwise 0
+ - As an example lets see how an ADC with a V<sub>ref</sub> of 2.56V converts a 1.89V sample 
+
+.center[<img src="img/SARPlot.png" height="240">]
+
+---
+name: S17
+
+# SAR Conversion in Tabular Format
+
+- Lets examine how an 8-bit SAR ADC that has a 2.56V V<sub>ref</sub> converts a sample of an analogue signal that has an amplitude of 1.89V.
+ - Has 256 amplitude intervals and the step size is 10mv (i.e. 2.56/256)
+- Result of the conversion is 10111101b (i.e. 189) which equates to 189mV (i.e. 189 x 10mV)
+
+.center[<img src="img/SARTable.png" width="700">]
+
+---
+name: S18
+
+# Acquisition Time & Conversion Time
+
+- The acquisition time must be long enough to allow the sample and hold capacitor to charge
+ - This is dependent on the source impedance (R<sub>signal</sub>) of the signal being measured
+ - The capacitor is fully charged after approximately 5 time constants (&#964;)
+ \\[ \tau = (R\_{signal} + R\_{sample}) C\_{sample} \\]
+- The conversion time is dependent on the resolution and the cycle time
+ - One cycle is required per bit of resolution
+ - Shorter cycle times will result in faster conversions, but the minimum cycle time will be limited by the ADC hardware capability, as well as the clock speed of the MCU
+- As the ADC interacts with the microprocessor inside the MCU its clock cycles must be aligned
+ - The ADC is almost always clocked by the same clock as the microprocessor, or a scaled derivative
+
+---
+name: S19
+
+# Multiple ADC Channels
+
+- Often more than one analogue signal needs to be converted
+- Rather than having multiple ADC units connected to a single pin each, a single ADC unit is often used used 
+ - The pins are connected to the ADC unit via a multiplexer
+- The inputs are called “ADC channels”
+- Because signals are multiplexed samples taken from each signal will not be at the same point in times
+ - If 2 signals need converting, a sample of the 2nd signal can only be taken after converting the 1st
+ - Some MCUs have 2 or more ADC units to allow simultaneously sample 2 or more signals
+
+.center[<img src="img/Multiplex.png" width="580">]
+
+---
+
+class: title-slide
+layout: false
+count: false
+.logo-title[]
+
+# The ADC on ATmega328P
 ### Configuring and Using
 
 ---
@@ -515,282 +562,34 @@ name: template_slide
 .footer[[Duleepa J Thrimawithana](https://www.linkedin.com/in/duleepajt), Department of Electrical, Computer and Software Engineering (2020)]
 
 ---
-name: S19
-
-# ATmega328P USART Peripheral
-
-- Supports full duplex operation
-- Asynchronous or synchronous communication
-- Has a high resolution baud rate generator
-- Supports 5, 6, 7, 8, or 9 data bits
-- Supports 1 or 2 stop bits
-- Odd or even parity generation and checking supported in hardware
-- Data over-run and framing error detection
-- Noise filtering including false start bit detection
-- Transmit (TX) complete, TX ready, and Receive (RX) complete interrupts
-- When using a 16MHz system clock, supports up to 1M baud 
-
----
 name: S20
 
-# ATmega328P USART Pins
+# ATmega328P ADC Peripheral
 
-- In the ATmega328P the USART0 Receive (RX) and Transmit (TX) pins are fixed
- - RX pin is PD0 (pin 30) while TX pin is PD1 (pin 31)
-- By default the bits of the DDRD register that corresponds to these two pins are configured in the correct mode (input for RX, output for TX) when we enable the UART peripheral
+- 10-bit resolution
+- 65us – 260us conversion time
+- Up to 15k samples per second at full resolution
+- 0V to VCC input voltage range
+- Three options for reference voltage
+ - Internal 1.1V reference voltage
+ - ADC supply voltage (AVCC)
+ - Externally generated reference voltage
+- 8 multiplexed channels
+- Single conversion or continuous conversion modes
+- Interrupt on conversion completion
+- &#177;2 LSB absolute accuracy
 
-.center[<img src="img/328PPins.png" width="300">]
 
 ---
 name: S21
 
-# ATmega328P USART Implementation
+# ATmega328P ADC Pins
 
-.center[<img src="img/328PUART.png" width="420">]
+- In the ATmega328P there are 8 ADC pins (PC0 to PC5 together with ADC6 and ADC7)
+ - By default these pins are configured as analogue inputs (this is not always the case)
+- Though AIN0 and AIN1 also accept analog inputs they are used for the comparator
 
----
-name: S22
-
-# ATmega328P USART Registers
-
-- The ATmega328P only has one USART and this is named USART0 
- - Since we use asynchronous mode, in lectures we will refer to USART0 as UART0
-- There are 5 registers associated with UART0
-
-<table class="tg" style="undefined;table-layout: fixed; width: 600px; margin-left:auto; margin-right:auto;">
-  <colgroup>
-  <col style="width: 200px">
-  <col style="width: 400px">
-  </colgroup>
-  <thead>
-    <tr>
-      <th class="tg-dzaw"><span style="color:white">Register</span></th>
-      <th class="tg-dzaw"><span style="color:white">Functionality</span></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td class="tg-jayl">UDR0</td>
-      <td class="tg-jayl">UART0 Input/Output Data Register</td>
-    </tr>
-    <tr>
-      <td class="tg-sabo">UCSR0A</td>
-      <td class="tg-sabo">UART0 Control and Status Register A</td>
-    </tr>
-    <tr>
-      <td class="tg-jayl">UCSR0B</td>
-      <td class="tg-jayl">UART0 Control and Status Register B</td>
-    </tr>
-    <tr>
-      <td class="tg-sabo">UCSR0C</td>
-      <td class="tg-sabo">UART0 Control and Status Register C</td>
-    </tr>
-    <tr>
-      <td class="tg-jayl">UBRR0</td>
-      <td class="tg-jayl">UART0 Baud Rate Register</td>
-    </tr>
-  </tbody>
-</table>
-
-- UDR0 register contains the UART data 
-- The remaining four registers are used to control the peripheral
- - Some fields are set by the user to control the operation
- - Some fields are set by the UART to indicate its current state
-
----
-name: S23
-
-# UDR0 Register
-
-.center[<img src="img/UDR0.png" width="600">]
-
-- The transmit data buffer (TXB) and receive data buffer (RXB) registers share the same address
- - The register accessed depends on whether a read or write is executed by the code
-- When setup to transmit data 
- - The code loads the data byte to transmit into the TXB register through UDR0
- - When the transmit shift register is empty the data in TXB register will be loaded automatically into the transmit shift register 
- - Each bit in the transmit shift register will be automatically transmitted one at a time as [we learnt previously](#S10)
-- When setup to receive data
- - Once the receive shift register receive a data byte, it is automatically copied into the RXB register 
-
----
-name: S24
-
-# UCSR0A Register
-
-.center[<img src="img/UCSR0A.png" width="600">]
-
-- .color-grey[RXC0:	*Receive Complete* flag is set when a new data frame is received]
-- TXC0:	*Transmit Complete* flag is set after transmitting a data frame   
-- UDRE0: *Data Register Empty* flag when set indicates if UDR0 is ready to be loaded with new data
-- .color-grey[FE0: *Frame Error*]
-- .color-grey[DOR0:	*Data Over-Run*]
-- .color-grey[UPE0:	*Parity Error*]
-- .color-grey[U2X0:	*Double Transmission Speed*]
-- .color-grey[MPCM0: *Multi-Processor Communication Mode*]
-
----
-name: S25
-
-# UCSR0B Register
-
-.center[<img src="img/UCSR0B.png" width="600">]
-
-- .color-grey[RXCIE0:	*Receive Complete Interrupt Enable*]
-- .color-grey[TXCIE0:	*Transmit Complete Interrupt Enable*]
-- .color-grey[UDRIE0: *Data Register Empty Interrupt Enable*]
-- .color-grey[RXEN0:	*Receiver Enable*]
-- TXEN0:	*Transmitter Enable*
-- UCSZ02:	*Character Size*
-- .color-grey[RXB80:	*Receive Data Bit 8* when using a UART frame with 9 data bits]
-- .color-grey[TXB80:	*Transmit Data Bit 8* when using a UART frame with 9 data bits]
-
----
-name: S26
-
-# UCSR0C Register
-
-.center[<img src="img/UCSR0C.png" width="600">]
-
-- UMSEL0[1..0]:	*Mode Select* where 00 = UART, 01 = USART, 10 = Reserved, 11 = SPI
-- UPM0[1..0]:	*Parity Mode* where 00 = Disabled, 01 = Reserved, 10 = Even, 11 = Odd
-- USBS0: *Stop Bit Select* where 0 = 1-bit, 1 = 2-bit
-- UCSZ0[1..0]: *Character Size* where 00 = 5 Bits, 01 = 6 Bits, 10 = 7 Bits, 11 = 8 Bits while UCSZ02 is set to 0
-- .color-grey[UCPOL0:	*USART Clock Polarity* when operating in synchronous mode]
-
----
-name: S27
-
-# UBRR0 Register 
-
-.center[<img src="img/UBRR0B.png" width="600">]
-.center[<img src="img/UBRR0A.png" width="600">]
-
-- UBRR0[12..0]:	*Baud Rate Register* value sets the baud rate by prescaling the system clock to generate a clock source for the UART
-
----
-name: S28
-
-# Calculating Value of UBRR0
-
-.center[<img src="img/UARTClock.png" width="500">]
-
-- The UBRR0 value defines the prescaler applied to used to the system clock (f<sub>osc</sub>) to obtain the UART clock (i.e. UART clock = (f<sub>osc</sub> / (UBRR0 + 1))
-- Under normal operation the UART clock needs to be 16 times the baud rate and therefore
-\\[ \text{Baud Rate} = \frac{f\_{osc}} {16 \times \left( UBRR0 + 1 \right) } \quad \text {or} \quad UBRR0 = \frac {f\_{osc}} {\left( \text {Baud Rate} \right) \times 16}  - 1\\]
-
----
-name: S29
-
-# Configuring the UART
-
-- First we need to configure the UART as per our specifications (9600 baud, 8N1 with no parity)
- - Need to set the bits of the [UCSR0A](#S24), [UCSR0B](#S25), [UCSR0C](#S26) and [UBRR0](#S27) registers 
- - Have to configure the bits of the DDRD register associated with TX and RX pins (done by default)
- - Do this in an initialization function
-
-.codes[
-```c
-// This function configures the UART to 9600 baud, 8N1 with no parity
-void uart_init(uint32_t baud_rate){
-  UCSR0A = 0b00000000;    //None of the settings here are used
-  UCSR0B = 0b00001000;    //Set TXEN0 bit to 1 (enable transmit) and UCSZ02 bit to 0 (8 data bits)
-                          //To improve readability we should aim to write this in the form "UCSR0B = (1<<TXEN0);"
-  UCSR0C = 0b00000110;    //UMSEL0[1..0]=00 (UART mode), UPM0[1..0]=00 (no parity), 
-                          //USBS0=0 (1 stop-bit), UCSZ0[1..0]=11 (8 data bits)
-  UBRR0 = 16000000 / (16 * baud_rate) - 1;
-                          //Set UBRR0 as per baud rate formula
-}
-```
-]
-
-
----
-name: S30
-
-# Transmitting a Data Byte
-
-- We also know how to use the UART registers to transmit data
- - We send data by loading the data byte to be sent into the UDR0 register
- - UDR0 needs to be ready for the new data byte and this can be checked by making sure the UDRE0 bit in the UCSR0A register is set
- - We typically do the above in a function dedicated to transmitting a byte
-
-.codes[
-```c
-// This function transmits a single byte via the UART
-void uart_transmit_byte(char byte){	
-  while ((UCSR0A & 0b00100000) == 0){       //UDRE0 bit is checked to see if it is 0 
-  ;                                         //If UDRE0 bit is not 0, wait until it becomes 0	
-  }
-
-  //Put the byte to be sent into the UDR0 register
-  UDR0 = byte;
-}
-```
-] 
-
----
-name: S31
-
-# Transmitting an Array of Bytes
-
-- We can also write a function that can transmit an array of bytes 
- - In a loop, we need to transmit one byte at a time by calling the function we wrote to transmit a byte
- - The number of bytes in the array is determined using the method *strlen* 
- - To use *strlen* you need to **#include &lt; string.h &gt;**
-
-.codes[
-```c
-//This function transmits an array of bytes via the UART using uart_transmit_byte(char byte)function
-void uart_transmit_array(char* msg){
-	//Loop through each byte in the array 
-	for (uint8_t i = 0; i < strlen(msg); i++){		
-		uart_transmit_byte(msg[i]);				//Transmit each byte using uart_transmit_byte(char byte)
-	}	
-}
-```
-] 
-
----
-
-class: title-slide
-layout: false
-count: false
-.logo-title[]
-
-# Character Encoding
-### American Standard Code for Information Interchange (ASCII)
-
----
-
-layout: true
-name: template_slide
-
-.logo-slide[]
-.footer[[Duleepa J Thrimawithana](https://www.linkedin.com/in/duleepajt), Department of Electrical, Computer and Software Engineering (2020)]
-
----
-name: S32
-
-# Why Do We Need Character Encoding?
-
-- UART communication protocol allows us to successfully transfer data between a microcontroller and external devices
- - UART can send a single byte of data at a time
-- If we only want to send numbers between 0-255 (or -128 to 127) then this works, but what if we want to send other data types?
- - For example how to send alphanumeric characters, larger numbers, key-value pairs, etc.
-- We call these desired values our “character set”
-- Encoding determines how our character set is represented by the data we can send
-- There are many types of character encoding systems
- - ASCII, ANSI, Unicode and UTF are a few common encoding systems
-- ASCII maps letters (upper and lower case), numbers (0-9), and special characters, to the range 0-127
- - For example, 0x48 is used to represent the character ‘A’
-
----
-name: S33
-
-# The ASCII Table
-
-.center[<img src="img/ASCII.jpg" width="700">]
+.center[<img src="img/328PPins.png" width="320">]
 
 ---
 name: S34
