@@ -605,135 +605,246 @@ name: S21
 .center[<img src="img/328PPins.png" width="320">]
 
 ---
-name: S34
+name: S22
 
-# Completing the UART Code
+# ATmega328P ADC Implementation
+
+.center[<img src="img/328PADC.png" width="440">]
+
+---
+name: S23
+
+# ATmega328P ADC Registers
+
+- The ATmega328P only has one ADC and this is named ADC 
+ - The 8 ADC channels (ADC0 to ADC7) are multiplexed 
+- There are 5 registers associated with the ADC
+
+<table class="tg" style="undefined;table-layout: fixed; width: 600px; margin-left:auto; margin-right:auto;">
+  <colgroup>
+  <col style="width: 200px">
+  <col style="width: 400px">
+  </colgroup>
+  <thead>
+    <tr>
+      <th class="tg-dzaw"><span style="color:white">Register</span></th>
+      <th class="tg-dzaw"><span style="color:white">Functionality</span></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="tg-jayl">ADMUX</td>
+      <td class="tg-jayl">ADC Multiplexer Selection Register</td>
+    </tr>
+    <tr>
+      <td class="tg-sabo">ADCSRA</td>
+      <td class="tg-sabo">ADC Control and Status Register A</td>
+    </tr>
+    <tr>
+      <td class="tg-jayl">ADCSRB</td>
+      <td class="tg-jayl">ADC Control and Status Register B</td>
+    </tr>
+    <tr>
+      <td class="tg-sabo">DIDR0</td>
+      <td class="tg-sabo">Digital Input Disable Register</td>
+    </tr>
+    <tr>
+      <td class="tg-jayl">ADCH & ADCL</td>
+      <td class="tg-jayl">ADC Data Registers</td>
+    </tr>
+  </tbody>
+</table>
+
+- ADMUX allows selecting the channel to convert & the ADC data registers contain the conversion result
+- The remaining three registers are used to control the peripheral
+ - Some fields are set by the user to control the operation
+ - Some fields are set by the ADC to indicate its current state
+
+---
+name: S24
+
+# ADMUX Register
+
+.center[<img src="img/ADMUX.png" width="600">]
+
+- REFS[1..0]:	*Reference Selection* where 00 = AREF, 01 = AVCC, 10 = Reserved, 11 = Internal 1.1V
+- .color-grey[ADLAR: *Left Adjust Result*]
+- MUX[3..0]: *Channel Selection*  
+.center[<img src="img/ADCChannel.png" width="420">]
+
+
+---
+name: S25
+
+# ADCSRA Register
+
+.center[<img src="img/ADCSRA.png" width="600">]
+
+- ADEN: *ADC Enable*
+- ADSC:	*Start Conversion* bit needs to be set to start each conversion in single conversion mode while in free running mode this bit only needs to be set for the first conversion
+- ADATE: *Auto Trigger Enable* allows starting an ADC conversion using a trigger signal
+- ADIF:	*Interrupt Flag* is set after completing a conversion and cleared when executing the corresponding interrupt
+- ADIE:	*Interrupt Enable*
+- ADPS[2..0]:	*Prescaler Select* where 000 = 2, 001 = 2, 010 = 4, 011 = 8, 100 = 16, 101 = 32, 110 = 64, 111 = 128
+
+---
+name: S26
+
+# ADCSRB Register
+
+.center[<img src="img/ADCSRB.png" width="600">]
+
+- .color-grey[ACME:	*Analogue Comparator Multiplexer Enable*]
+- ADTS[2..0]:	*Auto Trigger Source* when ADATE bit is set these bits selects which source will initiate an ADC conversion
+
+.center[<img src="img/ADCAutoTrigger.png" width="600">]
+
+---
+name: S27
+
+# DIDR0 Register
+
+.center[<img src="img/DIDR0.png" width="600">]
+
+- ADCxD: *Digital Input Disable* when ADC0-ADC5 pins are used as analogue inputs the digital input buffer on the corresponding pin can be disabled by setting the ADCxD bit to save power (ADC6 & ADC7 do not have buffers)
+
+---
+name: S28
+
+# ADCL and ADCH Registers 
+
+.center[<img src="img/ADCHL.png" width="600">]
+
+- ADC[9..0]: *ADC Result* registers are updated at the end of each conversion and to obtain the results (when ADLAR is cleared) read ADCL followed by ADCH (alternatively you can directly read the register ADC and assign it to a 16-bit variable)
+
+---
+name: S29
+
+# ADC Timing Diagram
+
+.center[<img src="img/ADCTiming2.png" width="580">]
+
+- The input signal is sampled 1.5 cycles after the conversion is started in normal conversion mode
+ - In auto triggered mode sample and hold take 2 cycles
+- The conversion of the sampled signal takes 11.5 cycles
+ - The total conversion takes 13 cycles in normal conversion mode and 13.5 cycles in auto triggered conversion mode
+
+---
+name: S30
+
+# Configuring the ADC
+
+- First we need to configure the ADC as per our needs
+ - Need to set the bits of the [ADMUX](#S24), [ADCSRA](#S25), [ADCSRB](#S26) and [DIDR0](#S27) registers 
+ - Do this in an initialization function
+- In the lectures as an example we will configure the ADC to perform operate in the single conversion mode
+ - For the project you are required to operate the ADC in the auto triggered mode using a timer as the trigger source 
 
 .codes[
 ```c
-#define F_CPU 16000000UL                    //Defining system clock frequency
+// This function configures the ADC to use AVCC as reference and read ADC0 in single conversion mode
+void adc_init(void){
+  ADMUX = 0b01000000;     //AVCC set as reference, ADC0 selected and results are right adjusted
+  ADCSRA = 0b10000111;    //Set ADEN bit to 1 (enable ADC) and prescaler to 111 (i.e. 128)
+                          //To improve readability write in the form "ADCSRA = (1&#60;&#60;ADEN) | (7&#60;&#60;ADPS0);"
+  ADCSRB = 0b00000000;    //Using the single conversion mode (for project you have to use auto trigger mode)
+  DIDR0 = 0b00000000;     //Buffers are not disabled (for project you may disable the buffers to save power)
+}
+```
+]
+
+---
+name: S31
+
+# Performing a Conversion
+
+- We also know how to use the ADCL & ADCH registers to read the conversion results
+ - Select the input channel and then start a conversion by setting ADSC bit
+ - Wait for the conversion to finish by polling the ADIF bit and read result from ADCL & ADCH
+ - We typically do the above in a function dedicated to read a given channel
+
+.codes[
+```c
+// This function reads an ADC channel and return results
+uint16_t adc_read_channel_single_conversion(uint8_t channel){	
+  ADMUX &= 0xF0;                        //Clear channel selection
+  ADMUX |= channel;                     //Set the channel to convert
+
+  ADCSRA |= (1 << ADSC);                //Starting an ADC conversion
+	
+  while ((ADCSRA & (1 << ADIF)) == 0) { //ADIF bit is checked to see if it is 0
+    ;                                   //If ADIF bit is not 0, wait until it becomes 0
+  }
+	
+  return ((ADCL << 0) | (ADCH << 8));   //Alternatively you can write return ADC;
+}
+```
+] 
+
+---
+name: S32
+
+# Completing the ADC Code
+
+.codes[
+```c
+#define F_CPU 800000UL                      //Defining system clock frequency
 
 #include <avr/io.h>                         //Needed for using the macros for register addresses
-#include <string.h>                         //Needed for using strlen()
-#include "util/delay.h"                     //Needed for using _delay_ms()
+#include <stdio.h>                          //Needed for printf()
+#include <util/delay.h>                     //Needed for using _delay_ms()
+#include "uart.h"                           //Including our uart peripheral library
+#include "adc.h"                            //Including our adc peripheral library
 
-//Prototypes of functions used
-void uart_init(uint32_t baud_rate);     
-void uart_transmit_byte(char byte);
-void uart_transmit_array(char* msg);
+static FILE usart_stdout = FDEV_SETUP_STREAM(uart_printf, NULL, _FDEV_SETUP_WRITE); //Creating a stream variable 
 
 int main(void){
-
+  stdout = &usart_stdout;                   //Binding the steam variable to stdout
   uart_init(9600);                          //Initializing the UART to 9600 baud, 8N1, with no parity
+  adc_init();                               //Initializing the ADC
+  uint32_t dc_voltage_mv = 0;               //Initializing variable to hold ADC result
 
   while (1){
-    uart_transmit_byte(0x48);               //Transmitting character 'H' - alternatively uart_transmit_byte('A');
-    uart_transmit_array("ello World\n\r");  //Transmitting string "ello World" with newline character '\n'
-                                            //and carriage return character '\r'
-    _delay_ms(1000);                        //Transmit above characters every 1s
+    dc_voltage_mv = ((uint32_t)adc_read_channel_single_conversion(2) * 5000)/1024;  //Converting result to mV
+    printf("Voltage: %d mV\n\r", (uint16_t)dc_voltage_mv);                          //Printing the result
+    _delay_ms(500);                                                                 //Repeat every 0.5s
   }
 }
 ```
 ]
 
 ---
-name: S35
+name: S33
 
-# Using *printf* and *sprintf* (PI)
+# Errors During ADC Conversion 
 
-- The *printf* and *sprintf* commands uses ASCII encoding
- - These commands take an input string, format it, and output it
-- To use *printf* and *sprintf* **#include &lt; stdio.h &gt;** 
-- We also need to redirect the output of *printf* to use the UART and to do this we bind a function which transmits a character via the UART
+- So far we considered an ideal ADC
+ - In reality the ADC conversion results has offset error, gain error, quantization error, integral non-linearity and differential non-linearity 
+- The absolute accuracy is the sum of the error 
+ - It is measured in Least-Significant-Bits (LSB)
+- Given that one LSB is equal one step size, we can determine how many volts the converted reading might differ from the actual value
 
-.codes[
-```c
-//Creating a stream variable
-static FILE usart_stdout = FDEV_SETUP_STREAM(uart_printf, NULL, _FDEV_SETUP_WRITE);
+\\[ V\_{\text{Absolute Error}} = V\_{\text{step}} \times  LSB\_{\text{Absolute Error}}  \\]
 
-int main(void)
-{
-  stdout = &usart_stdout;         //Binding the steam variable to stdout	
-  uart_init(9600);                //Initializing the UART to 9600 baud, 8N1 with no parity
-  
-  while (1){
-    printf("Hello World\r\n");    //Printing "Hello World"
-    _delay_ms(1000);              //Transmit message every 1s
-  }
-}
-```
-]
+\\[ V\_{\text{ADC}} - V\_{\text{Absolute Error}} \leqslant V\_{\text{Actual}} \leqslant V\_{\text{ADC}} + V\_{\text{Absolute Error}}  \\]
+
 
 ---
-name: S36
-
-# Using *printf* and *sprintf* (PII)
-
-- To use *printf* we need a new function called *uart_printf*
-
-.codes[
-```c
-int uart_printf(char var, FILE *stream) {
-	uart_transmit_byte(var);      //Using our original function to transmit UART data
-	return 0;
-}
-```
-]
-
-- Both *printf* and *sprintf* take a format string which defines the output together with a set of arguments
-- Format specifiers stating with % sign tell where to put these arguments and how to format them
-
-.codes[
-```c
-printf("Color %s, Number %d, Hex %X","Red", 125, 125);
-```
-]
-
-- When using sprintf the output is written into a character array
- - An example of using *sprintf* is provided in the UART lab
-- The main drawback of using *printf* and *sprintf* is the overhead they add in a very resource limited environment
-
----
-name: S37
-
-# Developing Modular Software
-
-- At this stage you should be learning to develop modular software
- - For example, all code relating each peripheral can be in a separate .c file, with a corresponding .h file
- - Allows code reuse, manageable and readable code, easy to collaborate, easy to test and validate
-- As an example, lets consider the code developed to use the UART
- - Use a separate C source file called *uart.c* and a corresponding header file called *uart.h*, which will hold function prototypes for all functions in *uart.c*
- - The *uart.h* should **#include** as few other .h files as possible and it should be protected against multiple **#include**
- - **#include "uart.h"** in *uart.c* together with any necessary .h files
- - **#include "uart.h"** in *main.c* so that we can access our UART functions
-- You may also want a shared .h such as *common.h* for global **#define** for example **#define F_CPU**
- - Avoid sharing global variables between .c files by declaring them as *static* 
-
----
-name: S38
-
-# Adding Source & Header Files to Project
-
-- To add the *uart.c* source file and *uart.h* header file to the project right-click on project name in solution explorer and click on *Add* followed by *New Item*
-
-.center[<img src="img/NewFiles.png" width="900">]
-
----
-name: S39
+name: S34
 
 # Things To Note
 
-- Your transmit function is blocking and your MCU cannot do anything else while transmitting over the UART
- - It can interfere with code that has timing constraints
- - DO NOT use UART transmissions from within time critical tasks like interrupts
+- Your ADC function is blocking and your MCU cannot do anything while taking an ADC reading
+ - For the project you will have to use an ADC interrupt 
+ - The ADC also need to be triggered based on a timer event to take an ADC reading every 1ms
 - You must understand examples you use during the lab
  - Your individual understanding will be assessed during all assessments 
  - During 2nd test you will have to develop a C program yourself and simulate it on Proteus
  - All team members must therefore understand every part of the design
-- It is critical that you complete the pre-lab of the UART lab before your lab session so that you can get help with the later parts of the lab
+- It is critical that you complete the pre-lab of the ADC lab before your lab session so that you can get help with the later parts of the lab
  - Please do not waste the opportunity to get support in the labs 
  - With 160 students in the class, closer to due dates, there will be limited opportunities to ask for help 
-- You need to demonstrate UART transmission during your midsemester review 
+
 
 ---
 
