@@ -209,7 +209,7 @@ name: S1a
 # Learning Objectives
 
 - What are analogue and digital signals?
-- Why do we want to process digital rather than analogue signals?
+- Why do we want to process digital signals rather than analogue signals?
 - What is an analogue to digital converter (ADC)?
 - Why do we need ADCs?
 - How do we characterize ADCs?
@@ -264,7 +264,7 @@ name: S2
 - Digital signals are discrete in both time and amplitude
  - More resistant to noise
  - Cannot exactly reproduce analogue signals
- - Some electrical sensors can output a digital signal
+ - Some electrical sensors can output digital signals
  - Can be converted to an analogue signal via a digital to analogue converter (DAC)
 ]
 
@@ -284,7 +284,7 @@ name: S3
 - An electrical transducer converts a physical signal/quantity into an electrical signal or an electrical signal into a physical signal/quantity
  - Can be categorized as electrical sensors and electrical actuators 
 - Electrical sensors receive a signal from a physical system, and produce an electrical signal as an output
- - For example, a temperature sensor concerts temperature into an electrical signal (voltage)
+ - For example, a temperature sensor converts temperature into an electrical signal (voltage)
 - Electrical actuators receive an electrical signal as an input, and produce a physical signal as an output
  - For example, a DC motor converts an electrical signal (current) into mechanical torque
 
@@ -373,7 +373,7 @@ name: S8
 
 - The full voltage range is broken into discrete intervals
 - The number of number of bits available in an ADC to represent the amplitude of a signal determine the number of discrete voltage intervals, as the number of intervals is equal to 2<sup>bits</sup>
-- As example, lets consider an ADC with a full voltage range of 5V and examine how it will represent a 3.2V analogue signal if this ADC had 1-bit, 2-bits and 3-bits to represent an analogue signal 
+- As an example, lets consider an ADC with a full voltage range of 5V and examine how it will represent a 3.2V analogue signal if this ADC had 1-bit, 2-bits and 3-bits to represent an analogue signal 
 
 .center[<img src="img/Quantization.png" height="270">]
 
@@ -403,7 +403,7 @@ name: S10
  - Time taken by the ADC to convert the sample of the analogue signal into a digital number
 - Total sampling time
  - This is the total time taken to make a single ADC reading and is therefore the sum of both the acquisition time and conversion time
- - The maximum sampling rate is limited by the minimum total sampling time
+ - The maximum sampling rate/frequency is limited by the minimum total sampling time
 \\[ f\_{sample(max)} = \frac{1}{t\_{acquisition(min)} + t\_{conversion(min)}} \\]
 - We will learn more about the acquisition process and the conversion process soon
 
@@ -415,7 +415,7 @@ name: S11
 - Resolution (bits)
  - This is determined by the number of bits available in the ADC to represent the signal
  - For example, an ADC that has a 8-bit resolution got 2<sup>8</sup> amplitude intervals
-- Supply voltage (V<sub>adc</sub>)
+- Supply voltage (AV<sub>CC</sub>)
  - This is the voltage that is needed to power the internal circuitry of an ADC (e.g. 5V)
 - Reference voltage (V<sub>ref</sub>)
  - This specifies the voltage which the input signal is compared to (e.g. 5V) and therefore signals larger than the reference voltage cannot be accurately converted
@@ -429,7 +429,7 @@ name: S12
 
 # ADC Types
 
-- There are multiple types of ADC, each focusing on different characteristics 
+- There are multiple types of ADCs, each focusing on different characteristics 
  - For example faster sampling rate, higher resolution, larger dynamic range, temperature stability, lower error, lower cost, etc. 
 - The most common types include delta-sigma ADC, successive approximation register (SAR) ADC and pipeline ADC
 - Microcontrollers predominantly employ successive approximation register (SAR) ADC
@@ -450,9 +450,8 @@ An ADC is used to convert an analogue signal that is between 0V and 3V to a digi
 - What is the maximum frequency that can be present in a signal such that the ADC could still accurately measure the signal?
 - What should be the minimum reference voltage that could be used in this design? 
 - What should be the minimum supply voltage this ADC should be specified to? 
-- If the ADC should be capable of measuring down to a 10mV signal what should be the minimum resolution of the ADC? Assume the ADC uses the minimum reference voltage needed for this design. 
+- If the ADC should be capable of measuring down to a 10mV signal, what should be the minimum resolution of the ADC? Assume the ADC uses the minimum reference voltage needed for this design. 
 ]
-
 
 ---
 
@@ -540,19 +539,20 @@ name: S18
  - Shorter cycle times will result in faster conversions, but the minimum cycle time will be limited by the ADC hardware capability, as well as the clock speed of the MCU
 - As the ADC interacts with the microprocessor inside the MCU its clock cycles must be aligned
  - The ADC is almost always clocked by the same clock as the microprocessor, or a scaled derivative
+ - The ADC unit of the ATmega328P requires a clock frequency between 50kHz and 200kHz (operating outside of this range impacts the ADC accuracy)
 
 ---
 name: S19
 
 # Multiple ADC Channels
 
-- Often more than one analogue signal needs to be converted
-- Rather than having multiple ADC units connected to a single pin each, a single ADC unit is often used used 
+- When using an MCU, often more than one analogue signal needs to be converted
+- Rather than having multiple ADC units connected to a single pin each, a single ADC unit is often used 
  - The pins are connected to the ADC unit via a multiplexer
 - The inputs are called “ADC channels”
-- Because signals are multiplexed samples taken from each signal will not be at the same point in times
+- Because signals are multiplexed, samples taken from each signal will not be at the same point in time
  - If 2 signals need converting, a sample of the 2nd signal can only be taken after converting the 1st
- - Some MCUs have 2 or more ADC units to allow simultaneously sample 2 or more signals
+ - Some MCUs have 2 or more ADC units to allow simultaneous sampling of 2 or more signals
 
 .center[<img src="img/Multiplex.png" width="580">]
 
@@ -585,7 +585,7 @@ name: S20
 - 0V to VCC input voltage range
 - Three options for reference voltage
  - Internal 1.1V reference voltage
- - ADC supply voltage (AVCC)
+ - ADC supply voltage (AV<sub>CC</sub>)
  - Externally generated reference voltage
 - 8 multiplexed channels
 - Single conversion or continuous conversion modes
@@ -655,7 +655,7 @@ name: S23
   </tbody>
 </table>
 
-- ADMUX allows selecting the channel to convert & the ADC data registers contain the conversion result
+- ADMUX allows selecting the channel to convert and the ADC data registers contain the conversion result
 - The remaining three registers are used to control the peripheral
  - Some fields are set by the user to control the operation
  - Some fields are set by the ADC to indicate its current state
@@ -695,7 +695,7 @@ name: S26
 .center[<img src="img/ADCSRB.png" width="600">]
 
 - .color-grey[ACME:	*Analogue Comparator Multiplexer Enable*]
-- ADTS[2..0]:	*Auto Trigger Source* when ADATE bit is set these bits selects which source will initiate an ADC conversion
+- ADTS[2..0]:	*Auto Trigger Source* when ADATE bit is set, these bits selects which source will initiate an ADC conversion
 
 .center[<img src="img/ADCAutoTrigger.png" width="600">]
 
@@ -725,8 +725,8 @@ name: S29
 .center[<img src="img/ADCTiming2.png" width="580">]
 
 - The input signal is sampled 1.5 cycles after the conversion is started in normal conversion mode
- - In auto triggered mode sample and hold take 2 cycles
-- The conversion of the sampled signal takes 11.5 cycles
+ - In auto triggered mode sample and hold takes 2 cycles
+- The digitization of the sampled signal takes 11.5 cycles
  - The total conversion takes 13 cycles in normal conversion mode and 13.5 cycles in auto triggered conversion mode
 
 ---
@@ -737,7 +737,7 @@ name: S30
 - First we need to configure the ADC as per our needs
  - Need to set the bits of the [ADMUX](#S24), [ADCSRA](#S25), [ADCSRB](#S26) and [DIDR0](#S27) registers 
  - Do this in an initialization function
-- In the lectures as an example we will configure the ADC to perform operate in the single conversion mode
+- In the lectures, as an example, we will configure the ADC to operate in the single conversion mode
  - For the project you are required to operate the ADC in the auto triggered mode using a timer as the trigger source 
 
 .codes[
@@ -837,7 +837,7 @@ name: S34
 - Your ADC function is blocking and your MCU cannot do anything while taking an ADC reading
  - For the project you will have to use an ADC interrupt 
  - The ADC also need to be triggered based on a timer event to take an ADC reading every 1ms
-- You must understand examples you use during the lab
+- You must understand examples you use for the lab or the project
  - Your individual understanding will be assessed during all assessments 
  - During 2nd test you will have to develop a C program yourself and simulate it on Proteus
  - All team members must therefore understand every part of the design
