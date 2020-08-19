@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Introduction to Digital Design</title>
+    <meta charset="utf-8">
+    <style>
+      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+
+      body { 
+        font-family: 'Droid Serif'; 
+        line-height: 1.6;
+        }
+
+      h1, h2, h3 {
+        font-family: 'Yanone Kaffeesatz';
+        font-weight: bold;
+        color: #00467F;
+      }
+
+      h1{
+        margin-top: 30px !important;
+        margin-bottom: 30px !important;
+      }
+
+      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+
+      .TitleAuthor {
+        color:white; 
+        font-weight: normal;
+      }
+
+      .title-slide .remark-slide-number {
+        display: none;
+      }
+      .title-slide h1, h2, h3, h4 {
+        text-align: left;
+        color:white;
+        line-height: 0.7;
+        font-weight: bold;
+      }
+
+      .title-slide {
+        vertical-align: middle;
+        background-color: #00467F;
+      }
+
+      .logo-title {
+        content: "";
+        position: absolute;
+        top: 15px;
+        right:   15px;
+        height: 88px;
+        width: 267px;
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-image: url(https://cdn.auckland.ac.nz/assets/central/central-services/mediaandmarketing/uoa-logos-2015/uoa-logo-2015-reverse.png);
+      }
+      .logo-slide {
+        content: "";
+        position: absolute;
+        top: 35px;
+        right:   15px;
+        height: 96px;
+        width: 100px;
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-image: url(https://cpb-ap-se2.wpmucdn.com/blogs.auckland.ac.nz/dist/d/79/files/2015/10/uoa-v-colour2.png);
+      }
+
+      .left-column {
+        width: 65%;
+        float: left;
+        word-wrap: break-word;
+      }
+     
+      .right-column {
+        width: 30%;
+        float: right;
+        word-wrap: break-word;
+      }
+
+      .left-column-s {
+        width: 75%;
+        float: left;
+        word-wrap: break-word;
+      }
+     
+      .right-column-s {
+        width: 20%;
+        float: right;
+        word-wrap: break-word;
+      }
+
+      .footer {
+        content: "";
+        position: absolute;
+        bottom: 17px;
+        color:gray;
+        font-size: 10pt;
+      }
+      
+      @page {
+        size: 1210px 681px;
+        margin: 0;
+      }
+
+      @media print {
+        .remark-slide-scaler {
+          width: 100% !important;
+          height: 100% !important;
+          transform: scale(1) !important;
+          top: 0 !important;
+          left: 0 !important;
+        }
+      }
+      
+      .credits {
+        font-size: 12px;
+        line-height: 10px !important;
+        font-family: 'Droid Serif'; 
+      }
+
+      .codes {
+        
+        line-height: 20px !important;
+      }
+
+      .questions {
+        font-size: 20px;
+        line-height: 28px !important;
+        font-family: 'Droid Serif'; 
+      }
+
+      .zoom175 {
+        transition: transform .2s; /* Animation */
+      }
+
+      .zoom175:hover {
+        transform: scale(1.75) translateY(-20%) translateX(-20%); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+      }
+
+      .color-grey{
+        color: #919191;
+      }
+
+    </style>
+
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
+    <style>
+    .smaller-font { font-size:14px } 
+    </style>
+
+    <!-- KaTeX and Mathjax support refer to below for syntax -->
+    <!-- https://math.meta.stackexchange.com/questions/5020/mathjax-basic-tutorial-and-quick-reference -->
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.1/dist/katex.min.css" integrity="sha384-dbVIfZGuN1Yq7/1Ocstc1lUEm+AT+/rCkibIcC/OmWo5f0EA48Vf8CytHzGrSwbQ" crossorigin="anonymous">
+    
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.1/dist/katex.min.js" integrity="sha384-2BKqo+exmr9su6dir+qCw08N2ZKRucY4PrGQPPWU1A7FtlCGjmEGFqXCv5nyM5Ij" crossorigin="anonymous"></script>
+
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.1/dist/contrib/auto-render.min.js" integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous"
+        onload="renderMathInElement(document.body);"></script>
+    
+    <script type="text/javascript" async
+    src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+
+    <style>
+      /* Table Style */
+      .tg  {border-collapse:collapse;border-color:#9ABAD9;border-spacing:0;}
+      .tg td{background-color:#EBF5FF;border-color:#9ABAD9;border-style:solid;border-width:1px;color:#444;
+        font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:2px 10px;word-break:normal;}
+      .tg th{background-color:#409cff;border-color:#9ABAD9;border-style:solid;border-width:1px;color:#fff;
+        font-family:Arial, sans-serif;font-size:14px;font-weight:normal;overflow:hidden;padding:2px 10px;word-break:normal;}
+      .tg .tg-dzaw{background-color:#4F81BD;color:#FFF;font-weight:bold;text-align:left;vertical-align:top}
+      .tg .tg-sabo{background-color:#ebf5ff;color:#000000;text-align:left;vertical-align:top}
+      .tg .tg-096r{color:#000000;text-align:left;vertical-align:top}
+      .tg .tg-jayl{background-color:#d2e4fc;color:#000000;text-align:left;vertical-align:top}
+      .tg .tg-ig71{background-color:#D2E4FC;color:#000000;text-align:left;vertical-align:top}
+    </style>
+
+  </head>
+  <body>
+    <textarea id="source">
+
+class: title-slide
+count: false
+.logo-title[]
+
+## ELECTENG 209
+# Embedded Software Design 
+### Digital Signal Processing 
+
+.TitleAuthor[Duleepa J Thrimawithana]
+
+---
+
+layout: true
+name: template_slide
+
+.logo-slide[]
+.footer[[Duleepa J Thrimawithana](https://www.linkedin.com/in/duleepajt), Department of Electrical, Computer and Software Engineering (2020)]
+
+---
+
+name: S1a
+
+# Learning Objectives
+
+- How do the ADC samples of the voltage and current waveforms relate to the analog signals?
+- What do we need to be aware of when extracting information from sampled waveforms?
+- How can we calculate the peak value of a sampled waveform?
+ - Using digital signal processing techniques
+ - Using analogue peak detector circuitry to aid digital processing
+- How can we calculate the RMS value of a sampled waveform?
+ - Implementing RMS formula using digital processing techniques
+ - Using rectangular rul to approximate the integral of a function
+ - Approximating the RMS using peak value of a sinusoidal waveforms 
+- How can we calculate power delivered to the load?
+ - Implementing power formula using digital processing techniques
+ - Approximating power using RMSs and power factor angle
+
+---
+
+name: S1b
+
+# Lecture Quiz 
+
+- The link to access the lecture quiz is http://q.xorro.com/quvt 
+ - Use your username to login (i.e. UPI in the form *abcd001*)
+ - Quiz is available for 3 days and allows multiple attempts
+- Alternatively scan the QR code below
+
+.center[<img src="img/QR.gif" width="300px">]
+
+---
+
+class: title-slide
+layout: false
+count: false
+.logo-title[]
+
+# Digital Representation of Voltage and Current
+### Understanding the Relation to Real Signals  
+
+---
+
+layout: true
+name: template_slide
+
+.logo-slide[]
+.footer[[Duleepa J Thrimawithana](https://www.linkedin.com/in/duleepajt), Department of Electrical, Computer and Software Engineering (2020)]
+
+---
+
+name: S2
+
+# Analogue vs Digital Signals
+
+.left-column[
+- Analogue signals are continuous in both time and amplitude
+ - Often sensitive to noise
+ - Most physical signals are analogue
+ - Most electrical sensors produce analogue electrical signals
+ - Can be converted to a digital signal via an analogue to digital converter (ADC)
+- Digital signals are discrete in both time and amplitude
+ - More resistant to noise
+ - Cannot exactly reproduce analogue signals
+ - Some electrical sensors can output digital signals
+ - Can be converted to an analogue signal via a digital to analogue converter (DAC)
+]
+
+.right-column[
+.center[<img src="img/AnalogDigital.png" width="280">]
+]
+
+---
+
+name: S3
+
+# Sensors and Actuators 
+
+
+- Often the physical signals/quantities we wish to interact with are not electrical
+ - For example, temperature, light, force, torque, etc.
+- An electrical transducer converts a physical signal/quantity into an electrical signal or an electrical signal into a physical signal/quantity
+ - Can be categorized as electrical sensors and electrical actuators 
+- Electrical sensors receive a signal from a physical system, and produce an electrical signal as an output
+ - For example, a temperature sensor converts temperature into an electrical signal (voltage)
+- Electrical actuators receive an electrical signal as an input, and produce a physical signal as an output
+ - For example, a DC motor converts an electrical signal (current) into mechanical torque
+
+&nbsp;
+.center[<img src="img/SensorsActuators.png" width="950">]
+
+---
+name: S4
+
+# Processing Signals 
+
+- Originally almost all electronics performed analogue signal processing
+ - Used standard components such as resistors, capacitors, transistors
+- Analogue signal processing is often complicated
+ - Usually requires custom hardware
+ - Designing analogue signal processing circuitry takes time and therefore is expensive
+- Specialized application, like fail-safe systems, require analogue signal processing
+- For many general applications it is beneficial to move the processing onto a digital platform like a microcontroller
+ - Multiple different signal processing operations can be performed by the same hardware
+ - It is easy to modify the processing by modifying the code 
+- Since most real-world signals are analogue, we must convert them into digital signals before we can process them using a microcontroller
+ - When converting analogue signals to digital signals we lose some information
+
+---
+name: S5
+
+# Signals in Your Project
+
+.center[<img src="img/System.png" height="200">]
+
+- The smart energy monitor needs to measure voltage and current to determine power drawn by the load
+- Voltage and current are analogue electrical signals and therefore they need to be converted into digital signals in order to use your microcontroller to perform signal processing
+- We will use the ADC peripheral on the ATmega328P to convert analogue electrical signals to digital signals
+ - The ADC only accepts analogue voltage signals that are in the range between 0V and VCC (e.g. 5V)
+ - Because of this you designed circuitry to convert the voltage and current you wish to measure into two analogue voltage signals that falls within this range
+
+---
+
+class: title-slide
+layout: false
+count: false
+.logo-title[]
+
+# Analogue to Digital Converters
+### Fundamentals Principles
+
+---
+
+layout: true
+name: template_slide
+
+.logo-slide[]
+.footer[[Duleepa J Thrimawithana](https://www.linkedin.com/in/duleepajt), Department of Electrical, Computer and Software Engineering (2020)]
+
+---
+name: S6
+
+# Analogue to Digital Conversion
+
+- An analogue to digital converter (ADC) converts an analogue signal to a digital one
+- We know that an analogue signal is continuous in both time and amplitude, whereas a digital signal is not
+- Therefore, the analogue signal needs to be digitized/discretized  
+ - A process known as sampling is used to convert the analogue signal into discrete time steps
+ - A process known as quantization is used to convert the analogue into discrete amplitudes
+- The analogue to digital conversion process introduce error
+ - For example during quantization information is lost
+
+.center[<img src="img/ADCProcess.png" height="180">]
+
+---
+name: S7
+
+# The Sampling Process
+
+- The size of the time intervals the signal is split into, referred to as sample time, is dependent on the sampling frequency (also called sampling rate), measured in hertz
+\\[ t\_{sample} = \frac{1}{f\_{sample}} \\]
+- Higher sampling rates allow the original analogue signal to be captured more accurately
+ - However this requires faster ADC hardware, and more memory to store the digital data
+- To accurately capture a signal the sampling rate must be greater than the Nyquist frequency
+ - Nyquist frequency is equal to twice the highest frequency present in the signal
+
+---
+name: S8
+
+# The Quantization Process
+
+- The full voltage range is broken into discrete intervals
+- The number of number of bits available in an ADC to represent the amplitude of a signal determine the number of discrete voltage intervals, as the number of intervals is equal to 2<sup>bits</sup>
+- As an example, lets consider an ADC with a full voltage range of 5V and examine how it will represent a 3.2V analogue signal if this ADC had 1-bit, 2-bits and 3-bits to represent an analogue signal 
+
+.center[<img src="img/Quantization.png" height="270">]
+
+---
+name: S9
+
+# A 3-Bit ADC 
+
+- Lets examine how a 3-bit ADC would represent a sin wave with an amplitude of 2.5V and an offset of 2.5V
+ - Assume the ADC has a full voltage range of 5V
+ - The analogue signal is sampled every 2ms
+ - A 3-bit ADC can break the full voltage range into 8 different intervals (i.e. 2<sup>3</sup>) 
+ - The analogue voltage samples are represented by digital numbers depending on which voltage interval each samples falls into (e.g. 3.97V is represented by '110' while 4.9V is represented by '111')
+- Higher the bits in the ADC the more accurately we can represent an analogue signal 
+
+.center[<img src="img/3bitADC.png" height="170">]
+
+---
+name: S10
+
+# Characteristics of an ADC (PI)
+
+- Acquisition time
+ - How long it takes for the ADC hardware to acquire a sample of the analogue signal
+ - This includes switching multiplexers, charging internal capacitors, waiting for transients to settle, etc. 
+- Conversion time
+ - Time taken by the ADC to convert the sample of the analogue signal into a digital number
+- Total sampling time
+ - This is the total time taken to make a single ADC reading and is therefore the sum of both the acquisition time and conversion time
+ - The maximum sampling rate/frequency is limited by the minimum total sampling time
+\\[ f\_{sample(max)} = \frac{1}{t\_{acquisition(min)} + t\_{conversion(min)}} \\]
+- We will learn more about the acquisition process and the conversion process soon
+
+---
+name: S11
+
+# Characteristics of an ADC (PII)
+
+- Resolution (bits)
+ - This is determined by the number of bits available in the ADC to represent the signal
+ - For example, an ADC that has a 8-bit resolution got 2<sup>8</sup> amplitude intervals
+- Supply voltage (AV<sub>CC</sub>)
+ - This is the voltage that is needed to power the internal circuitry of an ADC (e.g. 5V)
+- Reference voltage (V<sub>ref</sub>)
+ - This specifies the voltage which the input signal is compared to (e.g. 5V) and therefore signals larger than the reference voltage cannot be accurately converted
+- Step size (V<sub>step</sub>)
+ - This is the smallest signal that can be determined by the ADC and is a function of both the resolution and the reference voltage
+\\[ V\_{step} = \frac{V\_{ref}}{2^{resolution}} \\]
+
+
+---
+name: S12
+
+# ADC Types
+
+- There are multiple types of ADCs, each focusing on different characteristics 
+ - For example faster sampling rate, higher resolution, larger dynamic range, temperature stability, lower error, lower cost, etc. 
+- The most common types include delta-sigma ADC, successive approximation register (SAR) ADC and pipeline ADC
+- Microcontrollers predominantly employ successive approximation register (SAR) ADC
+ - They have a relatively low part count which keeps cost and size low
+ - They have low power consumption
+ - They have an adjustable resolution, and generally have mid-range resolution 
+ - They are generally mid-range for conversion speed
+- The ATmega328P has an SAR ADC
+
+---
+name: S13
+
+# Example: Sampling Rate and Resolution
+
+.questions[
+An ADC is used to convert an analogue signal that is between 0V and 3V to a digital signal. This ADC has a minimum acquisition time of 140ns, and a minimum conversion time of 360ns.   
+- What is the maximum sampling rate for the ADC? 
+- What is the maximum frequency that can be present in a signal such that the ADC could still accurately measure the signal?
+- What should be the minimum reference voltage that could be used in this design? 
+- What should be the minimum supply voltage this ADC should be specified to? 
+- If the ADC should be capable of measuring down to a 10mV signal, what should be the minimum resolution of the ADC? Assume the ADC uses the minimum reference voltage needed for this design. 
+]
+
+---
+
+class: title-slide
+layout: false
+count: false
+.logo-title[]
+
+# SAR ADC 
+### Operating Principles
+
+---
+
+layout: true
+name: template_slide
+
+.logo-slide[]
+.footer[[Duleepa J Thrimawithana](https://www.linkedin.com/in/duleepajt), Department of Electrical, Computer and Software Engineering (2020)]
+
+---
+name: S14
+
+# The Sampling Process (PI)
+
+- [Recall](#S7) that we want to take samples of the analogue signal at discrete points in time
+- This is because the quantization process takes time as it is not an instantaneous process
+ - During the quantization process we need to keep the signal being converted constant 
+- This is achieved by using a sample and hold circuit to capture a “snapshot” of the analogue signal and store it until the quantization process is completed
+ - The characteristics of the sample and hold circuit are important when designing the analogue circuitry that produce the input signal to the ADC
+ - Ideally the input to the ADC should be coming from a low impedance source
+
+.center[<img src="img/SampleHold.png" height="150">]
+
+---
+name: S15
+
+# The Sampling Process (PII)
+
+- At the start of the conversion the capacitor is connected to the input signal by closing the switch in order to charged it to the input voltage
+ - The length of time the capacitor is charging for is the acquisition time
+- Once charged the capacitor is disconnected by turning the switch off
+- The quantization is done on the capacitor voltage 
+ - Any changes in the input signal does not impact the quantization process as switch is off 
+- The length of time taken for this quantization process is the conversion time
+ - After completing an ADC conversion a new sample is taken and the process repeats 
+
+
+.center[<img src="img/SampleHold.png" height="150">]
+
+---
+name: S16
+
+# The Quantization Process 
+
+- The sample of the analogue signal is converted to a digital number over a series of ADC clock cycles
+ - Hence the name “successive approximation”, an algorithm that dates back to the 1500s
+- At each cycle, the sample of the analogue signal is compared to an internally generated voltage that is half the remaining amplitude interval (starts with half the value of V<sub>ref</sub>)
+ - If sample higher than internal voltage, output bit of this cycle is set to 1, otherwise 0
+ - As an example lets see how an ADC with a V<sub>ref</sub> of 2.56V converts a 1.89V sample 
+
+.center[<img src="img/SARPlot.png" height="240">]
+
+---
+name: S17
+
+# SAR Conversion in Tabular Format
+
+- Lets examine how an 8-bit SAR ADC that has a 2.56V V<sub>ref</sub> converts a sample of an analogue signal that has an amplitude of 1.89V.
+ - Has 256 amplitude intervals and the step size is 10mv (i.e. 2.56/256)
+- Result of the conversion is 10111101b (i.e. 189) which equates to 189mV (i.e. 189 x 10mV)
+
+.center[<img src="img/SARTable.png" width="700">]
+
+---
+name: S18
+
+# Acquisition Time & Conversion Time
+
+- The acquisition time must be long enough to allow the sample and hold capacitor to charge
+ - This is dependent on the source impedance (R<sub>signal</sub>) of the signal being measured
+ - The capacitor is fully charged after approximately 5 time constants (&#964;)
+ \\[ \tau = (R\_{signal} + R\_{sample}) C\_{sample} \\]
+- The conversion time is dependent on the resolution and the cycle time
+ - One cycle is required per bit of resolution
+ - Shorter cycle times will result in faster conversions, but the minimum cycle time will be limited by the ADC hardware capability, as well as the clock speed of the MCU
+- As the ADC interacts with the microprocessor inside the MCU its clock cycles must be aligned
+ - The ADC is almost always clocked by the same clock as the microprocessor, or a scaled derivative
+ - The ADC unit of the ATmega328P requires a clock frequency between 50kHz and 200kHz (operating outside of this range impacts the ADC accuracy)
+
+---
+name: S19
+
+# Multiple ADC Channels
+
+- When using an MCU, often more than one analogue signal needs to be converted
+- Rather than having multiple ADC units connected to a single pin each, a single ADC unit is often used 
+ - The pins are connected to the ADC unit via a multiplexer
+- The inputs are called “ADC channels”
+- Because signals are multiplexed, samples taken from each signal will not be at the same point in time
+ - If 2 signals need converting, a sample of the 2nd signal can only be taken after converting the 1st
+ - Some MCUs have 2 or more ADC units to allow simultaneous sampling of 2 or more signals
+
+.center[<img src="img/Multiplex.png" width="580">]
+
+---
+
+class: title-slide
+layout: false
+count: false
+.logo-title[]
+
+# The ADC on ATmega328P
+### Configuring and Using
+
+---
+
+layout: true
+name: template_slide
+
+.logo-slide[]
+.footer[[Duleepa J Thrimawithana](https://www.linkedin.com/in/duleepajt), Department of Electrical, Computer and Software Engineering (2020)]
+
+---
+name: S20
+
+# ATmega328P ADC Peripheral
+
+- 10-bit resolution
+- 65us – 260us conversion time
+- Up to 15k samples per second at full resolution
+- 0V to VCC input voltage range
+- Three options for reference voltage
+ - Internal 1.1V reference voltage
+ - ADC supply voltage (AV<sub>CC</sub>)
+ - Externally generated reference voltage
+- 8 multiplexed channels
+- Single conversion or continuous conversion modes
+- Interrupt on conversion completion
+- &#177;2 LSB absolute accuracy
+
+
+---
+name: S21
+
+# ATmega328P ADC Pins
+
+- In the ATmega328P there are 8 ADC pins (PC0 to PC5 together with ADC6 and ADC7)
+ - By default these pins are configured as analogue inputs (this is not always the case)
+- Though AIN0 and AIN1 also accept analog inputs they are used for the comparator
+
+.center[<img src="img/328PPins.png" width="320">]
+
+---
+name: S22
+
+# ATmega328P ADC Implementation
+
+.center[<img src="img/328PADC.png" width="440">]
+
+---
+name: S23
+
+# ATmega328P ADC Registers
+
+- The ATmega328P only has one ADC and this is named ADC 
+ - The 8 ADC channels (ADC0 to ADC7) are multiplexed 
+- There are 5 registers associated with the ADC
+
+<table class="tg" style="undefined;table-layout: fixed; width: 600px; margin-left:auto; margin-right:auto;">
+  <colgroup>
+  <col style="width: 200px">
+  <col style="width: 400px">
+  </colgroup>
+  <thead>
+    <tr>
+      <th class="tg-dzaw"><span style="color:white">Register</span></th>
+      <th class="tg-dzaw"><span style="color:white">Functionality</span></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="tg-jayl">ADMUX</td>
+      <td class="tg-jayl">ADC Multiplexer Selection Register</td>
+    </tr>
+    <tr>
+      <td class="tg-sabo">ADCSRA</td>
+      <td class="tg-sabo">ADC Control and Status Register A</td>
+    </tr>
+    <tr>
+      <td class="tg-jayl">ADCSRB</td>
+      <td class="tg-jayl">ADC Control and Status Register B</td>
+    </tr>
+    <tr>
+      <td class="tg-sabo">DIDR0</td>
+      <td class="tg-sabo">Digital Input Disable Register</td>
+    </tr>
+    <tr>
+      <td class="tg-jayl">ADCH & ADCL</td>
+      <td class="tg-jayl">ADC Data Registers</td>
+    </tr>
+  </tbody>
+</table>
+
+- ADMUX allows selecting the channel to convert and the ADC data registers contain the conversion result
+- The remaining three registers are used to control the peripheral
+ - Some fields are set by the user to control the operation
+ - Some fields are set by the ADC to indicate its current state
+
+---
+name: S24
+
+# ADMUX Register
+
+.center[<img src="img/ADMUX.png" width="600">]
+
+- REFS[1..0]:	*Reference Selection* where 00 = AREF, 01 = AVCC, 10 = Reserved, 11 = Internal 1.1V
+- .color-grey[ADLAR: *Left Adjust Result*]
+- MUX[3..0]: *Channel Selection*  
+.center[<img src="img/ADCChannel.png" width="420">]
+
+
+---
+name: S25
+
+# ADCSRA Register
+
+.center[<img src="img/ADCSRA.png" width="600">]
+
+- ADEN: *ADC Enable*
+- ADSC:	*Start Conversion* bit needs to be set to start each conversion in single conversion mode while in free running mode this bit only needs to be set for the first conversion
+- ADATE: *Auto Trigger Enable* allows starting an ADC conversion using a trigger signal
+- ADIF:	*Interrupt Flag* is set after completing a conversion and cleared when executing the corresponding interrupt
+- ADIE:	*Interrupt Enable*
+- ADPS[2..0]:	*Prescaler Select* where 000 = 2, 001 = 2, 010 = 4, 011 = 8, 100 = 16, 101 = 32, 110 = 64, 111 = 128
+
+---
+name: S26
+
+# ADCSRB Register
+
+.center[<img src="img/ADCSRB.png" width="600">]
+
+- .color-grey[ACME:	*Analogue Comparator Multiplexer Enable*]
+- ADTS[2..0]:	*Auto Trigger Source* when ADATE bit is set, these bits selects which source will initiate an ADC conversion
+
+.center[<img src="img/ADCAutoTrigger.png" width="600">]
+
+---
+name: S27
+
+# DIDR0 Register
+
+.center[<img src="img/DIDR0.png" width="600">]
+
+- ADCxD: *Digital Input Disable* when ADC0-ADC5 pins are used as analogue inputs the digital input buffer on the corresponding pin can be disabled by setting the ADCxD bit to save power (ADC6 & ADC7 do not have buffers)
+
+---
+name: S28
+
+# ADCL and ADCH Registers 
+
+.center[<img src="img/ADCHL.png" width="600">]
+
+- ADC[9..0]: *ADC Result* registers are updated at the end of each conversion and to obtain the results (when ADLAR is cleared) read ADCL followed by ADCH (alternatively you can directly read the register ADC and assign it to a 16-bit variable)
+
+---
+name: S29
+
+# ADC Timing Diagram
+
+.center[<img src="img/ADCTiming2.png" width="580">]
+
+- The input signal is sampled 1.5 cycles after the conversion is started in normal conversion mode
+ - In auto triggered mode sample and hold takes 2 cycles
+- The digitization of the sampled signal takes 11.5 cycles
+ - The total conversion takes 13 cycles in normal conversion mode and 13.5 cycles in auto triggered conversion mode
+
+---
+name: S30
+
+# Configuring the ADC
+
+- First we need to configure the ADC as per our needs
+ - Need to set the bits of the [ADMUX](#S24), [ADCSRA](#S25), [ADCSRB](#S26) and [DIDR0](#S27) registers 
+ - Do this in an initialization function
+- In the lectures, as an example, we will configure the ADC to operate in the single conversion mode
+ - For the project you are required to operate the ADC in the auto triggered mode using a timer as the trigger source 
+
+.codes[
+```c
+// This function configures the ADC to use AVCC as reference and read ADC0 in single conversion mode
+void adc_init(void){
+  ADMUX = 0b01000000;     //AVCC set as reference, ADC0 selected and results are right adjusted
+  ADCSRA = 0b10000111;    //Set ADEN bit to 1 (enable ADC) and prescaler to 111 (i.e. 128)
+                          //To improve readability write in the form "ADCSRA = (1&#60;&#60;ADEN) | (7&#60;&#60;ADPS0);"
+  ADCSRB = 0b00000000;    //Using the single conversion mode (for project you have to use auto trigger mode)
+  DIDR0 = 0b00000000;     //Buffers are not disabled (for project you may disable the buffers to save power)
+}
+```
+]
+
+---
+name: S31
+
+# Performing a Conversion
+
+- We also know how to use the ADCL & ADCH registers to read the conversion results
+ - Select the input channel and then start a conversion by setting ADSC bit
+ - Wait for the conversion to finish by polling the ADIF bit and read result from ADCL & ADCH
+ - We typically do the above in a function dedicated to read a given channel
+
+.codes[
+```c
+// This function reads an ADC channel and return results
+uint16_t adc_read_channel_single_conversion(uint8_t channel){	
+  ADMUX &= 0xF0;                        //Clear channel selection
+  ADMUX |= channel;                     //Set the channel to convert
+
+  ADCSRA |= (1 << ADSC);                //Starting an ADC conversion
+	
+  while ((ADCSRA & (1 << ADIF)) == 0) { //ADIF bit is checked to see if it is 0
+    ;                                   //If ADIF bit is not 0, wait until it becomes 0
+  }
+	
+  return ((ADCL << 0) | (ADCH << 8));   //Alternatively you can write return ADC;
+}
+```
+] 
+
+---
+name: S32
+
+# Completing the ADC Code
+
+.codes[
+```c
+#define F_CPU 800000UL                      //Defining system clock frequency
+
+#include <avr/io.h>                         //Needed for using the macros for register addresses
+#include <stdio.h>                          //Needed for printf()
+#include <util/delay.h>                     //Needed for using _delay_ms()
+#include "uart.h"                           //Including our uart peripheral library
+#include "adc.h"                            //Including our adc peripheral library
+
+static FILE usart_stdout = FDEV_SETUP_STREAM(uart_printf, NULL, _FDEV_SETUP_WRITE); //Creating a stream variable 
+
+int main(void){
+  stdout = &usart_stdout;                   //Binding the steam variable to stdout
+  uart_init(9600);                          //Initializing the UART to 9600 baud, 8N1, with no parity
+  adc_init();                               //Initializing the ADC
+  uint32_t dc_voltage_mv = 0;               //Initializing variable to hold ADC result
+
+  while (1){
+    dc_voltage_mv = ((uint32_t)adc_read_channel_single_conversion(2) * 5000)/1024;  //Converting result to mV
+    printf("Voltage: %d mV\n\r", (uint16_t)dc_voltage_mv);                          //Printing the result
+    _delay_ms(500);                                                                 //Repeat every 0.5s
+  }
+}
+```
+]
+
+---
+name: S33
+
+# Errors During ADC Conversion 
+
+- So far we considered an ideal ADC
+ - In reality the ADC conversion results has offset error, gain error, quantization error, integral non-linearity and differential non-linearity 
+- The absolute accuracy is the sum of the error 
+ - It is measured in Least-Significant-Bits (LSB)
+- Given that one LSB is equal one step size, we can determine how many volts the converted reading might differ from the actual value
+
+\\[ V\_{\text{Absolute Error}} = V\_{\text{step}} \times  LSB\_{\text{Absolute Error}}  \\]
+
+\\[ V\_{\text{ADC}} - V\_{\text{Absolute Error}} \leqslant V\_{\text{Actual}} \leqslant V\_{\text{ADC}} + V\_{\text{Absolute Error}}  \\]
+
+
+---
+name: S34
+
+# Things To Note
+
+- Your ADC function is blocking and your MCU cannot do anything while taking an ADC reading
+ - For the project you will have to use an ADC interrupt 
+ - The ADC also need to be triggered based on a timer event to take an ADC reading every 1ms
+- You must understand examples you use for the lab or the project
+ - Your individual understanding will be assessed during all assessments 
+ - During 2nd test you will have to develop a C program yourself and simulate it on Proteus
+ - All team members must therefore understand every part of the design
+- It is critical that you complete the pre-lab of the ADC lab before your lab session so that you can get help with the later parts of the lab
+ - Please do not waste the opportunity to get support in the labs 
+ - With 160 students in the class, closer to due dates, there will be limited opportunities to ask for help 
+
+
+---
+
+class: title-slide
+layout: false
+count: false
+.logo-title[]
+
+# Acknowledgments 
+#### These slides are adapted from material prepared by Travis Scott & Muhammad Nadeem
+
+
+
+    </textarea>
+
+    <!-- 
+    <script src="https://remarkjs.com/downloads/remark-latest.min.js">
+    </script>
+    -->    
+   
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML&delayStartupUntil=configured" type="text/javascript">
+    </script>
+
+
+    <script src="remark/remark.min.js" type="text/javascript">
+    </script>
+
+    <script type="text/javascript">
+      var hljs = remark.highlighter.engine;
+    </script>
+    <script src="remark/terminal.language.js" type="text/javascript"></script>
+
+    <script src="https://kit.fontawesome.com/a405eedf54.js" crossorigin="anonymous"></script>
+    <script src="remark/mark.min.js" type="text/javascript">
+    </script>
+    <link rel="stylesheet" href="remark/remark.search.css">
+    <script src="remark/remark.search.js" type="text/javascript"></script>
+
+    <script type="text/javascript">
+
+      var options = {};
+
+      var renderMath = function() {
+        renderMathInElement(document.body);
+        // or if you want to use $...$ for math,
+        renderMathInElement(document.body, {delimiters: [ // mind the order of delimiters(!?)
+        {left: "$$", right: "$$", display: true},
+        {left: "$", right: "$", display: false},
+        {left: "\\[", right: "\\]", display: true},
+        {left: "\\(", right: "\\)", display: false},
+        ]});
+      }
+
+      var slideshow = remark.create({
+        ratio: '16:9',
+        slideNumberFormat: '%current%',
+        countIncrementalSlides: false,
+        renderMath,
+        highlightLanguage: 'c',
+        highlightStyle: 'github',
+        navigation: {
+          // Enable or disable navigating using scroll
+          // Default: true
+          // Alternatives: false
+          scroll: true,
+
+          // Enable or disable navigation using touch
+          // Default: true
+          // Alternatives: false
+          touch: true,
+
+          // Enable or disable navigation using click
+          // Default: false
+          // Alternatives: true
+          click: false,
+        },
+        
+      });
+
+      MathJax.Hub.Config({
+          tex2jax: {
+          inlineMath: [['$','$'], ['\\(','\\)']],
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+          processEscapes: true
+          }
+      });
+
+      MathJax.Hub.Queue(function() {
+          $(MathJax.Hub.getAllJax()).map(function(index, elem) {
+              return(elem.SourceElement());
+          }).parent().addClass('has-jax');
+      });
+
+      MathJax.Hub.Configured();
+      
+      //Terminal style highligting code
+      var highlighted = document.querySelectorAll("code.terminal span.hljs-ansi");
+      Array.prototype.forEach.call(highlighted, function(next) {
+        next.insertAdjacentHTML("beforebegin", next.textContent);
+        next.parentNode.removeChild(next);
+      });
+
+      window.addEventListener('load', function() {
+      RemarkSearch.create({'position': 'top-left', 'caseSensitive' : false, 'showIcon': true, 'autoSearch': true});
+      });
+
+
+    </script>
+  </body>
+</html>
