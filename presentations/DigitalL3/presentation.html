@@ -773,7 +773,7 @@ uint16_t adc_read_channel_single_conversion(uint8_t channel){
   ADCSRA |= (1 << ADSC);                //Starting an ADC conversion
 	
   while ((ADCSRA & (1 << ADIF)) == 0) { //ADIF bit is checked to see if it is 0
-    ;                                   //If ADIF bit is not 0, wait until it becomes 0
+    ;                                   //If ADIF bit is not 1, wait until it becomes 1
   }
 	
   return ((ADCL << 0) | (ADCH << 8));   //Alternatively you can write return ADC;

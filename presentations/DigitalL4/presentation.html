@@ -256,24 +256,14 @@ name: template_slide
 
 name: S2
 
-# Analogue vs Digital Signals
+# The Voltage Measurement (PI)
 
-.left-column[
-- Analogue signals are continuous in both time and amplitude
- - Often sensitive to noise
- - Most physical signals are analogue
- - Most electrical sensors produce analogue electrical signals
- - Can be converted to a digital signal via an analogue to digital converter (ADC)
-- Digital signals are discrete in both time and amplitude
- - More resistant to noise
- - Cannot exactly reproduce analogue signals
- - Some electrical sensors can output digital signals
- - Can be converted to an analogue signal via a digital to analogue converter (DAC)
-]
+.center[<img src="img/VoltageCct.png" height="150">]
 
-.right-column[
-.center[<img src="img/AnalogDigital.png" width="280">]
-]
+- The step down in voltage achieved by the voltage divider can be quantified by a gain G<sub>vs</sub> 
+- The differential amplifier provide a gain G<sub>vo</sub> and an offset V<sub>off</sub>
+- The gain of the filter, G<sub>vf</sub>, is 1 for your design
+- The analogue signal at the ADC, V<sub>vo</sub>
 
 ---
 
