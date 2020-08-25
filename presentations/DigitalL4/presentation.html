@@ -294,7 +294,7 @@ name: S4
 
 # ADC Data Representing Voltage
 
-.center[<img src="img/VoltageData.png" height="175">]
+.center[<img src="img/VoltageData.png" height="165">]
 
 - In this lecture, lets assume V<sub>vf</sub> at ADC0 is sampled and converted to an ADC value every 2ms
  - Project specifications limits maximum sampling rate to 1kHz and therefore if repeatedly a sample of V<sub>vf</sub> is taken followed by a sample of V<sub>if</sub> then each V<sub>vf</sub> sample will be 2ms apart
@@ -309,7 +309,7 @@ name: S5
 
 # ADC Data Representing Current
 
-.center[<img src="img/CurrentData.png" height="175">]
+.center[<img src="img/CurrentData.png" height="165">]
 
 - Similar to V<sub>vf</sub> lets assume V<sub>if</sub> at ADC1 is sampled and converted to an ADC value every 2ms
  - Project specifications limits maximum sampling rate to 1kHz and therefore if repeatedly a sample of V<sub>vf</sub> is taken followed by a sample of V<sub>if</sub> then each V<sub>if</sub> sample will be 2ms apart
@@ -353,7 +353,7 @@ name: S7
 
 # Finding Max of ADC Samples
 
-.center[<img src="img/Peak.png" height="200">]
+.center[<img src="img/Peak.png" height="190">]
 
 - With a limited sampling rate and without a method to synchronize the sampling to align with a peak we cannot measure the peak accurately by sampling just one cycle of the signal
  - Notice in example above, that while during the first cycle the ADC data does not capture the peak, during the second cycle it does
@@ -382,7 +382,7 @@ name: S9
 .center[<img src="img/SuperD.png" height="200">]
 
 - To overcome the forward voltage drop of the diode a *superdiode* can be used
-- When V<sub>AC</sub> is greater than V<sub>pk</sub>, the op-amp forward biases the diode completing the negative feedback loop
+- When V<sub>AC</sub> is greater than V<sub>pk</sub>, the op-amp forward biases the diode completing negative feedback loop
  - Op-amp acts as a follower and C<sub>pk</sub> charges to peak value of V<sub>AC</sub>  
  - The maximum peak value that can be tracked is equal to V<sub>OH</sub> - V<sub>F</sub>, where V<sub>F</sub> is the forward voltage drop of the diode
 - A mechanism to discharge C<sub>pk</sub> is still required so a peak value that changes over time can be monitored
@@ -433,11 +433,12 @@ name: S11
  - By adding the areas of each rectangle we can evaluate the integral
  - Trapezoidal rule and a number of other more advanced methods can also be used
 
-.center[<img src="img/Riemann_sum_(leftbox).gif" height="150"> <img src="img/Riemann_sum_(middlebox).gif" height="150"> <img src="img/Riemann_sum_(rightbox).gif" height="170">
+.center[<img src="img/Riemann_sum_(leftbox).gif" height="150"> <img src="img/Riemann_sum_(middlebox).gif" height="150"> <img src="img/Riemann_sum_(rightbox).gif" height="150">
 .credits[
 Riemann Sum [[1]](https://en.wikipedia.org/wiki/Riemann_sum)
 ]
 ]
+
 ---
 name: S12
 
