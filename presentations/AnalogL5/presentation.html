@@ -256,17 +256,17 @@ name: template_slide
 
 name: S2
 
-# Product Development Cycle
+# Product Development Life Cycle
 
 - Concept and requirements (in EE209 these are given)
  - Starts with an idea which can be turned into a product
  - Requirement gathering, develop specifications and develop a conceptual design 
 - Detailed design 
  - Background research to identify applicable prior art, resources and technologies
- - Define the problem and then analyse feasible solutions using theory and simulation tools
+ - Define the problem, subdivide and then analyse feasible solutions using theory and simulation tools
  - Based on the findings develop a detailed solution for test and validation
 - Test and validate solution
- - Through simulations and/or prototype implementations 
+ - Through simulations and prototype implementations 
  - Fast tracked using Breadboards, Veroboards, dev kits, PCBs and rapid prototyping tools
 - Manufacturing and quality testing
  - Plan manufacturing, setup procurement processes, build, quality test and sell
@@ -299,9 +299,9 @@ name: S3
 - After proving your electronics design is feasible using theory and simulations, a prototype needs to be built to experimentally validate its functionality 
 - In real life you will iterate through many prototypes to refine the design so that it can be manufactured reliably at scale
 - How can we interconnect the electronic components needed to build a prototype?
- - For example, in your project, how can we connect the resistors to OpAmp to test the functionality of the differential amplifier circuit?
+ - For example, in your project, how can we connect the resistors to OpAmp to test functionality?
 
-.center[<img src="img/Process.png" height="200">]
+.center[<img src="img/Process.png" height="210">]
 
 ---
 
@@ -330,7 +330,8 @@ name: S5
 - Rather large through-hole (leaded) components were used
 - The components were connected by soldering wires between leads
 - Components are mechanically fixed to a non-conducting base plate 
-- Bulky designs that are tedious to manufacture as they require manual labour
+- Bulky designs that are tedious to manufacture 
+ - Require manual labour
 
 ---
 name: S6
@@ -341,7 +342,7 @@ name: S6
 
 - Printed circuit boards (PCBs) were used to assemble mainly through-hole devices
  - Surface mount technology starts to gain acceptance 
-- Copper tracks laid out on a board made from epoxy made interconnections between components that were soldered to these copper tracks
+- Copper tracks laid out on a board, which was made from epoxy, made interconnections between components that were soldered using a Lead alloy
  - These copper tracks were printed on the epoxy mostly using chemical etching techniques 
 - Maturing component technology allowed compact components
 
@@ -390,133 +391,127 @@ name: S9
 
 # The Terminology
 
-.center[<img src="img/Peak.png" height="200">]
+.center[<img src="img/Terminology.png" height="180">]
 
-- With a limited sampling rate and without a method to synchronize the sampling to align with a peak we cannot measure the peak accurately by sampling just one cycle of the signal
- - Notice in example above, that while during the first cycle the ADC data does not capture the peak, during the second cycle it does
-- The signal can be sampled over a large number of cycles to capture the peak as long as sampling frequency is not an integer multiplication of the signal frequency
- - This process takes time 
-
----
-name: S8
-
-# Using a Peak Detector Circuit
-
-.center[<img src="img/PeakDet.png" height="150">]
-
-- A dedicated peak detector circuit could be used to detect the peak
-- A diode and a capacitor can be used to sample the peak 
- - Works like a half-wave rectifier
- - A resistor, R<sub>bld</sub>, is needed to bleed the charge in C<sub>pk</sub> so a peak value that changes over time can be monitored (the RC time constant needs to be larger than the period of the signal)
- - Alternatively, a switch, S<sub>rst</sub>, can be used to reset the peak detector by discharging C<sub>pk</sub> regularly through a resistor, R<sub>rst</sub>
-- The forward voltage drop across diode significantly impacts the accuracy  
-
----
-name: S9
-
-# An Improved Peak Detector Circuit
-
-.center[<img src="img/SuperD.png" height="200">]
-
-- To overcome the forward voltage drop of the diode a *superdiode* can be used
-- When V<sub>AC</sub> is greater than V<sub>pk</sub>, the op-amp forward biases the diode completing the negative feedback loop
- - Op-amp acts as a follower and C<sub>pk</sub> charges to peak value of V<sub>AC</sub>  
- - The maximum peak value that can be tracked is equal to V<sub>OH</sub> - V<sub>F</sub>, where V<sub>F</sub> is the forward voltage drop of the diode
-- A mechanism to discharge C<sub>pk</sub> is still required so a peak value that changes over time can be monitored
-
----
-
-class: title-slide
-layout: false
-count: false
-.logo-title[]
-
-# RMS Current/Voltage
-### Techniques to Obtain the RMS of a Signal
-
----
-
-layout: true
-name: template_slide
-
-.logo-slide[]
-.footer[[Duleepa J Thrimawithana](https://www.linkedin.com/in/duleepajt), Department of Electrical, Computer and Software Engineering (2020)]
+- **Leads (pins)** of through-hole devices are inserted in to **holes** and the copper **pads** around these holes provides a surface to solder the leads
+- A **2-layer** PCB consists of an epoxy panel made from **FR4** with copper **traces (tracks)** on both top and bottom sides allowing to make electrical connections between the leads of the devices
+- **Plated through-hole (PTH)** technology ensures pads on top and bottom are electrically connected
+- **Solder mask** is a non-conducting paint that protects the copper while making soldering easier
+- **Silk screen** contains the writing on the board like **designators**, logos, information, etc.
 
 ---
 name: S10
 
-# Estimating RMS Using Peak 
+# PCB Design Step 1 - Component Library
 
-- [Recall](#S7) that we have already learnt how to obtain the peak of a signal
-- Assuming this signal is sinusoidal, the peak value is related to the RMS value as given by
+.center[<img src="img/Footprint.png" height="200">]
 
-\\[ RMS = \frac {Peak} {\sqrt{2}} \\]
+- First, develop a component library containing schematic symbols and footprints for each device
+- Schematic symbols are used to represent the devices in a schematic file 
+ - Drawn according to international standards such as the IEC60617
+- Footprints tell how devices are physical represented on a PCB 
+ - Includes information taken from the datasheet regarding the placement and dimensions of holes and pads, association of pads with physical pins of the device, 2D outline, 3D body, etc. 
+- Each schematic symbol needs to be associated with a corresponding footprint
 
-- The assumption of a sinusoidal signal is not always correct, especially in a practical design, as V<sub>ac</sub> and I<sub>L</sub> are often distorted sinusoidal signals
- - The distortions in the signals lead to significant errors in the RMS estimate when using this method
-- We can improve the accuracy by developing software to implement the RMS formula given by
-
-\\[ V\_{AC\_{rms}} = \sqrt {\frac {1} {T\_p} \int\_{0}^{T\_p} {V\_{AC}^2 dt}}  \quad \text{OR} \quad I\_{L\_{rms}} = \sqrt {\frac {1} {T\_p} \int\_{0}^{T\_p} {I\_{L}^2 dt}}\\]
-
+ 
 ---
 name: S11
 
-# Riemann Sum 
+# PCB Design Step 2 - Schematic File
 
-- RMS formula can be converted in to a form that can be evaluated in an MCU by applying it to ADC data
-- The integral term in the RMS formula can be evaluated in an MCU using the Riemann sum 
- - The area under a curve is divided  in to a number of rectangles where the height of these rectangles are evaluated using the ADC data of the signal
- - The width of each rectangle is equal to time between 2 ADC samples of the signal &#916;t<sub>sample</sub>
- - By adding the areas of each rectangle we can evaluate the integral
- - Trapezoidal rule and a number of other more advanced methods can also be used
+.center[<img src="img/EE209Sample.png" height="190">]
 
-.center[<img src="img/Riemann_sum_(leftbox).gif" height="150"> <img src="img/Riemann_sum_(middlebox).gif" height="150"> <img src="img/Riemann_sum_(rightbox).gif" height="170">
-.credits[
-Riemann Sum [[1]](https://en.wikipedia.org/wiki/Riemann_sum)
-]
-]
+- Once the component library is setup, we can develop the schematic of our circuit showing the electrical connectivity between the devices 
+- Layout the schematic a logical manner while observing conventions 
+ - Use net labels/ports where needed to reduce clutter
+ - Separate functional blocks of your circuit 
+- To improve readability add annotations
+- Complex designs often spans across multiple schematic sheets
+
 ---
 name: S12
 
-# Calculating the RMS Numerically 
+# PCB Design Step 3 - PCB Artwork
 
-.center[<img src="img/Vrms.png" height="220">]
+- After drawing the schematic, the PCB artwork can be developed by drawing Cu traces to make electrical connections between devices
+ - Planes/pours can also be used to create solid Cu planes for electrical connections
+- Before starting the artwork, setup the design rules as per manufacturing and assembly constraints
+- Arrangement of devices is very important and is key to doing a good PCB design 
+- Traces can be placed using **‘interactive routing tool’** on **top (red)** and **bottom (blue)** layers
 
-- If we have taken N ADC samples at regular &#916;t<sub>sample</sub> intervals over one time period of the signal, the time period T<sub>p</sub> = N&#916;t<sub>sample</sub>
-- We can square each V<sub>AC</sub> or I<sub>L</sub> sample and use Riemann sum to numerically evaluate the RMS as given by
 
-\\[ V\_{AC\_{rms}}^2 = \frac {1}{N \Delta t\_{sample}} \sum\_{i=0}^{N-1} V\_{AC}^2[i] \Delta t\_{sample} \quad \text{OR} \quad I\_{L\_{rms}}^2 = \frac {1}{N \Delta t\_{sample}} \sum\_{i=0}^{N-1} I\_L^2[i] \Delta t\_{sample}\\]
-
----
-
-class: title-slide
-layout: false
-count: false
-.logo-title[]
-
-# Power Factor 
-### Techniques to Obtain the Power Factor Angle
-
----
-
-layout: true
-name: template_slide
-
-.logo-slide[]
-.footer[[Duleepa J Thrimawithana](https://www.linkedin.com/in/duleepajt), Department of Electrical, Computer and Software Engineering (2020)]
+.center[<img src="img/PCB.png" height="210">]
 
 ---
 name: S13
 
-# Time Between Zero Crossings
+# PCB Design Step 4 - Manufacturing the PCB
 
-.center[<img src="img/PF.png" height="190">]
+- After completing the PCB design check compliance with manufacturing and assembly constraints using **'Design Rule Check'** you should also do a **visual check** by printing it (use 1:1 scale)
+- Finally, generate outputs and send for manufacturing
+ - PCBs are mainly manufactured through an etching process (and in same cases they are routed)
+ - After drilling the PCB, holes are plated with Cu and finally the solder mask and silk screen added
 
-- Because of the limited sampling frequency, using ADC data to calculate the time between voltage and current zero-crossings introduces significant error
-- Comparators can be used to detect the zero-crossings and generate rising or falling edge signals
- - To avoid noise from generating false edges, filtered signals should be fed to the comparators
-- The edges can be used as interrupts to control a timer to obtain the time, T<sub>zc</sub>, between edges
- - We can estimate power factor angle, &#952;, by looking at the time between the zero-crossings of the voltage and current waveforms since &#952; = 360<sup>0</sup> T<sub>zc</sub> / T<sub>p</sub>
+.center[<img src="img/PCBEtching.png" height="250">]
+
+---
+name: S14
+
+# Example: PCB Order Through PCBWay
+
+.questions[
+Discuss what you will have to specify to the PCB manufacturer if you were to get your PCB design manufactured through [PCBWay](https://www.pcbway.com).
+]
+
+.center[<img src="img/PCBWay.png" height="350">]
+
+---
+name: S15
+
+# PCB Design Considerations
+
+- Arrangement of components is critical
+ - MCU pins in use, allocation of Op-Amps, etc. need to be selected to help achieve a good design
+ - Arrange in to functional blocks for example digital, power, signal conditioning, etc. 
+- Use appropriate track widths and clearances and for your UG projects use
+ - Track widths of at least 0.5mm
+ - Clearances of at least 0.5mm between tracks and 1mm between tracks and plane
+- Minimize parasitic effects 
+ - Longer track introduces unwanted inductances and will pickup noise
+ - Avoid sharp corners and use shortest path for traces
+ - Use effective ground planes
+- Allow sufficient clearance between components
+ - Allow space for connectors, mountings, heat-sinks, etc.
+- Make sure test points are accessible 
+
+---
+name: S16
+
+# Example: TH vs SMT
+
+.questions[
+Discuss the differences between TH and SMT designs. What are **vias** and what are they used for?
+]
+&nbsp;
+
+.center[<img src="img/EgPCB.png" height="300">]
+
+---
+name: S17
+
+# ECSE Student Designs
+
+&nbsp;
+.center[<img src="img/IBMC.png" height="350">]
+
+---
+name: S18
+
+# ECSE Student Designs
+
+
+.center[<img src="img/B1.png" height="400"> ]
+
 
 ---
 
@@ -525,8 +520,8 @@ layout: false
 count: false
 .logo-title[]
 
-# Power 
-### Techniques to Obtain the Real Power
+# PCB Assembly (PCBA)
+### Assembly, Test & Validation
 
 ---
 
@@ -537,79 +532,184 @@ name: template_slide
 .footer[[Duleepa J Thrimawithana](https://www.linkedin.com/in/duleepajt), Department of Electrical, Computer and Software Engineering (2020)]
 
 ---
-name: S14
+name: S19
 
-# Estimating Power Using RMSs
+# Guide to Assembling & Testing
 
-- [Recall](#S10) that we have already learnt how to obtain the RMS of V<sub>AC</sub> and I<sub>L</sub>
-- Assuming V<sub>AC</sub> and I<sub>L</sub> are sinusoidal, the power is related to their RMS values and the power factor angle as given by
-
-\\[ P = V\_{AC\_{rms}} I\_{L\_{rms}} cos(\theta) \\]
-
-- The assumption of a sinusoidal signal is not always correct, especially in a practical design, as V<sub>ac</sub> and I<sub>L</sub> are often distorted sinusoidal signals
- - The distortions in the signals lead to significant errors in the power estimate when using RMSs and the power factor angle
-- We can improve the accuracy by developing software to implement the power formula given by
-
-\\[ P =  \frac {1} {T\_p} \int\_{0}^{T\_p} {V\_{AC} I\_{L} dt}  \\]
+- Devices may be assembled by hand or using semi/fully automated machines
+ - In this project you are required to assemble by hand
+ - ECSE department has a state of the art SMT prototyping facility (tours can be arranged)
+- Before assembling, develop test strategies that can be used to validate the design
+- Assemble the circuit in stages while testing as per your test strategies 
+ - Assemble, test and validate each functional block independently where possible 
+ - After validating each function block of the circuit then interconnecting these to step-by-step while validating each step
+- In this course, assemble and test power supply first, then assemble and test level-shifters, afterwards the filters and finally test the entire design
+ - Do not ever assemble the entire circuit and expect it to work the first time 
+ - Even the most experienced engineers assemble the first prototype in stages while validating each stage before proceeding to the next
 
 ---
-name: S15
+name: S20
 
-# Calculating Power Numerically 
+# Soldering Instructions - Getting Ready
 
 .left-column[
-- Assume we have taken N ADC samples of both V<sub>AC</sub> and I<sub>L</sub>
- - Samples of V<sub>AC</sub> as well as I<sub>L</sub> are at regular &#916;t<sub>sample</sub> intervals
-- We can multiply each V<sub>AC</sub> sample with corresponding I<sub>L</sub> sample to numerically evaluate power as given by
-
-\\[ P = \frac {1}{N \Delta t\_{sample}} \sum\_{i=0}^{N-1} V\_{AC}[i] I\_L[i] \Delta t\_{sample} = \frac {1}{N } \sum\_{i=0}^{N-1} V\_{AC}[i] I\_L[i]\\]
-
-- Since the two ADC channels are sampled one after the other, there is a time delay between each sample of V<sub>AC</sub> and its corresponding I<sub>L</sub> sample
- - This can lead to a significant error in power calculation in the form of a phase-shift
-
+- Health and safety is the first priority
+ - Wear safety glasses and clean your hands after soldering
+ - Always solder in a well-ventilated and well-lit space
+ - Pay full attention when using hot tools 
+- Find a suitable soldering iron and select your solder wire
+ - Soldering iron tip should be correct size and in good condition
+ - If soldering SMT devices, you can use solder paste and a hot air-gun/reflow oven
+ - It is recommended to use Leaded solder when performing manual soldering
+ - Unleaded solder was introduced to meet requirements of the Removal of Hazardous Substances (ROHS) directive, and is harder to use
 ]
 
 .right-column[
-.center[<img src="img/PowerSamples.png" width="320">]
+.center[<img src="https://i1.wp.com/goleman.co.nz/wp-content/uploads/2020/08/E4000_Xspex_Clear_01.jpg?fit=1500%2C850&ssl=1.png" width="250"> ]
+.center[<img src="http://www.ifirst.co.nz/image/cache/data/yihua-soldering-station-32435-1000x1000.jpeg" width="250"> ]
 ]
 
 ---
-name: S16
+name: S21
 
-# Linear Approximation of Missing Data 
+# Soldering Instructions - Prepare PCB
 
 .left-column[
-- The missing V<sub>AC</sub> and I<sub>L</sub> samples can be approximated using the average of the samples from either side (i.e. linear approximation)
-
-\\[ \bar{V}\_{AC}[i] = \left( V\_{AC}[i] + V\_{AC}[i+1] \right) / 2 \\]
-\\[ \bar{I}\_{L}[i] = \left( I\_{L}[i-1] + I\_{L}[i] \right) / 2 \\]
-
-- How can we estimate the 11<sup>th</sup> sample of V<sub>AC</sub> and the -1<sup>th</sup> sample of I<sub>L</sub>?
-- Power can now be evaluated as given by
-
-\\[ P = \frac {1}{2N} \sum\_{i=0}^{N-1} \left[ V\_{AC}[i] \bar{I}\_L[i] + \bar{V}\_{AC}[i] I\_L[i] \right] \\]
-
+- Prepare the PCB by making sure pad and hole areas are clean
+ - Clean the surface with some isopropyl alcohol (IPA) (or PCB cleaner) to remove any oxidation/debris
+ - The use of a brush/toothbrush or cleaning paper is helpful
+- Secure the PCB using a vice or masking tape so that it does not move when soldering
+ - When soldering ESD sensitive devices use an earthed wrist strap to prevent damage to devices 
+- Make sure you have all the devices and tools needed 
+- You will need a copy of the schematic and the PCB artwork to identify placement of components
+ - Its good practice to 'cross-off' components as you place them
 ]
 
 .right-column[
-.center[<img src="img/LinearAppx.png" width="320">]
+.center[<img src="https://images-na.ssl-images-amazon.com/images/I/71hrMaV1bQL._SL1500_.jpg" width="160"> <img src="https://images-na.ssl-images-amazon.com/images/I/71-MCcSH1PL._AC_SL1500_.jpg" width="70"> ]
+.center[<img src="https://media.digikey.com/Photos/Desco%20Photos/09085.jpg" width="220"> ]
 ]
 
 ---
-name: S17
+name: S22
 
-# The Power Calculation 
+# Soldering Instructions - Clean Tip
 
-- Once the missing samples are approximated, Riemann sum can be used to evaluate power
- - Can we improve the calculation accuracy?
-- In the project using Excel/Matlab/Repl.it validate your power calculation algorithm 
- - Operate on V<sub>AC</sub> and I<sub>L</sub> ADC samples collected from the MCU 
+- Set your soldering iron to between **330°C and 370°C** and let it reach this temperature 
+ - Solder tip and solder wire should suit the size of pads you will be soldering to
+- Once the iron is hot, clean the tip using a damp sponge/bras wool
+- Once clean apply a small amount of solder to tin the tip, and wipe again with the sponge/brass wool
+ - Solder tip cleaner can also be used if available
 
-.center[<img src="img/PowerFinal.png" height="280">]
+.center[<img src="img/Cleaning.png" height="250"> ]
 
 ---
-https://lordhelpus.wordpress.com/tag/pcb-designer/
+name: S23
 
+# Soldering Instructions - TH Components (PI)
+
+- Place the device on the PCB by inserting the leads in to the holes
+- Briefly apply the soldering tip to the joint to pre-heat one of the leads and the pad 
+- After a few seconds of heating (1s-3s), apply the solder wire to the heated joint 
+ - Take care not to overheat as it may damage device and/or the traces/pad
+- Ensure solder flows and covers the entire pad and lead 
+ - It should make a shiny concave shaped solder joint 
+ - You may apply flux to help improve the finish of your solder joint as it cleans the surface and avoids oxidization of the metal when heated 
+- Check the alignment of device and if not properly aligned heat the solder joint and realign the device 
+ - Do note that once you have soldered more than two leads it will be a challenge to realign
+- Continue soldering the other leads by repeating steps above 
+
+---
+name: S24
+
+# Soldering Instructions - TH Components (PII)
+
+.center[
+<img src="img/SolderingGuide.png" height="380"> 
+
+.credits[Taken from [[2]](https://learn.adafruit.com/adafruit-guide-excellent-soldering/tools)]
+]
+
+---
+name: S25
+
+# Soldering Instructions - SMT Components (PI)
+
+- Apply flux on to the pads to help improve the finish of your solder joint as it cleans the surface and avoids oxidization of the metal when heated
+- Briefly apply the soldering tip to one of the pads to pre-heat it
+- After a few seconds of heating (1s-3s), quickly apply the solder wire making a small solder blob
+- Remove the solder wire and place the part while keeping the soldering iron on the pad to keep the solder flowing
+- Once device is properly aligned and you have made sure it is flat against the PCB remove the iron making a solder join between the first lead of the device and the corresponding pad 
+ - The first solder joint you made is mainly to hold the SMT device in place 
+- Solder the next lead by first pre-heating the pad and the lead for a few seconds and then applying the solder wire to ensure solder flows and covers the entire pad and device lead 
+ - Should make a shiny concave shaped solder joint
+- Once all other leads are soldered, pre-heat the first solder joint and apply solder if needed
+
+---
+name: S26
+
+# Soldering Instructions - SMT Components (PII)
+
+- If using hot-air gun set to about 270°C for Leaded solder or to about 320°C for unleaded solder
+ - Set the airflow low initially
+- You may use a pre-heater to heat the PCB if needed
+- Use the syringe to apply solder paste to all the pads you are soldering the devices to
+ - Each pad should have enough solder to cover the entire pad in a thin layer
+- Place the component on to the pads and ensure component is aligned 
+- Hold hot-air gun over component until the solder “flows” and makes shiny concave shaped joints 
+
+.center[<img src="img/SMTSolder.png" height="200">]
+
+---
+name: S27
+
+# Rework - TH Components
+
+- When prototyping often you have to replace damaged devices or modify already soldered devices
+ - If the device is damaged or you do not intend to reuse the device, cut the leads just above the PCB board (on the component side of the board)
+- Use a flux pen/syringe to apply flux to the solder joints requiring rework
+- Apply the soldering iron to each solder joint until the solder starts to flow 
+- Gently pull the component leads from the hole using tweezers
+ - If you try to pull the leads forcefully you will damage the pads/traces/through-hole plating
+- It may help to add extra solder to act as thermal mass to help keep the solder joint heated
+- If you wish to preserve the device, you will have to equally heat all leads (using two soldering irons or a special tip) together before gently pulling the device out
+- Alternatively, you may use a vacuum de-soldering station – remember to hold the board in a manner to take advantage of gravity to help remove solder  
+
+---
+name: S28
+
+# Rework - SMT Components
+
+- If using a hot-air gun, make sure it is set to about 320°C and hold the hot-air gun over the component until the solder starts to flow 
+ - This is the recommended option for devices with many legs
+- If using a soldering iron, heat all leads equally until the solder starts to flow 
+ - It may help to add extra solder to act as thermal mass to help keep the solder joint heated 
+- Use a pair of tweezers to gently lift the component off the pads
+
+---
+name: S30
+
+# Rework - Cleaning
+
+- Excess solder from the pads/holes can be removed using solder wick
+- Alternatively, you may use a vacuum de-soldering station
+- Isopropyl alcohol (IPA) or special PCB board cleaner to clean the surface 
+ - Use a brush for thorough cleaning
+
+.center[
+<img src="https://images-na.ssl-images-amazon.com/images/I/51UuQ-pNXbL._AC_SL1000_.jpg" height="150"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+<img src="https://paceworldwide.com/sites/default/files/styles/product_full/public/2019-04/8007-0207.jpg?itok=6-0wZN0C" height="250"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <img src="https://www.jameco.com/Jameco/Products/MakeImag/153462.jpg" height="150"> 
+]
+
+---
+
+class: title-slide
+layout: false
+count: false
+.logo-title[]
+
+# Acknowledgments 
+#### The latter part of the lecture was drafted together with Travis Scott 
 
     </textarea>
 
