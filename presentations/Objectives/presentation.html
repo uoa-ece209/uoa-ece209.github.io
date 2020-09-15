@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Introduction to ELECTENG 209</title>
+    <meta charset="utf-8">
+    <style>
+      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+
+      body { 
+        font-family: 'Droid Serif'; 
+        line-height: 1.6;
+        }
+
+      h1, h2, h3 {
+        font-family: 'Yanone Kaffeesatz';
+        font-weight: bold;
+        color: #00467F;
+      }
+
+      h1{
+        margin-top: 30px !important;
+        margin-bottom: 30px !important;
+      }
+
+      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+
+      .TitleAuthor {
+        color:white; 
+        font-weight: normal;
+      }
+
+      .title-slide .remark-slide-number {
+        display: none;
+      }
+      .title-slide h1, h2, h3, h4 {
+        text-align: left;
+        color:white;
+        line-height: 0.7;
+        font-weight: bold;
+      }
+
+      .title-slide {
+        vertical-align: middle;
+        background-color: #00467F;
+      }
+
+      .logo-title {
+        content: "";
+        position: absolute;
+        top: 15px;
+        right:   15px;
+        height: 88px;
+        width: 267px;
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-image: url(https://cdn.auckland.ac.nz/assets/central/central-services/mediaandmarketing/uoa-logos-2015/uoa-logo-2015-reverse.png);
+      }
+      .logo-slide {
+        content: "";
+        position: absolute;
+        top: 35px;
+        right:   15px;
+        height: 96px;
+        width: 100px;
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-image: url(https://cpb-ap-se2.wpmucdn.com/blogs.auckland.ac.nz/dist/d/79/files/2015/10/uoa-v-colour2.png);
+      }
+
+      .left-column {
+        width: 65%;
+        float: left;
+        word-wrap: break-word;
+      }
+     
+      .right-column {
+        width: 30%;
+        float: right;
+        word-wrap: break-word;
+      }
+
+      .footer {
+        content: "";
+        position: absolute;
+        bottom: 17px;
+        color:gray;
+        font-size: 10pt;
+      }
+      
+      @page {
+        size: 1210px 681px;
+        margin: 0;
+      }
+
+      @media print {
+        .remark-slide-scaler {
+          width: 100% !important;
+          height: 100% !important;
+          transform: scale(1) !important;
+          top: 0 !important;
+          left: 0 !important;
+        }
+      }
+      
+      .credits {
+        font-size: 14px;
+        line-height: 4px !important;
+        font-family: 'Droid Serif'; 
+      }
+
+      .zoom175 {
+        transition: transform .2s; /* Animation */
+      }
+
+      .zoom175:hover {
+        transform: scale(1.75) translateY(-20%) translateX(-20%); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+      }
+
+    </style>
+
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
+    <style>
+    .smaller-font { font-size:14px } 
+    </style>
+
+    <!-- KaTeX and Mathjax support refer to below for syntax -->
+    <!-- https://math.meta.stackexchange.com/questions/5020/mathjax-basic-tutorial-and-quick-reference -->
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.1/dist/katex.min.css" integrity="sha384-dbVIfZGuN1Yq7/1Ocstc1lUEm+AT+/rCkibIcC/OmWo5f0EA48Vf8CytHzGrSwbQ" crossorigin="anonymous">
+    
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.1/dist/katex.min.js" integrity="sha384-2BKqo+exmr9su6dir+qCw08N2ZKRucY4PrGQPPWU1A7FtlCGjmEGFqXCv5nyM5Ij" crossorigin="anonymous"></script>
+
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.1/dist/contrib/auto-render.min.js" integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous"
+        onload="renderMathInElement(document.body);"></script>
+    
+    <script type="text/javascript" async
+    src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+
+    <style>
+      /* Table Style */
+      .tg  {border-collapse:collapse;border-color:#9ABAD9;border-spacing:0;}
+      .tg td{background-color:#EBF5FF;border-color:#9ABAD9;border-style:solid;border-width:1px;color:#444;
+        font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:3px 10px;word-break:normal;}
+      .tg th{background-color:#409cff;border-color:#9ABAD9;border-style:solid;border-width:1px;color:#fff;
+        font-family:Arial, sans-serif;font-size:14px;font-weight:normal;overflow:hidden;padding:3px 10px;word-break:normal;}
+      .tg .tg-dzaw{background-color:#4F81BD;color:#FFF;font-weight:bold;text-align:left;vertical-align:top}
+      .tg .tg-sabo{background-color:#ebf5ff;color:#000000;text-align:left;vertical-align:top}
+      .tg .tg-096r{color:#000000;text-align:left;vertical-align:top}
+      .tg .tg-jayl{background-color:#d2e4fc;color:#000000;text-align:left;vertical-align:top}
+      .tg .tg-ig71{background-color:#D2E4FC;color:#000000;text-align:left;vertical-align:top}
+    </style>
+
+  </head>
+  <body>
+    <textarea id="source">
+
+class: title-slide
+count: false
+.logo-title[]
+
+## ELECTENG 209
+# Analogue & Embedded Software Design 
+### An Introduction to the Course
+
+.TitleAuthor[Duleepa J Thrimawithana]
+
+---
+
+layout: true
+name: template_slide
+
+.logo-slide[]
+.footer[[Duleepa J Thrimawithana](https://www.linkedin.com/in/duleepajt), Department of Electrical, Computer and Software Engineering (2020)]
+
+---
+
+name: S1
+
+# The Project
+
+- What is this course about and what should students expect to learn?
+ - Gives you an opportunity to put in to practice some of the theories (analogue electronics & embedded software development) they learnt to design and engineer a solution to a 'real life problem'
+ - During this process students will gain fundamental knowledge, experience, skill-set and professional behavior needed to succeed in the more challenging design projects you will engage
+ in the future
+- What would students design and engineer during this course?
+ - An energy monitor to measure and display the amount of energy consumed by a household appliance
+- How would students achieve this task?
+ - The voltage and current at the input to appliance is measured using __analogue circuitry__ consisting of sensors, amplifiers and filters 
+ - An __embedded software program__ executed on a microcontroller converts the analogue signals to digital form and calculates the energy consumption together with other important information
+ - The information is shown on a __local LCD display__ and also __communicated__ wirelessly using Bluetooth with other smart devices
+
+---
+name: S15
+
+# System to Implement
+
+- To simplify the design, a scaled-down system, which uses a low-voltage
+AC source is considered
+  - An AC load, consisting of a variable resistor in series with a fixed inductor, is used to emulate an house-hold appliance 
+
+.center[<img src="img/System.png" height="275">]
+
+---
+name: S16
+
+# Key Design Specifications
+
+<table class="tg" style="undefined;table-layout: fixed; width: 647px; margin-left:auto; margin-right:auto;">
+  <colgroup>
+  <col style="width: 333px">
+  <col style="width: 314px">
+  </colgroup>
+  <thead>
+    <tr>
+      <th class="tg-dzaw"><span style="color:white">Parameter</span></th>
+      <th class="tg-dzaw"><span style="color:white">Value</span></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="tg-jayl">Source Voltage</td>
+      <td class="tg-jayl"> 14 V<sub>RMS</sub> &plusmn 10% </td>
+    </tr>
+    <tr>
+      <td class="tg-sabo">Source Frequency </td>
+      <td class="tg-sabo"> 50 Hz &plusmn 2% </td>
+    </tr>
+    <tr>
+      <td class="tg-ig71">Load Range</td>
+      <td class="tg-ig71"> 2.5 VA to 7.5 VA </td>
+    </tr>
+    <tr>
+      <td class="tg-sabo">Load Power Factor</td>
+      <td class="tg-sabo">0.75 to 0.99</td>
+    </tr>
+    <tr>
+      <td class="tg-ig71">Measurement Accuracy</td>
+      <td class="tg-ig71">5% of full-scale reading</td>
+    </tr>
+    <tr>
+      <td class="tg-sabo">ADC Conversion Rate</td>
+      <td class="tg-sabo">1 kHz or slower</td>
+    </tr>
+    <tr>
+      <td class="tg-ig71">LCD Display Information</td>
+      <td class="tg-ig71">Voltage, Current, Power and Energy</td>
+    </tr>
+    <tr>
+      <td class="tg-sabo">LCD Display Units</td>
+      <td class="tg-sabo">V<sub>RMS</sub>, A<sub>pk</sub>, W and W.min</td>
+    </tr>
+    <tr>
+      <td class="tg-ig71">LCD Scroll Rate</td>
+      <td class="tg-ig71">1 s</td>
+    </tr>
+    <tr>
+      <td class="tg-sabo">UART Baud Rate</td>
+      <td class="tg-sabo">9600 Baud</td>
+    </tr>
+    <tr>
+      <td class="tg-jayl">Information Transferred Via UART</td>
+      <td class="tg-jayl">Voltage, Current, Power and Energy</td>
+    </tr>
+    <tr>
+      <td class="tg-096r">PCB Size</td>
+      <td class="tg-096r">20000 mm&sup2 </td>
+    </tr>
+    <tr>
+      <td class="tg-jayl">PCB Technology</td>
+      <td class="tg-jayl">Double Layer with PTH</td>
+    </tr>
+    <tr>
+      <td class="tg-096r">Device Technology </td>
+      <td class="tg-096r">TH or SMT</td>
+    </tr>
+  </tbody>
+</table>
+
+---
+name: S17
+
+# Schematic of Recommended Design
+
+.center[
+<img src="img/RecommendedSch.png" height="450">
+]
+
+---
+name: S17
+
+# 3D Render of Recommended Design
+
+.center[
+<img src="img/3DRender.png" height="450">
+]
+
+---
+name: S17
+
+# Demo of Expected Final Design
+
+.center[
+<iframe width="784" height="441" src="https://www.youtube-nocookie.com/embed/5MTaWPhhueY" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+]
+
+---
+
+class: title-slide
+layout: false
+count: false
+.logo-title[]
+
+# Student Designs
+### A Sample of Top Designs
+
+---
+
+layout: true
+name: template_slide
+
+.logo-slide[]
+.footer[[Duleepa J Thrimawithana](https://www.linkedin.com/in/duleepajt), Department of Electrical, Computer and Software Engineering (2020)]
+
+---
+name: S20
+
+# Top Designs from the Past (PI)
+
+&nbsp
+
+.center[
+<img src="img/2016Designs.png" height="325">
+.credits[
+SMT designs with a digitally controlled gain stage (left) & a LCD screen (right) developed by teams in 2016.
+]
+]
+
+---
+name: S21
+
+# Top Designs from the Past (PII)
+
+&nbsp
+
+.center[
+<img src="img/2018Designs.png" height="325">
+.credits[
+A couple of the SMT designs that were developed by teams in 2018.
+]
+]
+
+---
+name: S22
+
+# Top Designs from the Past (PIII)
+
+.center[
+<img src="img/2018Designs2.png" height="400">
+.credits[
+A [web application](https://rabadunk.github.io/group26/) developed by a team in 2018 to log information.
+]
+]
+
+
+---
+
+class: title-slide
+layout: false
+count: false
+.logo-title[]
+
+# Statistics
+### Course Feedback & Student Performance
+
+---
+
+layout: true
+name: template_slide
+
+.logo-slide[]
+.footer[[Duleepa J Thrimawithana](https://www.linkedin.com/in/duleepajt), Department of Electrical, Computer and Software Engineering (2020)]
+
+---
+name: S23
+
+# Course Feedback
+
+.center[
+<img src="img/CourseSurvey.png" height="450">
+]
+
+---
+
+name: S24
+
+# Entry Performance
+
+.center[
+<img src="img/EntryGPAStats.png" height="450">
+]
+
+---
+name: S25
+
+# Past Grades
+
+.center[
+<img src="img/PastGrades.png" height="450">
+]
+
+
+    </textarea>
+
+    <!-- 
+    <script src="https://remarkjs.com/downloads/remark-latest.min.js">
+    </script>
+    -->    
+   
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML&delayStartupUntil=configured" type="text/javascript">
+    </script>
+
+
+    <script src="remark.min.js" type="text/javascript">
+    </script>
+
+    <script type="text/javascript">
+      var hljs = remark.highlighter.engine;
+    </script>
+    <script src="terminal.language.js" type="text/javascript"></script>
+
+    <script src="https://kit.fontawesome.com/a405eedf54.js" crossorigin="anonymous"></script>
+    <script src="mark.min.js" type="text/javascript">
+    </script>
+    <link rel="stylesheet" href="remark.search.css">
+    <script src="remark.search.js" type="text/javascript"></script>
+
+    <script type="text/javascript">
+
+      var options = {};
+
+      var renderMath = function() {
+        renderMathInElement(document.body);
+        // or if you want to use $...$ for math,
+        renderMathInElement(document.body, {delimiters: [ // mind the order of delimiters(!?)
+        {left: "$$", right: "$$", display: true},
+        {left: "$", right: "$", display: false},
+        {left: "\\[", right: "\\]", display: true},
+        {left: "\\(", right: "\\)", display: false},
+        ]});
+      }
+
+      var slideshow = remark.create({
+        ratio: '16:9',
+        slideNumberFormat: '%current%',
+        countIncrementalSlides: false,
+        renderMath,
+        highlightLanguage: 'c',
+        highlightStyle: 'github',
+        navigation: {
+          // Enable or disable navigating using scroll
+          // Default: true
+          // Alternatives: false
+          scroll: true,
+
+          // Enable or disable navigation using touch
+          // Default: true
+          // Alternatives: false
+          touch: true,
+
+          // Enable or disable navigation using click
+          // Default: false
+          // Alternatives: true
+          click: false,
+        },
+      });
+
+      MathJax.Hub.Config({
+          tex2jax: {
+          inlineMath: [['$','$'], ['\\(','\\)']],
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+          processEscapes: true
+          }
+      });
+
+      MathJax.Hub.Queue(function() {
+          $(MathJax.Hub.getAllJax()).map(function(index, elem) {
+              return(elem.SourceElement());
+          }).parent().addClass('has-jax');
+      });
+
+      MathJax.Hub.Configured();
+      
+      //Terminal style highligting code
+      var highlighted = document.querySelectorAll("code.terminal span.hljs-ansi");
+      Array.prototype.forEach.call(highlighted, function(next) {
+        next.insertAdjacentHTML("beforebegin", next.textContent);
+        next.parentNode.removeChild(next);
+      });
+
+      window.addEventListener('load', function() {
+      RemarkSearch.create({'position': 'top-left', 'caseSensitive' : false, 'showIcon': true, 'autoSearch': true});
+      });
+
+    </script>
+  </body>
+</html>
