@@ -682,8 +682,7 @@ name: S27
 #include <avr/io.h>       //Needed for using the macros for register addresses
 #include "tc0.h"          //Including our TC0 peripheral library
 
-int main(void)
-{
+int main(void){
   tc0_init();             //Initializing TC0 to work in CT mode with 1ms period 
   DDRB |= 1 << PINB5;     //Setting PB5 as output
     

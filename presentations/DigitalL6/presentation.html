@@ -1,0 +1,1037 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Embedded Software Design</title>
+    <meta charset="utf-8">
+    <style>
+      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+
+      body { 
+        font-family: 'Droid Serif'; 
+        line-height: 1.6;
+        }
+
+      h1, h2, h3 {
+        font-family: 'Yanone Kaffeesatz';
+        font-weight: bold;
+        color: #00467F;
+      }
+
+      h1{
+        margin-top: 30px !important;
+        margin-bottom: 30px !important;
+      }
+
+      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+
+      .TitleAuthor {
+        color:white; 
+        font-weight: normal;
+      }
+
+      .title-slide .remark-slide-number {
+        display: none;
+      }
+      .title-slide h1, h2, h3, h4 {
+        text-align: left;
+        color:white;
+        line-height: 0.7;
+        font-weight: bold;
+      }
+
+      .title-slide {
+        vertical-align: middle;
+        background-color: #00467F;
+      }
+
+      .logo-title {
+        content: "";
+        position: absolute;
+        top: 15px;
+        right:   15px;
+        height: 88px;
+        width: 267px;
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-image: url(https://cdn.auckland.ac.nz/assets/central/central-services/mediaandmarketing/uoa-logos-2015/uoa-logo-2015-reverse.png);
+      }
+      .logo-slide {
+        content: "";
+        position: absolute;
+        top: 35px;
+        right:   15px;
+        height: 96px;
+        width: 100px;
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-image: url(https://cpb-ap-se2.wpmucdn.com/blogs.auckland.ac.nz/dist/d/79/files/2015/10/uoa-v-colour2.png);
+      }
+
+      .left-column {
+        width: 65%;
+        float: left;
+        word-wrap: break-word;
+      }
+     
+      .right-column {
+        width: 30%;
+        float: right;
+        word-wrap: break-word;
+      }
+
+      .left-column-s {
+        width: 75%;
+        float: left;
+        word-wrap: break-word;
+      }
+     
+      .right-column-s {
+        width: 20%;
+        float: right;
+        word-wrap: break-word;
+      }
+
+      .footer {
+        content: "";
+        position: absolute;
+        bottom: 17px;
+        color:gray;
+        font-size: 10pt;
+      }
+      
+      @page {
+        size: 1210px 681px;
+        margin: 0;
+      }
+
+      @media print {
+        .remark-slide-scaler {
+          width: 100% !important;
+          height: 100% !important;
+          transform: scale(1) !important;
+          top: 0 !important;
+          left: 0 !important;
+        }
+      }
+      
+      .credits {
+        font-size: 12px;
+        line-height: 10px !important;
+        font-family: 'Droid Serif'; 
+      }
+
+      .codes {
+        
+        line-height: 20px !important;
+      }
+
+      .questions {
+        font-size: 20px;
+        line-height: 28px !important;
+        font-family: 'Droid Serif'; 
+      }
+
+      .zoom175 {
+        transition: transform .2s; /* Animation */
+      }
+
+      .zoom175:hover {
+        transform: scale(1.75) translateY(-20%) translateX(-20%); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+      }
+
+      .color-grey{
+        color: #919191;
+      }
+
+    </style>
+
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
+    <style>
+    .smaller-font { font-size:14px } 
+    </style>
+
+    <!-- KaTeX and Mathjax support refer to below for syntax -->
+    <!-- https://math.meta.stackexchange.com/questions/5020/mathjax-basic-tutorial-and-quick-reference -->
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.1/dist/katex.min.css" integrity="sha384-dbVIfZGuN1Yq7/1Ocstc1lUEm+AT+/rCkibIcC/OmWo5f0EA48Vf8CytHzGrSwbQ" crossorigin="anonymous">
+    
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.1/dist/katex.min.js" integrity="sha384-2BKqo+exmr9su6dir+qCw08N2ZKRucY4PrGQPPWU1A7FtlCGjmEGFqXCv5nyM5Ij" crossorigin="anonymous"></script>
+
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.1/dist/contrib/auto-render.min.js" integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous"
+        onload="renderMathInElement(document.body);"></script>
+    
+    <script type="text/javascript" async
+    src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+
+    <style>
+      /* Table Style */
+      .tg  {border-collapse:collapse;border-color:#9ABAD9;border-spacing:0;}
+      .tg td{background-color:#EBF5FF;border-color:#9ABAD9;border-style:solid;border-width:1px;color:#444;
+        font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:2px 10px;word-break:normal;}
+      .tg th{background-color:#409cff;border-color:#9ABAD9;border-style:solid;border-width:1px;color:#fff;
+        font-family:Arial, sans-serif;font-size:14px;font-weight:normal;overflow:hidden;padding:2px 10px;word-break:normal;}
+      .tg .tg-dzaw{background-color:#4F81BD;color:#FFF;font-weight:bold;text-align:left;vertical-align:top}
+      .tg .tg-sabo{background-color:#ebf5ff;color:#000000;text-align:left;vertical-align:top}
+      .tg .tg-096r{color:#000000;text-align:left;vertical-align:top}
+      .tg .tg-jayl{background-color:#d2e4fc;color:#000000;text-align:left;vertical-align:top}
+      .tg .tg-ig71{background-color:#D2E4FC;color:#000000;text-align:left;vertical-align:top}
+    </style>
+
+  </head>
+  <body>
+    <textarea id="source">
+
+class: title-slide
+count: false
+.logo-title[]
+
+## ELECTENG 209
+# Embedded Software Design 
+### Interrupts 
+
+.TitleAuthor[Duleepa J Thrimawithana]
+
+---
+
+layout: true
+name: template_slide
+
+.logo-slide[]
+.footer[[Duleepa J Thrimawithana](https://www.linkedin.com/in/duleepajt), Department of Electrical, Computer and Software Engineering (2020)]
+
+---
+
+name: S1a
+
+# Learning Objectives
+
+- Why are interrupts important?
+- Understanding the differences between interrupts and polling
+- Why do we need interrupts in the project?
+- Understanding Interrupt Service Routine (ISR)
+- How are interrupts implemented by the microprocessor?
+- Learning to configure and use interrupts in the ATmega328P
+- Learning to develop code to use the interrupts in the ATmega328P
+- Understanding RAM allocation 
+- Understanding how the stack, heap and data segment spaces are used
+- Understanding context switching
+
+---
+
+name: S1b
+
+# Lecture Quiz 
+
+- The link to access the lecture quiz is http://q.xorro.com/quvt 
+ - Use your username to login (i.e. UPI in the form *abcd001*)
+ - Quiz is available for 3 days and allows multiple attempts
+- Alternatively scan the QR code below
+
+.center[<img src="img/QR.gif" width="300px">]
+
+---
+
+class: title-slide
+layout: false
+count: false
+.logo-title[]
+
+# Input/Output Events
+### How to Handle I/O Events?
+
+---
+
+layout: true
+name: template_slide
+
+.logo-slide[]
+.footer[[Duleepa J Thrimawithana](https://www.linkedin.com/in/duleepajt), Department of Electrical, Computer and Software Engineering (2020)]
+
+---
+name: S2
+
+# I/O Events
+
+- I/O peripherals enable the microprocessor in an MCU to interface with external electrical signals
+ - So far we have looked at GPIO, UART, ADC and Timer peripherals
+- The peripherals often take considerable amount of time to complete a given task 
+ - The time taken can be many system clock cycles and during this time the microprocessor can be executing part of the code
+ - For example, a UART transmitting at a low baud rate takes a considerable amount of time to send a byte of data
+- The peripherals also have to respond to external signals which are non-deterministic (i.e. we don’t know when they will occur)
+ - When we are trying to detect such signals, the microprocessor have to communicate regularly with the peripherals checking to see if they have occurred
+ - For example, when checking for a push-button press, we have to scan the GPIO pin its connected at regular intervals 
+
+---
+name: S3
+
+# Responding to I/O Events
+
+- So far we used the polling method to respond to events (e.g. a peripheral completing a task or responding to an external signal)
+ - When polling, which is also called “blocking” or “busy waiting”, the microprocessor waits to respond to the event
+- Waiting for peripherals to complete tasks and responding to non-deterministic external signals keep the microprocessor unnecessarily busy
+- To be efficient, the microprocessor needs to execute code in response to these events at the correct time rather than waiting for them to occur
+ - For example, write a byte of data to UART transmit buffer (UDR0) when it is just emptied rather than waiting it to be empty
+- The second method to respond to these events, is to use interrupts
+ - Interrupts enable the microprocessor to respond to events at the correct time rather than waiting for them to occur
+
+---
+name: S4
+
+# Polling 
+
+.center[<img src="img/Polling.png" height="160"> <img src="img/PollingCode.png" height="160">]
+
+- So far we used polling when we interacted with the GPIOs, UART, ADC and timer  
+- We executed code continuously in the form of a loop to check the state of a given register bit
+ - With the UART we checked UDRE0, with ADC we checked ADIF and so on
+- The register bits were checked as part of the normal program execution while halting the execution of the rest of the program
+ - Once the appropriate state was detected, the action was taken and continued with the rest of the program
+
+---
+name: S5
+
+# Benefits & Drawbacks of Polling
+
+- Benefits of polling include
+ - Simple to implement, and does not require any hardware
+ - The processor is always in a known state when executing code, so race conditions and variable states do not have to be managed
+- Drawbacks of polling include
+ - If multiple peripherals require checking, it must do them in a round-robin fashion adding a delay between each check of a given peripheral
+ - If two peripherals require servicing, they will be done in the order they are checked, which may not be the order of priority
+ - Most of the time the check does not result in any work being done, so this processor time has been wasted
+ - It can be very difficult to get the processor to run other code in between polling all of its peripherals
+
+
+---
+name: S6
+
+# Interrupts
+
+.center[<img src="img/Interrupt.png" height="220">]
+
+- Interrupts were introduced explicitly to handle events
+- When an event triggers an interrupt, the normal program execution is halted, and a special function is executed
+ - This special function is called the Interrupt Service Routine (ISR)
+- Once the ISR has completed, the processor returns to the code it was executing before the interrupt occurred
+
+---
+name: S7
+
+# Benefits & Drawbacks of Interrupts
+
+- Benefits of interrupts include
+ - Interrupts can be responded to an event almost immediately
+ - The interrupts can be given priorities to make sure the most important events are always responded to quickly 
+ - The processor can be performing useful work while waiting for an interrupt to occur
+- Drawbacks of interrupts include
+ - Extra hardware is required to implement interrupts 
+ - The state of the processor is not known when an interrupt occurs
+ - Developing the code more difficult, as the program must understand and handle any state which can be modified by an interrupt
+ - Memory management becomes more complex
+
+---
+name: S8
+
+# When to Use Interrupts
+
+- Not every event is best handled by an interrupt
+ - Sometimes it is easier to use polling
+ - Sometimes you have sufficient processing resources that the penalty for polling is insignificant
+- Interrupts should be used when an event has 3 main characteristics
+ - Asynchronous: The event can occur at any time, and there is no way to predict when this will be
+ - Urgent: The event needs to responded to immediately
+ - Infrequent: The event is not occurring continuously
+- An emergency shutdown event (such as over current) is an example of an event which is a good candidate for using an interrupt
+- In contrast, if transmitting a few bytes of data over UART after processing some data, then in this example polling may be used
+
+
+---
+name: S9
+
+# Interrupts in Your Project
+
+.center[<img src="img/System.png" height="190">]
+
+- We need to measure voltage and current at regular time intervals for our calculations
+- While taking these measurements we also need to scan and update the display periodically 
+ - It will be challenging to do both these tasks if we poll the ADC measurements
+- We can setup the ADC to auto-trigger on a timer and use ADC conversion complete interrupt
+ - While waiting for an ADC measurement we can update the display using a timer interrupt 
+ - You will need to think about interrupt priorities to meet your timing requirements 
+- We could put the calculation on hold and use polling to transmit data over the UART 
+
+---
+
+class: title-slide
+layout: false
+count: false
+.logo-title[]
+
+# Interrupt Service Routines
+### Understanding the Fundamentals 
+
+---
+
+layout: true
+name: template_slide
+
+.logo-slide[]
+.footer[[Duleepa J Thrimawithana](https://www.linkedin.com/in/duleepajt), Department of Electrical, Computer and Software Engineering (2020)]
+
+---
+
+name: S10
+
+# What is an ISR?
+
+- An MCU executes a normal program in and orderly sequence determined by the user
+- When an interrupt occurs, the normal program execution is halted, and a special function is executed
+ - This function is called the Interrupt Service Routine (ISR)
+- An ISR can be thought of as a function with no return value, and no input arguments
+ - As always, there are exceptions, but in general this is the case
+- The only way for an ISR to communicate with the rest of the program is through variables with shared scope
+ - These are global variables with file level or unlimited scope (i.e. static or extern global variables)
+- Once the ISR has completed, the processor returns to the code it was executing before the interrupt occurred
+- Each interrupt normally has its own ISR
+ - These ISRs will be executed in the order of their interrupt priority 
+- ISRs are not called as part of the normal program execution
+
+---
+name: S11
+
+# How to Use an ISR
+
+.codes[
+```c
+//An ISR does not take any arguments, and does not return a result
+void interrupt_service_routine_1(void){
+  //Do something 	
+}
+
+void function_1(void){
+  //Do something 	
+}
+
+void function_2(void){
+  //Do something 	
+}
+
+int main(void){
+	
+	while (1){
+    //We can call our functions, but NOT an ISR
+		function_1();
+		function_2();
+	}	
+}
+```
+]
+
+---
+name: S12
+
+# ISR Communication
+
+- As the ISR cannot be passed arguments or return a result, it can only communicate with the rest of the program by using global variables with file or unlimited scope
+- As the interrupt can occur at any time, any variables written by the ISR can be modified at any point during regular execution
+ - Normally the compiler does not expect this, so we must use the *volatile* keyword to alert it
+- The *volatile* keyword prevents the compiler from optimizing the code under the assumption the variable will never change
+- Failure to use the *volatile* keyword can result in code that crashes or doesn’t work
+
+.codes[
+```c
+volatile int my_volatile_variable;          //Global variable with unlimited scope
+volatile extern int my_volatile_variable;   //Global variable with unlimited scope
+volatile static int my_volatile_variable;   //Global variable with file scope
+
+int main(void){
+ //Do something
+}
+```
+]
+
+---
+name: S13
+
+# ISR Communication Example
+
+.codes[
+```c
+//millisecond_counter is not changed by the main function. Therefore, the compiler might infer that the 
+//millisecond_counter is never updated. In this case, millisecond_counter can never be greater than 1000. 
+//So the code can be removed (optimized out). The volatile keyword tells the compiler that the variable 
+//is updated outside the normal program execution, and prevents the code from being removed.
+volatile uint16_t millisecond_counter = 0;
+
+// This ISR is called by a timer every millisecond
+void TIMER_interrupt_service_routine(void){
+  millisecond_counter++;	
+}
+
+// This program toggles an LED every second
+int main(void){
+  TIMER_initialise_for_millisecond_interrupt();
+  LED_initialise();
+  while(1){		
+    if (millisecond_counter > 1000) {   // Check if 1 second has passed
+      LED_toggle();                     // Toggle the LED
+      millisecond_counter = 0;          // Reset the counter
+    }		
+  }	
+}
+```
+]
+
+---
+name: S14
+
+# ISR Execution (PI)
+
+- The microcontroller has special hardware lines which can be set to signal an interrupt has occurred
+- The address of each ISR is stored at a dedicated location in the program memory (usually it is the first thing) in the form of a table 
+ - This table is called the “Interrupt Vector Table”
+ - The position of the interrupt in this table also determines its priority 
+- When an interrupt occurs, the microprocessor completes the current instruction, and stores the address of the next instruction (i.e. the program counter) on the stack
+- Then the address for the ISR of the interrupt that occurred is loaded by the processor to the program counter, and execution of ISR continues from that point
+ - In ATmega328P global interrupts are disabled to avoid nested interrupts
+- Upon completing the ISR, the address stored on the stack is loaded back into the program counter, and execution resumes from that address
+- If other interrupts occurred while executing an ISR, they will be processed in the order of priority after completing the first one
+
+---
+name: S15
+
+# ISR Execution (PII)
+
+.center[<img src="img/InterruptsExecution.png" height="430">]
+
+---
+
+class: title-slide
+layout: false
+count: false
+.logo-title[]
+
+# Interrupts on ATmega328P
+### Configuring and Using
+
+---
+
+layout: true
+name: template_slide
+
+.logo-slide[]
+.footer[[Duleepa J Thrimawithana](https://www.linkedin.com/in/duleepajt), Department of Electrical, Computer and Software Engineering (2020)]
+
+---
+name: S16
+
+# ATmega328P Interrupts
+
+- The ATmega328P supports multiple interrupt sources and these include
+ - GPIO level changes
+ - UART receive complete, transmit buffer empty
+ - ADC conversion completion
+ - Timer compare match, overflow
+- The interrupt priority is fixed where lower addresses in interrupt vector table have a higher priority
+- All interrupt sources have their own interrupt enable bit that needs to be set
+ - The global interrupt enable bit needs to be also set to enable interrupts
+- It takes a minimum of 4 cycles to execute the ISR address in the interrupt vector table
+ - The microprocessor has to complete the instruction it was executing and store the contents of general purpose registers and program counter 
+ - The status register is not stored and restored automatically when servicing an interrupt
+- Global interrupts are automatically disabled when an interrupt occurs and enabled when returning from an ISR
+
+---
+name: S17
+
+# ATmega328P Interrupt Pins
+
+- In the ATmega328P the external interrupt pins INT0 and INT1 are PD2 and PD3
+- Any of the pin change interrupts (PCINTx) pins can also be used as interrupt sources
+ - However they have a shared ISR
+
+.center[<img src="img/328PPins.png" width="320">]
+
+---
+name: S18
+
+# ATmega328P Interrupts Registers
+
+- There is one global interrupt enable bit (I-bit) which enables or disables all interrupts
+
+<table class="tg" style="undefined;table-layout: fixed; width: 600px; margin-left:auto; margin-right:auto;">
+  <colgroup>
+  <col style="width: 200px">
+  <col style="width: 400px">
+  </colgroup>
+  <thead>
+    <tr>
+      <th class="tg-dzaw"><span style="color:white">Register</span></th>
+      <th class="tg-dzaw"><span style="color:white">Functionality</span></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="tg-jayl">SREG</td>
+      <td class="tg-jayl">AVR Status Register</td>
+    </tr>
+  </tbody>
+</table>
+
+- Interrupts associated with most peripherals are configured and controlled using bits in their own registers 
+- There are usually two bits associated with an interrupt
+ - Setting interrupt enable bit causes an interrupt to be triggered by an interrupt event
+ - The interrupt flag bit is set whenever an interrupt event occurs regardless of whether the interrupt enable bit is set or cleared
+- The interrupt flag bit is cleared automatically when the ISR for the interrupt is executed
+ - Alternatively it can be cleared by writing 1 to the flag
+- If an interrupt occurs when executing another ISR, the corresponding interrupt flag will be set so that the new interrupt can be serviced after returning from the current ISR 
+
+---
+name: S19
+
+# Status Register (SREG)
+
+.center[<img src="img/SREG.png" width="600">]
+
+- I: *Global Interrupt Enable* must be set for interrupts to be enabled
+- The other bits are used by the processor and can be ignored
+ - They contain information about the most recently executed instruction by the ALU
+
+---
+name: S20
+
+# Interrupts Associated with Peripherals
+
+- From the interrupt vector table we can see that the peripherals we have discussed so far all have interrupts associated with them
+- USART0 has receive complete, transmit data register empty and transmit complete interrupts
+ - UCSR0B has the interrupt enable bits and UCSR0A has the interrupt flag bits
+- ADC has a conversion complete interrupt
+ - ADCSRA has both the interrupt enable and flag bits
+- TC0 has overflow, compare match A and compare match B interrupts
+ - TIMSK0 has the interrupt enable bits and TIFR0 has the interrupt flag bits 
+- There are more which you may wish to make use of
+ - For example, the zero crossing detector that feeds INT0 can generate an interrupt that could be used to enable taking the set of ADC samples needed for the calculations  
+- In this lecture, we will investigate the TC0 compare match A interrupt
+
+---
+name: S21
+
+# TIMSK0 Registers 
+
+.center[<img src="img/TIMSK0.png" width="600">]
+
+- .color-grey[OCIE0B:	*Output Compare Match B Interrupt Enable* executes corresponding interrupt when OCR0B match TCNT0]
+- OCIE0A:	*Output Compare Match A Interrupt Enable* executes corresponding interrupt when OCR0A match TCNT0
+- .color-grey[TOIE0:	*Overflow Interrupt Enable* executes corresponding interrupt when TCNT0 overflows]
+
+---
+name: S22
+
+# TIFR0 Registers 
+
+.center[<img src="img/TIFR0.png" width="600">]
+
+- .color-grey[OCF0B:	*Output Compare Match B Flag* is set when OCR0B match TCNT0]
+- OCF0A:	*Output Compare Match A Flag* is set when OCR0A match TCNT0
+- .color-grey[TOV0:	*Overflow Flag* is set when TCNT0 overflows]
+
+---
+name: S23
+
+# Clear Timer on Compare Match
+
+.center[<img src="img/CTCMode.png" height="190">]
+
+- As we did during the lecture on timers we are going to operate TC0 in CTC mode
+- In CTC mode, TCNT0 counts up starting from 0, where TCNT0 is incremented by 1 every timer clock cycle
+- TCNT0 value is compared with OCR0A value we will define and when they match, TCNT0 will be set to 0 (i.e. cleared) and OCF0A flag will be set to 1
+ - If OCIE0A bit is set a *TIMER0 COMPA* interrupt will be triggered
+ - OCF0A flag will be cleared when executing the *TIMER0 COMPA* interrupt
+
+---
+name: S24
+
+# Configuring TC0 in CTC Mode
+
+- Lets develop an initialization function to configure TC0 to operate in the [CTC mode](https://ee209-2020class.github.io/presentations/DigitalL5/presentation.html#30)
+- We want the timer to have period of 1ms 
+- Since the ATmega328P uses a 0.8MHz system clock to achieve this 
+ - We will use a prescaler of 8 and load 99 to OCR0A 
+- We also have to enable *TIMER0 COMPA* interrupt by setting the OCIE0A bit
+ - We will also start the timer by setting CS0[2..0] to 010 
+
+.codes[
+```c
+//This function configures TC0 to generate a TIMER0 COMPA interrupt every 1ms
+void tc0_init_1ms_interrupt(void){
+  TCCR0A = 0b00000010;    //WGM0[2..0] should be set to 010 for CTC mode
+  OCR0A = 99;             //Loading OCR0A with 99 to get a period of 1ms
+  TIMSK0 = 0b00000010;    //Enable output compare match A interrupt
+  TCCR0B = 0b00000010;    //Initialize CS0[2..0] to 010 so that timer runs with a prescaler of 8
+}
+```
+]
+
+---
+name: S25
+
+# Writing the ISR
+
+- The C language has no specific rules for interrupts
+- Creating the interrupt vector table and placing it in memory is handled by Atmel Studio
+ - It also provides macros required for interrupts in &#60; avr&#47;interrupt.h &#62;
+- An ISR can be declared using the name of the source as listed in the interrupt vector table with *_vect* added at the end
+ - In this case we will use *TIMER0_COMPA_vect*
+- In the ISR we are going to toggle PB0 while also incrementing *millisecond_counter*, which is a global variable 
+
+.codes[
+```c
+//An ISR is declared ISR(source_name_vect) where source_name is as per interrupt vector table
+//TIMER0 COMPA ISR is called when a compare match A occurs
+ISR(TIMER0_COMPA_vect){
+  PORTB ^= 1 << PINB0;      //Toggle PB0
+  millisecond_counter++;    //Increment the global counter variable
+}
+```
+]
+
+---
+name: S26
+
+# Completing the Code
+
+.codes[
+```c
+#include <avr/io.h>         //Needed for using the macros for register addresses
+#include <avr/interrupt.h>  //Needed for using the macros for interrupts
+#include "tc0.h"            //Including our TC0 peripheral library
+
+static volatile uint16_t millisecond_counter = 0; //Declaring a variable that has a file level scope
+
+ISR(TIMER0_COMPA_vect){                           //ISR for TIMER0 COMPA executes every 1ms
+  PORTB ^= 1 << PINB0;                            //Toggle PB0
+  millisecond_counter++;                          //Increment the global counter variable
+}
+
+int main(void){
+  DDRB |= 1 << PINB5 | 1 << PINB0;    //Setting PB0 and PB5 as output pins
+  tc0_init_1ms_interrupt();           //Initializing TC0 with a 1ms interrupt 
+  sei();                              //Enable global interrupts by setting I-bit
+  while (1){
+    if(millisecond_counter >= 500){   //Check to see 0.5s has elapsed 
+      PORTB ^= 1 << PINB5;            //Toggle PB5 
+      millisecond_counter = 0;        //Reset counter
+    }
+  }
+}
+```
+]
+
+---
+name: S27
+
+# ISR Rules
+
+- ISRs are usually used to ensure the program responds quickly to certain events
+- The processor can only execute one ISR at a time
+- Therefore, ensure that your ISR is as short as possible
+ - Do not use delays or long loops
+ - Do not call expensive functions such as functions used to transmit data over UART
+- You should use the interrupt to handle time critical actions, and then set flags to indicate to the main loop that a task needs to be executed
+ - For example, use the ISR to read data from the UART, and then set a flag to let the main loop know that there is new data available to process
+ - This allows the UART peripheral to receive the next byte
+
+---
+name: S28
+
+# Interrupt Bugs
+
+- While interrupts are powerful, interrupting the execution flow of your program can introduce bugs if you are not careful
+- We briefly discussed the volatile keyword, which prevents compiler optimizations from introducing bugs
+- There are more bugs which are caused by what you actually do inside interrupts 
+- Suppose your interrupt checks a flag to see if a buffer contains some data, and then transmits that data
+ - What happens if the interrupt occurs between the flag getting set and the data being put into the buffer?
+ - If you set the flag after adding the data, you might transmit data that is not the last thing in the buffer
+- Another issue associated with interrupts is stack overflow 
+ - We will discuss about this briefly in the following section of the lecture
+- You will learn about other problems and how to solve them in future courses 
+- For now, try to keep your interrupt code as simple as possible
+
+---
+
+class: title-slide
+layout: false
+count: false
+.logo-title[]
+
+# RAM Usage
+### Stack, Heap and Data Segment Spaces
+
+---
+
+layout: true
+name: template_slide
+
+.logo-slide[]
+.footer[[Duleepa J Thrimawithana](https://www.linkedin.com/in/duleepajt), Department of Electrical, Computer and Software Engineering (2020)]
+
+---
+name: S29
+
+# RAM Allocation
+
+.left-column[
+- Recall that RAM is one of the three core resources a microcontroller has
+- RAM is split into three sections
+ - The Stack: Used for temporary storage of variables associated with functions and grows as functions are called, and shrinks as functions return
+ - The Heap: Used for storing dynamic variables using malloc and it is set to a fixed size by the programmer
+ - The Data Segment: Used for storage of variables with greater than function scope (static or global), which are allocated at compile time and is set to a fixed size depending on how many of these variables need to be stored
+]
+
+.right-column[
+.center[<img src="img/RAMAlloc.png" width="240">]
+]
+
+---
+name: S30
+
+# RAM Considerations
+
+- The combined size of the stack, heap, and data segment cannot exceed the size of RAM
+ - Running out of space is called a “stack collision” or “stack overflow”
+- You need to be aware of this in your program
+ - If you have unexplained crashes/behavior, you may have a stack collision
+- High stack usage can be attributed to 
+ - Many nested function calls (especially recursion)
+ - Allocating large arrays inside functions
+- High heap usage can be attributed to 
+ - Using malloc() to create large dynamic arrays
+ - Not releasing allocated memory using free()
+- High data usage can be attributed to 
+ - Allocating large arrays with file or unlimited scope
+- Be careful when allocating arrays to store data in your project
+
+---
+name: S31
+
+# Example: RAM Calculations
+
+.questions[
+A program has two global arrays of 16-bit integers. Each array can store 100 variables. The size of the RAM is 2kB. Assume a 100 byte heap is present.
+ - What is the total data segment size used by the two arrays?
+ - How much space is left for the stack? 
+]
+
+---
+name: S32
+
+# The Stack
+
+- The stack is a consecutive block of data which stores
+ - Local variables
+ - Function parameters and return values for each function called
+ - Return addresses for each function/ISR called
+ - Temporary storage of register values
+- Usually the stack starts at the last RAM address (highest) and grows down
+
+.center[<img src="img/StackUse.png" height="200">]
+
+---
+name: S33
+
+# How Does the Stack Operate?
+
+- The stack operates as a last-in-first-out (LIFO) buffer
+- The stack pointer stores the address of the next available location on the stack
+- The stack pointer is decremented each time data is placed onto the stack (pushed)
+- The stack pointer is incremented each time data is removed from the stack (popped)
+
+.center[<img src="img/StackOp.png" height="250">]
+
+---
+name: S34
+
+# The Push Operation
+
+- To add data to the stack it is “pushed” to the stack pointer address, and the stack pointer is then increased
+&nbsp;
+
+.center[<img src="img/Push.png" height="280">]
+
+---
+name: S35
+
+# The Pop Operation
+
+- To remove data from the stack the stack pointer is decreased, and then data is “popped” out from the stack pointer address 
+&nbsp;
+
+.center[<img src="img/Pop.png" height="280">]
+
+---
+name: S36
+
+# Example: Investigating the Use of RAM
+
+.questions[
+Simulate the following code in Atmel Studio and comment on how the RAM is used.
+]
+.codes[
+```c
+#include <avr/io.h>
+
+volatile uint16_t voltages_mv[20];    //Which part of memory is this stored?
+volatile uint16_t voltage_rms_mv = 0; //Which part of memory is this stored?
+
+uint16_t my_func(uint16_t data_in){   //How is the function input communicated?
+  static uint16_t x;                  //Which part of memory is this stored?
+  uint16_t y = 600;					
+  x = x + data_in + y;
+  return x;
+}
+
+int main(void){
+  uint16_t a = 2000;					
+  uint16_t b = 4000;					
+  voltage_rms_mv = b/4;             //What happens to the global variable?
+  voltages_mv[0] = a+voltages_mv;   //What happens to the global variable?
+  uint16_t c = my_func(5000);       //What get pushed when jumping and what get popped when returning?
+}
+```
+]
+
+---
+name: S37
+
+# Context Switching
+
+- While a function is executing (such as during normal program operation) it uses the microprocessor register file
+ - The register file is where variables which are being actively used are stored, such as inputs for arithmetic operations, loop counters etc.
+ - The ATmega328P has 32 registers 
+- The ISR will also use the register file, so before executing an ISR the data in the registers must be saved to the stack
+ - You need to make sure that there is sufficient space in the stack
+ - The function you were in when before jumping to the ISR may not be using all the registers 
+- After the ISR completes, these values are loaded from the stack back into the registers
+- This process is called a “context switch” 
+ - The compiler automatically adds these instructions to the ISR
+ 
+---
+name: S38
+
+# ISR Execution Delay
+
+- The time taken to start executing an ISR is limited by how long the context switch takes
+ - This delay time is an important design parameter
+
+.center[<img src="img/ContextSwitch.png" height="320">]
+
+---
+
+class: title-slide
+layout: false
+count: false
+.logo-title[]
+
+# Acknowledgments 
+#### These slides are adapted from material prepared by Travis Scott & Muhammad Nadeem
+
+
+    </textarea>
+
+    <!-- 
+    <script src="https://remarkjs.com/downloads/remark-latest.min.js">
+    </script>
+    -->    
+   
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML&delayStartupUntil=configured" type="text/javascript">
+    </script>
+
+
+    <script src="remark/remark.min.js" type="text/javascript">
+    </script>
+
+    <script type="text/javascript">
+      var hljs = remark.highlighter.engine;
+    </script>
+    <script src="remark/terminal.language.js" type="text/javascript"></script>
+
+    <script src="https://kit.fontawesome.com/a405eedf54.js" crossorigin="anonymous"></script>
+    <script src="remark/mark.min.js" type="text/javascript">
+    </script>
+    <link rel="stylesheet" href="remark/remark.search.css">
+    <script src="remark/remark.search.js" type="text/javascript"></script>
+
+    <script type="text/javascript">
+
+      var options = {};
+
+      var renderMath = function() {
+        renderMathInElement(document.body);
+        // or if you want to use $...$ for math,
+        renderMathInElement(document.body, {delimiters: [ // mind the order of delimiters(!?)
+        {left: "$$", right: "$$", display: true},
+        {left: "$", right: "$", display: false},
+        {left: "\\[", right: "\\]", display: true},
+        {left: "\\(", right: "\\)", display: false},
+        ]});
+      }
+
+      var slideshow = remark.create({
+        ratio: '16:9',
+        slideNumberFormat: '%current%',
+        countIncrementalSlides: false,
+        renderMath,
+        highlightLanguage: 'c',
+        highlightStyle: 'github',
+        navigation: {
+          // Enable or disable navigating using scroll
+          // Default: true
+          // Alternatives: false
+          scroll: true,
+
+          // Enable or disable navigation using touch
+          // Default: true
+          // Alternatives: false
+          touch: true,
+
+          // Enable or disable navigation using click
+          // Default: false
+          // Alternatives: true
+          click: false,
+        },
+        
+      });
+
+      MathJax.Hub.Config({
+          tex2jax: {
+          inlineMath: [['$','$'], ['\\(','\\)']],
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+          processEscapes: true
+          }
+      });
+
+      MathJax.Hub.Queue(function() {
+          $(MathJax.Hub.getAllJax()).map(function(index, elem) {
+              return(elem.SourceElement());
+          }).parent().addClass('has-jax');
+      });
+
+      MathJax.Hub.Configured();
+      
+      //Terminal style highligting code
+      var highlighted = document.querySelectorAll("code.terminal span.hljs-ansi");
+      Array.prototype.forEach.call(highlighted, function(next) {
+        next.insertAdjacentHTML("beforebegin", next.textContent);
+        next.parentNode.removeChild(next);
+      });
+
+      window.addEventListener('load', function() {
+      RemarkSearch.create({'position': 'top-left', 'caseSensitive' : false, 'showIcon': true, 'autoSearch': true});
+      });
+
+
+    </script>
+  </body>
+</html>
