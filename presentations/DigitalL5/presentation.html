@@ -214,7 +214,7 @@ name: S1a
 - How does a timer peripheral work?
 - What different timer peripheral configurations are there?
 - How do we characterize timer peripherals?
-- Learning to configure and use the timers in the ATmega328P
+- Learning to configure the timers in the ATmega328P
 - Learning to develop code to use the timers in the ATmega328P
 - Understanding pulse width modulation (PWM)
 
@@ -258,7 +258,7 @@ name: S2
 - Often we want to perform some action after a certain period of time
  - This could be a one time (single) action, or a repeated (periodic) action
  - As an example consider blinking an LED every 1s
-- We als want to monitor activities, and want to determine for how long or how often they occur
+- We also want to monitor activities, and want to determine for how long or how often they occur
  - As an example consider having to measure how long a button is pressed for
 - All microcontrollers have a notion of time based on its clock, as each clock period is a function of the system clock frequency
 \\[ T\_{system\\\_clk} = \frac{1}{f\_{system\\\_clk}} \\]
@@ -271,7 +271,7 @@ name: S3
 # Timing Without Timer Peripherals
 
 - The microcontroller processor also has a notion of time from the system clock since the duration of each execution cycle is also
-\\[ T\_{system\\\_clk} = \frac{1}{f\_{system\\\_clk}} \\]
+\\[ T\_{cpu\\\_clk} = \frac{1}{f\_{cpu\\\_clk}} \\]
 - We could implement timing in software by using for example a 'dummy' block of code that uses up execution cycles
  - This is at the expense of taking up the processor time
 - We also need to know exactly how many clock cycles it took to execute the block of code used for timing 
@@ -403,7 +403,7 @@ name: S11
 ---
 name: S12
 
-# Characteristics of a Timer (PI)
+# Characteristics of a Timer (PII)
 
 - Range
  - This is the maximum time interval the timer can measure
@@ -573,17 +573,17 @@ name: S20
 ---
 name: S21
 
-# OCR0A & OCR0B Register
+# OCR0A & OCR0B Registers
 
 .center[<img src="img/OCR0.png" width="600">]
 
-- OCR0A[7..0]: *Output Compare Register A* is either used as Top, or compared with TCNT0 and a match can be used to generate an interrupt or to generate a waveform on the 0C0A pin
-- .color-grey[OCR0B[7..0]: *Output Compare Register B* is compared with TCNT0 and a match can be used to generate an interrupt, or to generate a waveform on the 0C0B pin]
+- OCR0A[7..0]: *Output Compare Register A* is either used as Top, or compared with TCNT0 and a match can be used to generate an interrupt or to generate a waveform on the OC0A pin
+- .color-grey[OCR0B[7..0]: *Output Compare Register B* is compared with TCNT0 and a match can be used to generate an interrupt, or to generate a waveform on the OC0B pin]
 
 ---
 name: S22
 
-# TIMSK0 Registers 
+# TIMSK0 Register
 
 .center[<img src="img/TIMSK0.png" width="600">]
 
@@ -594,7 +594,7 @@ name: S22
 ---
 name: S23
 
-# TIFR0 Registers 
+# TIFR0 Register
 
 .center[<img src="img/TIFR0.png" width="600">]
 
