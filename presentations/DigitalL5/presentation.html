@@ -208,12 +208,12 @@ name: S1a
 
 # Learning Objectives
 
-- Why are timers important?
+- Why are timer peripherals important?
 - Can we do timing using software?
 - Why do we need timers in the project?
 - How does a timer peripheral work?
-- What different timer configurations are there?
-- How do we characterize timers?
+- What different timer peripheral configurations are there?
+- How do we characterize timer peripherals?
 - Learning to configure and use the timers in the ATmega328P
 - Learning to develop code to use the timers in the ATmega328P
 - Understanding pulse width modulation (PWM)
@@ -258,11 +258,11 @@ name: S2
 - Often we want to perform some action after a certain period of time
  - This could be a one time (single) action, or a repeated (periodic) action
  - As an example consider blinking an LED every 1s
-- We als want to monitoring activities, and want to determine how long or how often they occur
+- We als want to monitor activities, and want to determine for how long or how often they occur
  - As an example consider having to measure how long a button is pressed for
 - All microcontrollers have a notion of time based on its clock, as each clock period is a function of the system clock frequency
-\\[ T\_{clk} = \frac{1}{f\_{clk}} \\]
-- Timers are peripherals which enable us to convert the `\(T_{clk}\)` either into actions in real time or to measure events in real time
+\\[ T\_{system\\\_clk} = \frac{1}{f\_{system\\\_clk}} \\]
+- Timers are peripherals which enable us to convert the `\(T_{system\_clk}\)` either into actions in real time or to measure events in real time
 
 ---
 
@@ -270,13 +270,13 @@ name: S3
 
 # Timing Without Timer Peripherals
 
-- The microcontroller processor also has a notion of time from the system clock since the duration of each execution cycle is 
-\\[ T\_{clk} = \frac{1}{f\_{clk}} \\]
+- The microcontroller processor also has a notion of time from the system clock since the duration of each execution cycle is also
+\\[ T\_{system\\\_clk} = \frac{1}{f\_{system\\\_clk}} \\]
 - We could implement timing in software by using for example a 'dummy' block of code that uses up execution cycles
- - This is at the expense taking up the processor time
+ - This is at the expense of taking up the processor time
 - We also need to know exactly how many clock cycles it took to execute the block of code used for timing 
  - This can be tricky and the functionality is limited
-- As an example we can use the assembly instruction **NOP** to generate a single cycle delay
+- As an example we can use the assembly instruction **NOP** to generate a single execution cycle delay
  - In the C code having **asm("NOP");** repeated a number of times can create a given delay
  - Alternatively a loop may also be used
 
@@ -286,10 +286,10 @@ name: S4
 # Example: Timing in Software
 
 .questions[
-An ATmega328P uses a 1MHz system clock. In an embedded program you were developing, a 4&mu;s needed to be generated and you decided that the best option is to use **NOP** operations. 
+An ATmega328P uses a 1MHz system clock. In an embedded program you were developing, a 4&mu;s delay needed to be generated and you decided that the best option is to use **NOP** operations. 
  - How long does it take to execute a single **NOP** operation?
  - How many **NOP** operations should you execute to create a 4&mu;s delay?
- - Write the code that could be used to generate a 4&mu;s
+ - Write the code that could be used to generate a 4&mu;s 
 ]
 
 ---
@@ -301,7 +301,7 @@ name: S5
 
 - The smart energy monitor needs to measure voltage and current to determine power drawn by the load
 - We will need to measure these signals at regular time intervals as per project specifications
- - We may also want to for example measure time between zero crossings tp determine the frequency
+ - We may also want to for example measure time between zero crossings to determine the frequency
 - We will need to update the display periodically and send data over the UART periodically
 - We will use the timer peripherals on the ATmega328P to perform each of these timing tasks
  - You will need to think about the most suitable timer peripheral for each function taking in to account their characteristics and interrupt priorities
@@ -345,7 +345,7 @@ name: S7
 .center[<img src="img/TimerReset.png" height="250">]
 
 - If the counter size is 8-bits and it is counting up, it will reset to 0 at the next increment after 255
-- Alternatively, the counter can be made to reset every time it reaches a specific count, referred to as **TOP**, thats lets than largest number the counter can hold 
+- Alternatively, the counter can be made to reset every time it reaches a specific count, referred to as **TOP**, and **TOP** should be less than largest number the counter can hold (referred to as the **MAX**)
 - The event generated when a counter resets, referred to as an **overflow**, can be used for precise timing
  - Either using polling or interrupts
 
@@ -356,10 +356,10 @@ name: S8
 
 .center[<img src="img/TimerCompare.png" height="250">]
 
-- A compare value can be used to detect when a set count value is reached
+- A **compare** value can be used to detect when a set count value is reached
 - The event generated when a **compare match** occurs can be used for precise timing
  - Either using polling or interrupts
-- Overflow and compare match events can be used to generate a pulse width modulated (PWM) signal
+- Overflow and compare match events can also generate a pulse width modulated (PWM) signal
  - We will talk about PWM briefly later in the lecture
 
 ---
@@ -379,10 +379,9 @@ name: S10
 # Example: Timing with Timer Peripheral
 
 .questions[
-An ATmega328P uses a 1MHz system clock. In an embedded program you were developing, a 4&mu;s needed to be generated and you decided that the best option is to use a timer peripheral. The timer peripheral you are using is fed directly by the system clock (i.e. prescaler is 1).
- - How long does it take to execute a single **NOP** operation?
- - How many **NOP** operations should you execute to create a 4&mu;s delay?
- - Write the code that could be used to generate a 4&mu;s
+An ATmega328P uses a 1MHz system clock. In an embedded program you were developing, a 4&mu;s delay needed to be generated and you decided that an option is to use a timer peripheral. The timer peripheral you are using is fed directly by the system clock (i.e. prescaler is 1).
+ - If you plan to use an overflow event for timing what should be the **Top** value?
+ - If you plan to use a compare match event for timing what should be the **Compare** value?
 ]
 
 ---
@@ -462,7 +461,7 @@ name: S14
  - Clear on match (auto-reload)
  - PWM generation
  - Three independent interrupt sources
-- In this lecture we will learn to use TC0 with polling
+- We will learn to use the timer with polling
 - For the project you will have to use interrupts as there are tasks that need to happen in parallel
  - You may also decide to use more than 1 timer peripheral 
 
@@ -472,7 +471,7 @@ name: S15
 
 # ATmega328P TC0 Pins
 
-- In the ATmega328P there are there are 3 pins associated with TC0
+- In the ATmega328P there are 3 pins associated with TC0
  - PD4 (T0) is used to provide an external clock source while PD5 (OC0B) and PD6 (OC0A) are used to generate waveforms based on compare match events
 
 .center[<img src="img/328PPins.png" width="320">]
@@ -537,7 +536,7 @@ name: S17
 - TCCR0A and TCCR0B are used to configure TC0 peripheral 
 - TCNT0 is an 8-bit register that holds the count value
 - OCR0A and OCR0B are used to set the compare match value (and in some modes the Top)
-- TIMSK0 is used to configure interrupts while TIFR0 contains flags
+- TIMSK0 is used to configure interrupts and TIFR0 contains flags
 
 ---
 name: S18
@@ -548,7 +547,7 @@ name: S18
 
 - .color-grey[COM0A[1..0]:	*Compare Match Output A Mode* where 00 = Disconnect, 01 = Toggle on Match, 10 = Clear on Match, 11 = Set on Match]
 - .color-grey[COM0B[1..0]:	*Compare Match Output B Mode* where 00 = Disconnect, 01 = Toggle on Match, 10 = Clear on Match, 11 = Set on Match]
-- WGM0[1..0]: *Waveform Generation Mode* together with WGM02 in TCCR0B selects 000 = Normal, 001 = Phase Correct PWM with 0xFF as Top, 010 = Clear on Compare Match with OCRA as Top, 011 = Fast PWM with 0xFF as Top, 101 = Phase Correct PWM with OCRA as Top, 111 = Fast PWMwith OCRA as Top
+- WGM0[1..0]: *Waveform Generation Mode* together with WGM02 in TCCR0B selects 000 = Normal, 001 = Phase Correct PWM with 0xFF as Top, 010 = Clear on Compare Match with OCRA as Top, 011 = Fast PWM with 0xFF as Top, 101 = Phase Correct PWM with OCRA as Top, 111 = Fast PWM with OCRA as Top
 
 ---
 name: S19
@@ -630,7 +629,8 @@ name: S25
 
 .codes[
 ```c
-//This function configures TC0 to use a prescaler of 8 and operate in CTC mode with a period of 1ms
+//This function configures TC0 to operate in CTC mode with a period of 1ms
+//The prescaler of 8 needed is not loaded to keep timer stopped until it is used 
 void tc0_init(void){
   TCCR0A = 0b00000010;    //WGM0[2..0] should be set to 010 for CTC mode
   TCCR0B = 0b00000000;    //Initialize CS0[2..0] to 000 so that timer is stopped until needed
@@ -657,7 +657,7 @@ void tc0_ms_delay(uint32_t milliseconds){
   TCNT0 = 0;                          //Reset the TCNT0 count
   TCCR0B |= 0b00000010;               //Start the timer with a prescaler of 8
 	
-	//Loop until the requested milliseconds have elapsed
+  //Loop until the requested milliseconds have elapsed
   while (timer_overflows < milliseconds) {
     if((TIFR0 & (1 << OCF0A)) != 0){  //Check if the timer has overflowed
       timer_overflows++;              //Increase the overflow count
@@ -683,7 +683,7 @@ name: S27
 #include "tc0.h"          //Including our TC0 peripheral library
 
 int main(void){
-  tc0_init();             //Initializing TC0 to work in CT mode with 1ms period 
+  tc0_init();             //Initializing TC0 to work in CTC mode with 1ms period 
   DDRB |= 1 << PINB5;     //Setting PB5 as output
     
   while (1){
@@ -745,7 +745,7 @@ name: S30
 
 # Using Timer to Generate a PWM Signal
 
-- When using a timer, the count value is reset when it reaches the Top value, which sets the timer period
+- In a timer, the count value is reset when it reaches the **Top** value, which sets the timer period
  - We can use this property to generate T<sub>p</sub> of a PWM signal
 - A compare match event can be used to drive the digital I/O pins connected to OCnA/OCnB when count value reaches the compare value
  - We can use this property to set T<sub>on</sub> of the PWM, by setting the output state of OCnA/OCnB to low when every time a compare match is achieved
