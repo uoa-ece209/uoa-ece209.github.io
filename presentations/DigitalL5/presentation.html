@@ -547,7 +547,7 @@ name: S18
 
 - .color-grey[COM0A[1..0]:	*Compare Match Output A Mode* where 00 = Disconnect, 01 = Toggle on Match, 10 = Clear on Match, 11 = Set on Match]
 - .color-grey[COM0B[1..0]:	*Compare Match Output B Mode* where 00 = Disconnect, 01 = Toggle on Match, 10 = Clear on Match, 11 = Set on Match]
-- WGM0[1..0]: *Waveform Generation Mode* together with WGM02 in TCCR0B selects 000 = Normal, 001 = Phase Correct PWM with 0xFF as Top, 010 = Clear on Compare Match with OCRA as Top, 011 = Fast PWM with 0xFF as Top, 101 = Phase Correct PWM with OCRA as Top, 111 = Fast PWM with OCRA as Top
+- WGM0[1..0]: *Waveform Generation Mode* together with WGM02 in TCCR0B selects 000 = Normal, 001 = Phase Correct PWM with 0xFF as Top, 010 = Clear on Compare Match with OCR0A as Top, 011 = Fast PWM with 0xFF as Top, 101 = Phase Correct PWM with OCR0A as Top, 111 = Fast PWM with OCR0A as Top
 
 ---
 name: S19
