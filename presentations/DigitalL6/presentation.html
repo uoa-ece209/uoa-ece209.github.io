@@ -761,11 +761,10 @@ name: S29
 # Interrupt Bugs
 
 - While interrupts are powerful, interrupting the execution flow of your program can introduce bugs if you are not careful
-- We briefly discussed the volatile keyword, which prevents compiler optimizations from introducing bugs
-- There are more bugs which are caused by what you actually do inside interrupts 
+- We discussed the volatile keyword, which prevents compiler optimizations from introducing bugs
 - Suppose your interrupt checks a flag to see if a buffer contains some data, and then transmits that data
- - What happens if the interrupt occurs between the flag getting set and the data being put into the buffer?
- - If you set the flag before adding the data, you might transmit data that is not the last thing in the buffer
+ - If the interrupt occurs between the flag getting set and the data being put into the buffer you might transmit data that is not the last thing in the buffer
+- Similarly, when a multi-byte variable that is modified by an ISR is also used in a function they need to be atomically read/modified 
 - Another issue associated with interrupts is stack overflow 
  - We will discuss about this briefly in the following section of the lecture
 - You will learn about other problems and how to solve them in future courses 
