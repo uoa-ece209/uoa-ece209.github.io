@@ -127,6 +127,11 @@
         line-height: 20px !important;
       }
 
+      .codes_dense {
+        
+        line-height: 15px !important;
+      }
+
       .questions {
         font-size: 20px;
         line-height: 28px !important;
@@ -214,7 +219,6 @@ name: S1a
 - Understanding Interrupt Service Routine (ISR)
 - How are interrupts implemented by the microprocessor?
 - Learning to configure and use interrupts in the ATmega328P
-- Learning to develop code to use the interrupts in the ATmega328P
 - Understanding RAM allocation 
 - Understanding how the stack, heap and data segment spaces are used
 - Understanding context switching
@@ -258,11 +262,11 @@ name: S2
 - I/O peripherals enable the microprocessor in an MCU to interface with external electrical signals
  - So far we have looked at GPIO, UART, ADC and Timer peripherals
 - The peripherals often take considerable amount of time to complete a given task 
- - The time taken can be many system clock cycles and during this time the microprocessor can be executing part of the code
+ - The time taken can be many system clock cycles and during this time the microprocessor can be executing code
  - For example, a UART transmitting at a low baud rate takes a considerable amount of time to send a byte of data
 - The peripherals also have to respond to external signals which are non-deterministic (i.e. we don’t know when they will occur)
  - When we are trying to detect such signals, the microprocessor have to communicate regularly with the peripherals checking to see if they have occurred
- - For example, when checking for a push-button press, we have to scan the GPIO pin its connected at regular intervals 
+ - For example, when checking for a push-button press, we have to regularly scan the GPIO pin it is connected at
 
 ---
 name: S3
@@ -301,7 +305,7 @@ name: S5
 - Drawbacks of polling include
  - If multiple peripherals require checking, it must do them in a round-robin fashion adding a delay between each check of a given peripheral
  - If two peripherals require servicing, they will be done in the order they are checked, which may not be the order of priority
- - Most of the time the check does not result in any work being done, so this processor time has been wasted
+ - Most of the time, the checking does not result in any work being done, so this processor time has been wasted
  - It can be very difficult to get the processor to run other code in between polling all of its peripherals
 
 
@@ -323,13 +327,13 @@ name: S7
 # Benefits & Drawbacks of Interrupts
 
 - Benefits of interrupts include
- - Interrupts can be responded to an event almost immediately
+ - Interrupts can respond to an event almost immediately
  - The interrupts can be given priorities to make sure the most important events are always responded to quickly 
  - The processor can be performing useful work while waiting for an interrupt to occur
 - Drawbacks of interrupts include
  - Extra hardware is required to implement interrupts 
  - The state of the processor is not known when an interrupt occurs
- - Developing the code more difficult, as the program must understand and handle any state which can be modified by an interrupt
+ - Developing the code is more difficult, as the program must understand and handle any state which can be modified by an interrupt
  - Memory management becomes more complex
 
 ---
@@ -361,7 +365,7 @@ name: S9
 - We can setup the ADC to auto-trigger on a timer and use ADC conversion complete interrupt
  - While waiting for an ADC measurement we can update the display using a timer interrupt 
  - You will need to think about interrupt priorities to meet your timing requirements 
-- We could put the calculation on hold and use polling to transmit data over the UART 
+- After the calculation are done we can use polling to transmit data over the UART 
 
 ---
 
@@ -407,7 +411,7 @@ name: S11
 .codes[
 ```c
 //An ISR does not take any arguments, and does not return a result
-void interrupt_service_routine_1(void){
+ISR(NAME_vect){
   //Do something 	
 }
 
@@ -443,9 +447,9 @@ name: S12
 
 .codes[
 ```c
-volatile int my_volatile_variable;          //Global variable with unlimited scope
-volatile extern int my_volatile_variable;   //Global variable with unlimited scope
-volatile static int my_volatile_variable;   //Global variable with file scope
+volatile uint8_t my_volatile_variable_1;          //Global variable with unlimited scope
+extern volatile uint8_t my_volatile_variable_2;   //Global variable with unlimited scope
+static volatile uint8_t my_volatile_variable_3;   //Global variable with file scope
 
 int main(void){
  //Do something
@@ -466,19 +470,19 @@ name: S13
 //is updated outside the normal program execution, and prevents the code from being removed.
 volatile uint16_t millisecond_counter = 0;
 
-// This ISR is called by a timer every millisecond
-void TIMER_interrupt_service_routine(void){
+//This ISR is called by a timer every millisecond
+ISR(NAME_vect){
   millisecond_counter++;	
 }
 
-// This program toggles an LED every second
+//This program toggles an LED every second
 int main(void){
   TIMER_initialise_for_millisecond_interrupt();
   LED_initialise();
   while(1){		
-    if (millisecond_counter > 1000) {   // Check if 1 second has passed
-      LED_toggle();                     // Toggle the LED
-      millisecond_counter = 0;          // Reset the counter
+    if (millisecond_counter > 1000) {   //Check if 1 second has passed
+      LED_toggle();                     //Toggle the LED
+      millisecond_counter = 0;          //Reset the counter
     }		
   }	
 }
@@ -539,8 +543,7 @@ name: S16
 - All interrupt sources have their own interrupt enable bit that needs to be set
  - The global interrupt enable bit needs to be also set to enable interrupts
 - It takes a minimum of 4 cycles to execute the ISR address in the interrupt vector table
- - The microprocessor has to complete the instruction it was executing and store the contents of general purpose registers and program counter 
- - The status register is not stored and restored automatically when servicing an interrupt
+ - The microprocessor has to complete the instruction it was executing and store the contents of general purpose registers, program counter, as well as the status register before servicing an interrupt
 - Global interrupts are automatically disabled when an interrupt occurs and enabled when returning from an ISR
 
 ---
@@ -602,6 +605,13 @@ name: S19
 ---
 name: S20
 
+# The Interrupt Vector Table
+
+.center[<img src="img/InterruptVecTable.png" width="530">]
+
+---
+name: S21
+
 # Interrupts Associated with Peripherals
 
 - From the interrupt vector table we can see that the peripherals we have discussed so far all have interrupts associated with them
@@ -616,7 +626,7 @@ name: S20
 - In this lecture, we will investigate the TC0 compare match A interrupt
 
 ---
-name: S21
+name: S22
 
 # TIMSK0 Registers 
 
@@ -627,7 +637,7 @@ name: S21
 - .color-grey[TOIE0:	*Overflow Interrupt Enable* executes corresponding interrupt when TCNT0 overflows]
 
 ---
-name: S22
+name: S23
 
 # TIFR0 Registers 
 
@@ -638,7 +648,7 @@ name: S22
 - .color-grey[TOV0:	*Overflow Flag* is set when TCNT0 overflows]
 
 ---
-name: S23
+name: S24
 
 # Clear Timer on Compare Match
 
@@ -651,12 +661,12 @@ name: S23
  - OCF0A flag will be cleared when executing the *TIMER0 COMPA* interrupt
 
 ---
-name: S24
+name: S25
 
 # Configuring TC0 in CTC Mode
 
 - Lets develop an initialization function to configure TC0 to operate in the [CTC mode](https://ee209-2020class.github.io/presentations/DigitalL5/presentation.html#30)
-- We want the timer to have period of 1ms 
+- We want TC0 to generate an interrupt every 1ms 
 - Since the ATmega328P uses a 0.8MHz system clock to achieve this 
  - We will use a prescaler of 8 and load 99 to OCR0A 
 - We also have to enable *TIMER0 COMPA* interrupt by setting the OCIE0A bit
@@ -675,7 +685,7 @@ void tc0_init_1ms_interrupt(void){
 ]
 
 ---
-name: S25
+name: S26
 
 # Writing the ISR
 
@@ -698,11 +708,11 @@ ISR(TIMER0_COMPA_vect){
 ]
 
 ---
-name: S26
+name: S27
 
 # Completing the Code
 
-.codes[
+.codes_dense[
 ```c
 #include <avr/io.h>         //Needed for using the macros for register addresses
 #include <avr/interrupt.h>  //Needed for using the macros for interrupts
@@ -720,17 +730,19 @@ int main(void){
   tc0_init_1ms_interrupt();           //Initializing TC0 with a 1ms interrupt 
   sei();                              //Enable global interrupts by setting I-bit
   while (1){
+    cli();                            //Disable global interrupts to ensure correct operation of if statement
     if(millisecond_counter >= 500){   //Check to see 0.5s has elapsed 
       PORTB ^= 1 << PINB5;            //Toggle PB5 
       millisecond_counter = 0;        //Reset counter
     }
+    sei();                            //Enable global interrupts by setting I-bit
   }
 }
 ```
 ]
 
 ---
-name: S27
+name: S28
 
 # ISR Rules
 
@@ -744,7 +756,7 @@ name: S27
  - This allows the UART peripheral to receive the next byte
 
 ---
-name: S28
+name: S29
 
 # Interrupt Bugs
 
@@ -753,7 +765,7 @@ name: S28
 - There are more bugs which are caused by what you actually do inside interrupts 
 - Suppose your interrupt checks a flag to see if a buffer contains some data, and then transmits that data
  - What happens if the interrupt occurs between the flag getting set and the data being put into the buffer?
- - If you set the flag after adding the data, you might transmit data that is not the last thing in the buffer
+ - If you set the flag before adding the data, you might transmit data that is not the last thing in the buffer
 - Another issue associated with interrupts is stack overflow 
  - We will discuss about this briefly in the following section of the lecture
 - You will learn about other problems and how to solve them in future courses 
@@ -778,7 +790,7 @@ name: template_slide
 .footer[[Duleepa J Thrimawithana](https://www.linkedin.com/in/duleepajt), Department of Electrical, Computer and Software Engineering (2020)]
 
 ---
-name: S29
+name: S30
 
 # RAM Allocation
 
@@ -795,7 +807,7 @@ name: S29
 ]
 
 ---
-name: S30
+name: S31
 
 # RAM Considerations
 
@@ -810,11 +822,11 @@ name: S30
  - Using malloc() to create large dynamic arrays
  - Not releasing allocated memory using free()
 - High data usage can be attributed to 
- - Allocating large arrays with file or unlimited scope
+ - Allocating large arrays with static or global scope
 - Be careful when allocating arrays to store data in your project
 
 ---
-name: S31
+name: S32
 
 # Example: RAM Calculations
 
@@ -825,7 +837,7 @@ A program has two global arrays of 16-bit integers. Each array can store 100 var
 ]
 
 ---
-name: S32
+name: S33
 
 # The Stack
 
@@ -839,7 +851,7 @@ name: S32
 .center[<img src="img/StackUse.png" height="200">]
 
 ---
-name: S33
+name: S34
 
 # How Does the Stack Operate?
 
@@ -851,7 +863,7 @@ name: S33
 .center[<img src="img/StackOp.png" height="250">]
 
 ---
-name: S34
+name: S35
 
 # The Push Operation
 
@@ -861,7 +873,7 @@ name: S34
 .center[<img src="img/Push.png" height="280">]
 
 ---
-name: S35
+name: S36
 
 # The Pop Operation
 
@@ -871,7 +883,7 @@ name: S35
 .center[<img src="img/Pop.png" height="280">]
 
 ---
-name: S36
+name: S37
 
 # Example: Investigating the Use of RAM
 
@@ -903,22 +915,22 @@ int main(void){
 ]
 
 ---
-name: S37
+name: S38
 
 # Context Switching
 
 - While a function is executing (such as during normal program operation) it uses the microprocessor register file
  - The register file is where variables which are being actively used are stored, such as inputs for arithmetic operations, loop counters etc.
  - The ATmega328P has 32 registers 
-- The ISR will also use the register file, so before executing an ISR the data in the registers must be saved to the stack
+- The ISR will also use the register file, so before executing an ISR the data in the registers that are used must be pushed to the stack
  - You need to make sure that there is sufficient space in the stack
- - The function you were in when before jumping to the ISR may not be using all the registers 
-- After the ISR completes, these values are loaded from the stack back into the registers
+- In addition, the program counter and the status register also needs to be pushed to the stack
+- After the ISR completes, these values are loaded back from the stack
 - This process is called a “context switch” 
  - The compiler automatically adds these instructions to the ISR
  
 ---
-name: S38
+name: S39
 
 # ISR Execution Delay
 
