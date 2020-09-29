@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Remark UoA Template</title>
+    <meta charset="utf-8">
+    <style>
+      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+
+      body { 
+        font-family: 'Droid Serif'; 
+        line-height: 1.6;
+        }
+
+      h1, h2, h3 {
+        font-family: 'Yanone Kaffeesatz';
+        font-weight: bold;
+        color: #00467F;
+      }
+
+      h1{
+        margin-top: 30px !important;
+        margin-bottom: 30px !important;
+      }
+
+      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+
+      .TitleAuthor {
+        color:white; 
+        font-weight: normal;
+      }
+
+      .title-slide .remark-slide-number {
+        display: none;
+      }
+      .title-slide h1, h2, h3, h4 {
+        text-align: left;
+        color:white;
+        line-height: 0.7;
+        font-weight: bold;
+      }
+
+      .title-slide {
+        vertical-align: middle;
+        background-color: #00467F;
+      }
+
+      .logo-title {
+        content: "";
+        position: absolute;
+        top: 15px;
+        right:   15px;
+        height: 88px;
+        width: 267px;
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-image: url(https://cdn.auckland.ac.nz/assets/central/central-services/mediaandmarketing/uoa-logos-2015/uoa-logo-2015-reverse.png);
+      }
+      .logo-slide {
+        content: "";
+        position: absolute;
+        top: 35px;
+        right:   15px;
+        height: 96px;
+        width: 100px;
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-image: url(https://cpb-ap-se2.wpmucdn.com/blogs.auckland.ac.nz/dist/d/79/files/2015/10/uoa-v-colour2.png);
+      }
+
+      .left-column {
+        width: 65%;
+        float: left;
+        word-wrap: break-word;
+      }
+     
+      .right-column {
+        width: 30%;
+        float: right;
+        word-wrap: break-word;
+      }
+
+      .left-column-s {
+        width: 75%;
+        float: left;
+        word-wrap: break-word;
+      }
+     
+      .right-column-s {
+        width: 20%;
+        float: right;
+        word-wrap: break-word;
+      }
+
+      .footer {
+        content: "";
+        position: absolute;
+        bottom: 17px;
+        color:gray;
+        font-size: 10pt;
+      }
+      
+      @page {
+        size: 1210px 681px;
+        margin: 0;
+      }
+
+      @media print {
+        .remark-slide-scaler {
+          width: 100% !important;
+          height: 100% !important;
+          transform: scale(1) !important;
+          top: 0 !important;
+          left: 0 !important;
+        }
+      }
+      
+      .credits {
+        font-size: 12px;
+        line-height: 10px !important;
+        font-family: 'Droid Serif'; 
+      }
+
+      .codes {
+        
+        line-height: 20px !important;
+      }
+
+      .questions {
+        font-size: 20px;
+        line-height: 28px !important;
+        font-family: 'Droid Serif'; 
+      }
+
+      .zoom175 {
+        transition: transform .2s; /* Animation */
+      }
+
+      .zoom175:hover {
+        transform: scale(1.75) translateY(-20%) /* translateX(-20%);  */
+        /* (Note: if the zoom is too large, it will go outside of the viewport) */
+      }
+
+      .zoom400 {
+        transition: transform .2s; /* Animation */
+      }
+
+      .zoom400:hover {
+        transform: scale(4) translateY(-50%) /* translateX(-20%);  */
+        /* (Note: if the zoom is too large, it will go outside of the viewport) */
+      }
+
+     .zoom120 {
+	transition: transform .2s;
+     }
+
+     .zoom120:hover {
+	transform: scale(1.2);
+     }
+
+      .color-grey{
+        color: #919191;
+      }
+
+    </style>
+
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
+    <style>
+    .smaller-font { font-size:14px } 
+    </style>
+
+    <!-- KaTeX and Mathjax support refer to below for syntax -->
+    <!-- https://math.meta.stackexchange.com/questions/5020/mathjax-basic-tutorial-and-quick-reference -->
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.1/dist/katex.min.css" integrity="sha384-dbVIfZGuN1Yq7/1Ocstc1lUEm+AT+/rCkibIcC/OmWo5f0EA48Vf8CytHzGrSwbQ" crossorigin="anonymous">
+    
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.1/dist/katex.min.js" integrity="sha384-2BKqo+exmr9su6dir+qCw08N2ZKRucY4PrGQPPWU1A7FtlCGjmEGFqXCv5nyM5Ij" crossorigin="anonymous"></script>
+
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.1/dist/contrib/auto-render.min.js" integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous"
+        onload="renderMathInElement(document.body);"></script>
+    
+    <script type="text/javascript" async
+    src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+
+    <style>
+      /* Table Style */
+      .tg  {border-collapse:collapse;border-color:#9ABAD9;border-spacing:0;}
+      .tg td{background-color:#EBF5FF;border-color:#9ABAD9;border-style:solid;border-width:1px;color:#444;
+        font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:2px 10px;word-break:normal;}
+      .tg th{background-color:#409cff;border-color:#9ABAD9;border-style:solid;border-width:1px;color:#fff;
+        font-family:Arial, sans-serif;font-size:14px;font-weight:normal;overflow:hidden;padding:2px 10px;word-break:normal;}
+      .tg .tg-dzaw{background-color:#4F81BD;color:#FFF;font-weight:bold;text-align:left;vertical-align:top}
+      .tg .tg-sabo{background-color:#ebf5ff;color:#000000;text-align:left;vertical-align:top}
+      .tg .tg-096r{color:#000000;text-align:left;vertical-align:top}
+      .tg .tg-jayl{background-color:#d2e4fc;color:#000000;text-align:left;vertical-align:top}
+      .tg .tg-ig71{background-color:#D2E4FC;color:#000000;text-align:left;vertical-align:top}
+    </style>
+
+  </head>
+  <body>
+    <textarea id="source">
+
+class: title-slide
+count: false
+.logo-title[]
+
+# Energy Monitor
+### ELECTENG 209
+
+.TitleAuthor[Hao Lin, Krithik Lekinwala, Ankush Patel and Ruskin Swedlund]
+
+---
+
+layout: true
+name: template_slide
+
+.logo-slide[]
+.footer[[Hao Lin, Krithik Lekinwala, Ankush Patel and Ruskin Swedlund](https://www.linkedin.com/in/authorname), Department of Electrical, Computer and Software Engineering (2020)]
+
+---
+# Introduction
+- Home energy monitor to read voltage, current and power consumption
+- Display information on a local 7-segment display and on a mobile using Bluetooth
+
+.center[<img src = "img/Xmini.jpg" width="30%" />]
+
+
+---
+name: S2
+
+# Analog Design Considerations: Signal Amplification
+- $50\%$ range increase for ADC input by optimizing resistors chosen in the differential amplifier
+      - From $1.3\ V \leftrightarrow 2.9\ V$ to $0.9\ V \leftrightarrow 3.3\ V$
+
+.center[<img src="img/ADCInput.png" width="65%">]
+
+---
+name: S3
+
+# Analog Design Considerations: Peak Dectector
+- Peak detected by sampling the voltage when an interrupt is triggered
+  * Interrupt generated using an analogue circuit
+
+
+.center[
+<img src = "img/peakDetectorSchem.png" width="49%" /> &nbsp;
+<img src = "img/peakDetector.png" width="49%" />
+]
+
+
+---
+name: S4
+
+# Software Design Considerations
+
+- Our key focus was to procure <b>modular</b> and <b>efficient</b> code
+
+.center[<img src = "img/DependencyGraph.svg" width="65%" />]
+
+
+---
+name: S5
+
+# Software Design Considerations
+
+- Our custom `print()` function, which is built on top of our modular UART functions that automaticlly convert to 3 significant figures before transmitting
+
+.codes[
+```c
+#define rmsvoltage 14.5
+#define peakcurrent 125
+#define power 1.60
+int main()
+{
+	print("rms voltage is: %f", rmsvoltage);
+	print("peak current is: %d", peakcurrent);
+	print("power is: %f", power);
+}
+```
+]
+
+.center[<img src="img/virtualTerminal.png" height="100">]
+
+
+---
+
+name: S6
+
+# Software Design Considerations
+
+* Standard library `printf()` is just under a $kB$ in size
+
+* Our custom `print()` function only consumes $244 \ bytes$
+	* Thats over $70\%$ reduction in size
+
+* Our custom print function retains all the convenient `printf()` syntax
+
+.code[
+```
+[Firmware/]$ nm --print-size -t d FW.ELF | grep -w 'print\|printf\|vfprintf'
+00003694 00000244 T print // 244 bytes 
+00005880 00000040 T printf
+00005920 00000934 T vfprintf // 974 bytes, 75% reduction
+[Firmware/]$ 
+```
+]
+
+---
+name: S7
+
+# PCB Layout
+.center[
+	<img src="img/netw/PCBLayout3DAnnotated.png" width="50%"> &nbsp; &nbsp; &nbsp; &nbsp; 
+  <img src="img/netw/PCBLayout2D.png" width="30%">
+]
+---
+name: S8
+
+# Project Management
+
+- Workflow planning and task management using Slack and Trello
+
+.center[
+<img src='img/Trello.png' width='55%' /> &nbsp; &nbsp; &nbsp; &nbsp;
+<img src='img/Trello2.png' width="30%" />
+]
+---
+
+name: S9
+
+# Project Management
+
+- Effective use of Git, rolling back when encountering issues with latest commit
+- Python script reads makefile to generate Atmel Studio Project so we are not limited to Atmel IDE
+
+<pre>
+<code style="text-align: center">
++--------------+        +---------------+          +---------------+
+|              |        |               |          |               |
+|   Makefile   +-------->  genAtmel.py  +---------->  AtmelStudio  |
+|              |        |               |          | Project Files |
++--------------+        +---------------+          +---------------+
+</code>
+</pre>
+.
+<img src='img/graph.svg' width='100%' />
+.center[** Git Commit Graph **]
+---
+
+class: title-slide
+layout: false
+count: false
+.logo-title[]
+
+# Acknowledgements
+#### Special thanks to Duleepa and the TA's 
+#### for their valuable feedback.
+
+    </textarea>
+
+    <!-- 
+    <script src="https://remarkjs.com/downloads/remark-latest.min.js">
+    </script>
+    -->    
+   
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML&delayStartupUntil=configured" type="text/javascript">
+    </script>
+
+
+    <script src="remark/remark.min.js" type="text/javascript">
+    </script>
+
+    <script type="text/javascript">
+      var hljs = remark.highlighter.engine;
+    </script>
+    <script src="remark/terminal.language.js" type="text/javascript"></script>
+
+    <script src="https://kit.fontawesome.com/a405eedf54.js" crossorigin="anonymous"></script>
+    <script src="remark/mark.min.js" type="text/javascript">
+    </script>
+
+    <script type="text/javascript">
+
+      var options = {};
+
+      var renderMath = function() {
+        renderMathInElement(document.body);
+        // or if you want to use $...$ for math,
+        renderMathInElement(document.body, {delimiters: [ // mind the order of delimiters(!?)
+        {left: "$$", right: "$$", display: true},
+        {left: "$", right: "$", display: false},
+        {left: "\\[", right: "\\]", display: true},
+        {left: "\\(", right: "\\)", display: false},
+        ]});
+      }
+
+      var slideshow = remark.create({
+        ratio: '16:9',
+        slideNumberFormat: '%current%',
+        countIncrementalSlides: false,
+        renderMath,
+        highlightLanguage: 'c',
+        highlightStyle: 'github',
+        navigation: {
+          // Enable or disable navigating using scroll
+          // Default: true
+          // Alternatives: false
+          scroll: true,
+
+          // Enable or disable navigation using touch
+          // Default: true
+          // Alternatives: false
+          touch: true,
+
+          // Enable or disable navigation using click
+          // Default: false
+          // Alternatives: true
+          click: false,
+        },
+        
+      });
+
+      MathJax.Hub.Config({
+          tex2jax: {
+          inlineMath: [['$','$'], ['\\(','\\)']],
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+          processEscapes: true
+          }
+      });
+
+      MathJax.Hub.Queue(function() {
+          $(MathJax.Hub.getAllJax()).map(function(index, elem) {
+              return(elem.SourceElement());
+          }).parent().addClass('has-jax');
+      });
+
+      MathJax.Hub.Configured();
+      
+      //Terminal style highligting code
+      var highlighted = document.querySelectorAll("code.terminal span.hljs-ansi");
+      Array.prototype.forEach.call(highlighted, function(next) {
+        next.insertAdjacentHTML("beforebegin", next.textContent);
+        next.parentNode.removeChild(next);
+      });
+
+      window.addEventListener('load', function() {
+      RemarkSearch.create({'position': 'top-left', 'caseSensitive' : false, 'showIcon': true, 'autoSearch': true});
+      });
+
+
+    </script>
+  </body>
+</html>
