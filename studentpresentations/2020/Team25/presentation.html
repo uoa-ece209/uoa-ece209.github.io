@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Remark UoA Template</title>
+    <meta charset="utf-8">
+    <style>
+      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+
+      body {
+        font-family: 'Droid Serif';
+        line-height: 1.6;
+        }
+
+      h1, h2, h3 {
+        font-family: 'Yanone Kaffeesatz';
+        font-weight: bold;
+        color: #1c2129;
+      }
+
+      h1{
+        margin-top: 30px !important;
+        margin-bottom: 30px !important;
+      }
+
+      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+
+      .TitleAuthor {
+        color:white;
+        font-weight: normal;
+      }
+
+      .title-slide .remark-slide-number {
+        display: none;
+      }
+      .title-slide h1, h2, h3, h4 {
+        text-align: left;
+        color:white;
+        line-height: 0.7;
+        font-weight: bold;
+      }
+
+      .title-slide {
+        vertical-align: middle;
+        background-color: #1c2129;
+      }
+
+      .logo-title {
+        content: "";
+        position: absolute;
+        top: 0px;
+        right:   15px;
+        height: 150px;
+        width: 150px;
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-image: url(./img/template/logo-light.png);
+      }
+      .logo-slide {
+        content: "";
+        position: absolute;
+        top: 0px;
+        right:   15px;
+        height: 150px;
+        width: 150px;
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-image: url(./img/template/logo-grey.png);
+      }
+
+      .left-column {
+        width: 65%;
+        float: left;
+        word-wrap: break-word;
+      }
+
+      .right-column {
+        width: 30%;
+        float: right;
+        word-wrap: break-word;
+      }
+
+      .left-column-s {
+        width: 75%;
+        float: left;
+        word-wrap: break-word;
+      }
+
+      .right-column-s {
+        width: 20%;
+        float: right;
+        word-wrap: break-word;
+      }
+
+      .footer {
+        content: "";
+        position: absolute;
+        bottom: 17px;
+        color:gray;
+        font-size: 10pt;
+      }
+
+      @page {
+        size: 1210px 681px;
+        margin: 0;
+      }
+
+      @media print {
+        .remark-slide-scaler {
+          width: 100% !important;
+          height: 100% !important;
+          transform: scale(1) !important;
+          top: 0 !important;
+          left: 0 !important;
+        }
+      }
+
+      .credits {
+        font-size: 12px;
+        line-height: 10px !important;
+        font-family: 'Droid Serif';
+      }
+
+      .codes {
+
+        line-height: 20px !important;
+      }
+
+      .questions {
+        font-size: 20px;
+        line-height: 28px !important;
+        font-family: 'Droid Serif';
+      }
+
+      .zoom175 {
+        transition: transform 0.5s; /* Animation */
+      }
+
+      .zoom175:hover {
+        transform: scale(1.75) translateY(-20%) translateX(-0%);
+        /* (Note: if the zoom is too large, it will go outside of the viewport) */
+      }
+      .zoom175:active {
+        opacity: 0%;
+        /* (Note: if the zoom is too large, it will go outside of the viewport) */
+      }
+
+      .peekaboo {
+        transform: translateY(-10%) scale(1.75);
+        opacity: 0%;
+        transition: transform 0.5s, opacity 0.25s; /* Animation */
+      }
+      .peekaboo:active {
+        transform: translateY(-127%) scale(1.75);
+        opacity: 100%;
+      }
+
+      .zoom350 {
+        transition: transform 0.5s; /* Animation */
+      }
+
+      .zoom350:hover {
+        transform: scale(3.5) translateY(-30%) translateX(7.5%);
+        /* (Note: if the zoom is too large, it will go outside of the viewport) */
+      }
+
+      .color-grey{
+        color: #919191;
+      }
+
+      .S53d:hover {
+        transform: rotate(-180deg) scale(3) translateX(7.5rem) translateY(3rem);
+      }
+      .S53d {
+        transition: 2s;
+      }
+
+    </style>
+
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
+    <style>
+    .smaller-font { font-size:14px }
+    </style>
+
+    <!-- KaTeX and Mathjax support refer to below for syntax -->
+    <!-- https://math.meta.stackexchange.com/questions/5020/mathjax-basic-tutorial-and-quick-reference -->
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.1/dist/katex.min.css" integrity="sha384-dbVIfZGuN1Yq7/1Ocstc1lUEm+AT+/rCkibIcC/OmWo5f0EA48Vf8CytHzGrSwbQ" crossorigin="anonymous">
+
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.1/dist/katex.min.js" integrity="sha384-2BKqo+exmr9su6dir+qCw08N2ZKRucY4PrGQPPWU1A7FtlCGjmEGFqXCv5nyM5Ij" crossorigin="anonymous"></script>
+
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.1/dist/contrib/auto-render.min.js" integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous"
+        onload="renderMathInElement(document.body);"></script>
+
+    <script type="text/javascript" async
+    src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+
+    <style>
+      /* Table Style */
+      .tg  {border-collapse:collapse;border-color:#9ABAD9;border-spacing:0;}
+      .tg td{background-color:#EBF5FF;border-color:#9ABAD9;border-style:solid;border-width:1px;color:#444;
+        font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:2px 10px;word-break:normal;}
+      .tg th{background-color:#409cff;border-color:#9ABAD9;border-style:solid;border-width:1px;color:#fff;
+        font-family:Arial, sans-serif;font-size:14px;font-weight:normal;overflow:hidden;padding:2px 10px;word-break:normal;}
+      .tg .tg-dzaw{background-color:#4F81BD;color:#FFF;font-weight:bold;text-align:left;vertical-align:top}
+      .tg .tg-sabo{background-color:#ebf5ff;color:#000000;text-align:left;vertical-align:top}
+      .tg .tg-096r{color:#000000;text-align:left;vertical-align:top}
+      .tg .tg-jayl{background-color:#d2e4fc;color:#000000;text-align:left;vertical-align:top}
+      .tg .tg-ig71{background-color:#D2E4FC;color:#000000;text-align:left;vertical-align:top}
+    </style>
+
+  </head>
+  <body>
+    <textarea id="source">
+
+class: title-slide
+count: false
+.logo-title[]
+
+# Smart Energy Monitor
+### Team 25
+
+.TitleAuthor[Keith Anderson, Russell Eskildsen, Yulia Pechorina, and Nishan Shrestha]
+
+---
+
+layout: true
+name: template_slide
+
+.logo-slide[]
+.footer[Team 25: Keith Anderson, Russell Eskildsen, Yulia Pechorina, and Nishan Shrestha]
+
+---
+
+name: S1
+
+# Project Brief
+Design a smart energy monitor with bluetooth connectivity
+
+# Design Goals
+- Maximise learning
+- Reflect industry standards
+- Design a compact PCB up to 100mm x 100mm
+- Maximise accuracy
+
+---
+
+name: S2
+
+# Key Hardware Design Features
+- Programmable Gain Amplifier
+  - Achieves increased dynamic range, maximising accuracy
+  - Uses SPI serial communication protocol, maximising learning
+- SMT PCB Design
+  - Allows for a much more compact design
+  - Industry standard PCB type
+  - Maximises accuracy by decreasing signal trace lengths
+  - Is more challenging to design for than through-hole, maximising learning
+- Built-in ATmega328PB microcontroller
+  - Allows for a much more compact design
+  - Industry standard method for implementing a microcontroller
+  - Maximises accuracy by decreasing signal trace lengths
+  - Maximises accuracy by giving potential for decreased power draw
+  - Maximises learning by adding complexity to PCB design
+
+
+---
+
+name: S2.5
+
+# Project Management
+The following software is being used to help effectively manage the project
+- Git
+  - Version control
+- Slack
+  - Team communications
+- Trello
+  - Kanban-boarding
+
+
+---
+
+
+name: S3
+
+# Programmable Gain Amplifier
+Microchip MCP6S93<br  />
+Chosen to improve accuracy of small signals and improve dynamic range especially for the low current signals.
+
+.right-column[
+.right[<img src="img/intro/PGA.png" width="200px" style="
+    transform: translateY(20%)  translateX(-20%);
+">]
+<span style="
+    font-size: 0.8rem;
+    transform: translateX(-19px);
+    transform: translateY(4rem) !important;
+    display: flex;
+">https://www.microchip.com/wwwproducts/en/MCP6S93</span>
+]
+
+.left-column[
+- Rail-to-rail operation
+- 2 channels
+- SPI programming
+- Selectable gains of 1, 2, 4, 5, <b>8, 10, 16</b> and 32.
+.zoom350[
+.center[<img src="img/intro/hysteresis.png" width="300px">]]
+]
+
+
+---
+
+name: S4
+
+# SMT Design
+
+- Allows for a more compact design
+- Cheaper and faster to produce
+- Closer to what is used in industry
+- Will give experience with reflow techniques
+.zoom175[
+.center[<img src="img/intro/smt.png" width="275px">]]
+.peekaboo[
+.center[<img src="img/intro/3d.png" width="275px">]
+]
+
+
+---
+
+name: S5
+
+# Built-in ATmega328PB Microcontroller
+
+.left-column[
+- Allows for the shortest possible signal traces, reducing the potential for picking up noise
+- Allows for a much more compact design with no plug-in development board
+- Clocked at 16MHz, regulated by external crystal
+  - Option to run at a lower frequency to conserve power, which is not possible with a development board
+- 5V Vcc ARef with external capacitor
+  - Chosen as the PGA operates off of the 0V and Vcc rails.
+- ISP programming from header
+- User LED provided for testing/debugging
+- External reset tactile pushbutton
+]
+.right-column[
+<img src="img/intro/3d.png" width="300px" style="" class="S53d">
+]
+---
+
+name: S6
+
+# Project Management
+.left-column[
+- Git used for version control of project
+  - Major design features implemented by branching and merging
+  - Easily review each other's work
+- Slack used for team communication
+  - Convenient zoom integration for team meetings and reviews with staff
+- Trello used for kanban-boarding
+  - Track and assign tasks
+  - Resolve issues
+  - Create meeting agendas and take minutes
+]
+.right-column[
+<img src="img/intro/git.gif" width="350px">
+]
+---
+
+class: title-slide
+layout: false
+count: false
+.logo-title[]
+
+# Acknowledgements
+#### Special thanks to Duleepa and all 209 staff
+#### for their valuable help, advice and feedback.
+
+---
+
+class: title-slide
+layout: false
+count: false
+.logo-title[]
+
+# Questions?
+### Thank you
+
+    </textarea>
+
+    <!--
+    <script src="https://remarkjs.com/downloads/remark-latest.min.js">
+    </script>
+    -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML&delayStartupUntil=configured" type="text/javascript">
+    </script>
+
+
+    <script src="remark/remark.min.js" type="text/javascript">
+    </script>
+
+    <script type="text/javascript">
+      var hljs = remark.highlighter.engine;
+    </script>
+    <script src="remark/terminal.language.js" type="text/javascript"></script>
+
+    <script src="https://kit.fontawesome.com/a405eedf54.js" crossorigin="anonymous"></script>
+    <script src="remark/mark.min.js" type="text/javascript">
+    </script>
+    <link rel="stylesheet" href="remark/remark.search.css">
+    <script src="remark/remark.search.js" type="text/javascript"></script>
+
+    <script type="text/javascript">
+
+      var options = {};
+
+      var renderMath = function() {
+        renderMathInElement(document.body);
+        // or if you want to use $...$ for math,
+        renderMathInElement(document.body, {delimiters: [ // mind the order of delimiters(!?)
+        {left: "$$", right: "$$", display: true},
+        {left: "$", right: "$", display: false},
+        {left: "\\[", right: "\\]", display: true},
+        {left: "\\(", right: "\\)", display: false},
+        ]});
+      }
+
+      var slideshow = remark.create({
+        ratio: '16:9',
+        slideNumberFormat: '%current%',
+        countIncrementalSlides: false,
+        renderMath,
+        highlightLanguage: 'c',
+        highlightStyle: 'github',
+        navigation: {
+          // Enable or disable navigating using scroll
+          // Default: true
+          // Alternatives: false
+          scroll: true,
+
+          // Enable or disable navigation using touch
+          // Default: true
+          // Alternatives: false
+          touch: true,
+
+          // Enable or disable navigation using click
+          // Default: false
+          // Alternatives: true
+          click: false,
+        },
+
+      });
+
+      MathJax.Hub.Config({
+          tex2jax: {
+          inlineMath: [['$','$'], ['\\(','\\)']],
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+          processEscapes: true
+          }
+      });
+
+      MathJax.Hub.Queue(function() {
+          $(MathJax.Hub.getAllJax()).map(function(index, elem) {
+              return(elem.SourceElement());
+          }).parent().addClass('has-jax');
+      });
+
+      MathJax.Hub.Configured();
+
+      //Terminal style highligting code
+      var highlighted = document.querySelectorAll("code.terminal span.hljs-ansi");
+      Array.prototype.forEach.call(highlighted, function(next) {
+        next.insertAdjacentHTML("beforebegin", next.textContent);
+        next.parentNode.removeChild(next);
+      });
+
+      window.addEventListener('load', function() {
+      RemarkSearch.create({'position': 'top-left', 'caseSensitive' : false, 'showIcon': true, 'autoSearch': true});
+      });
+
+
+    </script>
+  </body>
+</html>
