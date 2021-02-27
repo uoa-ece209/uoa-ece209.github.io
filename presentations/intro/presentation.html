@@ -162,7 +162,7 @@ count: false
 .logo-title[]
 
 ## ELECTENG 209
-# Analogue & Embedded Software Design 
+# Analog & Embedded Software Design 
 ### An Introduction to the Course
 
 .TitleAuthor[Duleepa J Thrimawithana]
@@ -393,14 +393,14 @@ name: S14
 # The Project
 
 - What is this course about and what should you expect to learn?
- - Gives you an opportunity to put in to practice some of the theories (analogue electronics & embedded software development) you learnt to design and engineer a solution to a 'real life problem'
+ - Gives you an opportunity to put in to practice some of the theories (analog electronics & embedded software development) you learnt to design and engineer a solution to a 'real life problem'
  - During this process you will gain fundamental knowledge, experience, skill-set and professional behavior needed to succeed in the more challenging design projects you will engage
  in the future
 - What would you design and engineer during this course?
  - An energy monitor to measure and display the amount of energy consumed by a household appliance
 - How would you achieve this task?
- - The voltage and current at the input to appliance is measured using __analogue circuitry__ consisting of sensors, amplifiers and filters 
- - An __embedded software program__ executed on a microcontroller converts the analogue signals to digital form and calculates the energy consumption together with other important information
+ - The voltage and current at the input to appliance is measured using __analog circuitry__ consisting of sensors, amplifiers and filters 
+ - An __embedded software program__ executed on a microcontroller converts the analog signals to digital form and calculates the energy consumption together with other important information
  - The information is shown on a __local LCD display__ and also communicated __wirelessly using Bluetooth__ with other smart devices
 
 ---
@@ -410,7 +410,8 @@ name: S15
 
 - To simplify the design, we will consider a scaled-down system, which uses a low-voltage
 AC source 
-  - An AC load, consisting of a variable resistor in series with a fixed inductor, is used to emulate an house-hold appliance 
+ - The AC source frequency is 500 Hz (oppose to 50 Hz grid frequency) to reduce the size of the AC load
+ - An AC load, consisting of a variable resistor in series with a fixed inductor, is used to emulate an house-hold appliance 
 
 .center[<img src="img/System.png" height="275">]
 
@@ -437,7 +438,7 @@ name: S16
     </tr>
     <tr>
       <td class="tg-sabo">Source Frequency </td>
-      <td class="tg-sabo"> 50 Hz &plusmn 2% </td>
+      <td class="tg-sabo"> 500 Hz &plusmn 2% </td>
     </tr>
     <tr>
       <td class="tg-ig71">Load Range</td>
@@ -445,7 +446,7 @@ name: S16
     </tr>
     <tr>
       <td class="tg-sabo">Load Power Factor</td>
-      <td class="tg-sabo">0.75 to 0.99</td>
+      <td class="tg-sabo">0.7 to 1</td>
     </tr>
     <tr>
       <td class="tg-ig71">Measurement Accuracy</td>
@@ -453,15 +454,15 @@ name: S16
     </tr>
     <tr>
       <td class="tg-sabo">ADC Conversion Rate</td>
-      <td class="tg-sabo">1 kHz or slower</td>
+      <td class="tg-sabo">10 kHz or slower</td>
     </tr>
     <tr>
-      <td class="tg-ig71">LCD Display Information</td>
-      <td class="tg-ig71">Voltage, Current, Power and Energy</td>
+      <td class="tg-ig71">MCU System Clock</td>
+      <td class="tg-ig71">2 MHz</td>
     </tr>
     <tr>
-      <td class="tg-sabo">LCD Display Units</td>
-      <td class="tg-sabo">V<sub>RMS</sub>, A<sub>pk</sub>, W and W.min</td>
+      <td class="tg-sabo">LCD Display Information</td>
+      <td class="tg-sabo">Voltage (V<sub>pk</sub>), Current (A<sub>rms</sub>), Power (W)</td>
     </tr>
     <tr>
       <td class="tg-ig71">LCD Scroll Rate</td>
@@ -496,9 +497,7 @@ name: S17
 
 # Demo of Expected Final Design
 
-.center[
-<iframe width="784" height="441" src="https://www.youtube-nocookie.com/embed/5MTaWPhhueY" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-]
+Coming soon...
 
 ---
 name: S18
@@ -512,7 +511,7 @@ name: S18
  - This is an important part of preparing to be a professional engineer
  - You depend on each other to do well in this course
 - Plan your work, document your work and communicate regularly with your team members
- - Use [Trello](https://trello.com) to plan and manage the work as well as to document design notes and team discussions 
+ - Use a logbook and/or [Trello](https://trello.com) to plan and document your work 
  - Use [Slack](https://slack.com/intl/en-nz/) and [Zoom](https://zoom.us)/[Hangouts](https://hangouts.google.com) for team communications
  - Use [GitHub](https://github.com) and [G Suite](https://gsuite.google.com)/[Office 365](https://www.library.auckland.ac.nz/services/it-essentials/computer-facilities/software-personal-use/microsoft-student-advantage-office-365) products to collaborate with team members
 - Be patient with your team members even if they are not making much progress during the initial stage
@@ -527,7 +526,7 @@ name: S19
 # Course Calendar
 
 
-.center[<img src="img/2020Calendar.png" height="430">]
+.center[<img src="img/2021Calendar.png" height="450">]
 
 ---
 name: S20
@@ -584,9 +583,7 @@ name: S24
 
 # Entry Performance
 
-.center[
-<img src="img/Entry.png" height="450">
-]
+Coming later...
 
 ---
 name: S25
@@ -692,11 +689,11 @@ name: S29
     </tr>
     <tr>
       <td class="tg-sabo">Midsemester Progress Review </td>
-      <td class="tg-sabo">5%</td>
+      <td class="tg-sabo">6%</td>
     </tr>
     <tr>
       <td class="tg-ig71">Final Interview</td>
-      <td class="tg-ig71">15%</td>
+      <td class="tg-ig71">14%</td>
     </tr>
     <tr>
       <td class="tg-sabo">Project Deliverables </td>
@@ -718,14 +715,14 @@ name: S30
  - The written part of the tests will assess your understanding of fundamental concepts 
  - The simulation component of the 1st test will be conducted using LTspice
  - The simulation component of the 2nd test will be conducted using Atmel Studio and Proteus VSM
-- During each of the 15 lecture, we will conduct a 0.6% quizzes using Xorro-Q (or Canvas) to evaluate your engagement and understanding
- - Quizzes will be available for 24 hours and you are allowed multiple attempts
+- During each of the 15 lecture, we will conduct a 0.6% quizzes using Canvas to evaluate your engagement and understanding
+ - Quizzes will be available for 24 hours and you are allowed 3 attempts
  - The maximum marks you can get will be capped to 5%
 - The 6 lab assignments are designed to guide you through the design and advance your understanding
- - Allow plenty of time, especially if you have forgotten the EE202, EE210 & CS201 contents 
+ - Allow plenty of time, especially if you have forgotten the EE202/EE291 & CS201 contents 
  - You can work as a team, but your solutions must be __submitted individually__ 
  - We will use one of the two weekly lab sessions to help you complete these assignments 
- - The remaining weekly lab session will be used to assess your solutions (1%), understanding and engagement (1%) and use of digital collaboration tools (0.5%)
+ - The remaining weekly lab session will be used to assess your solutions (1%), understanding and engagement (1%) and use of collaboration tools and documentation (0.5%)
 
 
 ---
@@ -734,14 +731,14 @@ name: S31
 # Progress Review, Interview & Deliverables
 
 - Just before the midsemester break we will review your progress
- - An analogue circuit that meets all the needs of the project needs to be successfully designed, simulated and validated
- - An embedded software program that can transmit data from the ATmega328P via UART to a terminal should be successfully implemented, simulated and validated
- - A short interview will be held to assess your circuit (2%), software (1%) and your understanding (2%)
+ - An analog circuit that meets all the needs of the project needs to be successfully designed, simulated and validated
+ - An embedded software program that can transmit data from the ATmega328P via UART to a terminal should be successfully implemented and validated
+ - A short interview will be held to assess your circuit (2%), software (1%) and your understanding (3%)
 - During the last week of the semester there will be an interview to evaluate your design as well as your understanding of the subject matter
  - Design will be evaluated based on functionality (5%), measurement accuracy (5%) and quality (4%) 
  - You are required to submit a short technical report with details of your design (4%)
- - We will check how well you have used Trello, GitHub and Slack to plan, manage and document the work (2%)
- - Theoretical and practical knowledge of electronics (7.5%) and programming (7.5%) concepts you gained during the project will be assessed __individually__ during the interview 
+ - We will check how well you have used logbook/Trello, GitHub and Slack to plan, manage and document the work (2%)
+ - Theoretical and practical knowledge of electronics (7%) and programming (7%) concepts you gained during the project will be assessed __individually__ during the interview 
 
 ---
 name: S32
@@ -750,21 +747,21 @@ name: S32
 
 - The optional *Smart Energy Challenge* is focused on implementing a web-based data-logging system 
  - It should record and display the data collected from the energy monitor 
- - You may use an IoT platform like ThingSpeak to simplify this task
+ - You may use an IoT platform to simplify this task
 - Before attempting the *Smart Energy Challenge* you must complete all other tasks
- - You can get up to 1 bonus marks for successfully completing the *Smart Energy Challenge*
+ - You can get up to 2 bonus marks for successfully completing the *Smart Energy Challenge*
 - Based on the performance throughout the semester the top 4 design teams will be selected 
+ - Finalists will get up to 1 bonus marks 
 - Industry judges from [DATAMARS](https://datamars.com) will interview the top 4 teams 
  - These judges will deliver a seminar during the 6th week of the semester along with vital information about the interviews
- - They will decide the winners of the *2020 Smart Energy Challenge*
- - The winners will get up to 1 bonus marks and a certificate 
+ - They will decide the winners of the *2021 Smart Energy Challenge*
 
 .center[<img src="img/datamars.png" height="80">]
 
 ---
 name: S33
 
-# Digital Collaboration Tools
+# Collaborating with Team Members
 
 - To be a good engineer you also need to develop a number of *soft-skills*
  - Some of the key skills you should aim to develop are management, teamwork and communication 
@@ -773,7 +770,7 @@ name: S33
  - The information recorded in a logbook include, design notes, design decisions, calculations, software flow diagrams, schematics, meeting minutes, etc. 
 - In industry, many different digital tools are used to help with managing teamwork work, communicating with team members and documenting details of the project
  - Trello, Slack and GitHub are a few such most commonly used and simple to use tools 
-- In this project all students are expected to use Trello, Slack and GitHub to effectively plan, manage and document the work
+- In this project all students are expected to use a logbook and/or Trello together with Slack and GitHub to effectively plan, manage and document the work
  - We will regularly check how you use these tools as part of the assessment process
 
 ---
@@ -781,47 +778,46 @@ name: S34
 
 # Resources & Flexible Learning
 
-- Duleepa Thrimawithana (course director), Su Tang and Andrew Austin, from the academic staff, will be looking after this course
+- Duleepa Thrimawithana (course director) and Waleed Abdulla, from the academic staff, will be looking after this course
  - Felix Marattukalam and Wai Yeung are your technical facilitators 
 - Teaching assistance (TAs) will be available to help with lab assignments and the project
- - Victor Wang (EE), Patrick Lawton (EE), Vahid Zahiri (EE), Tharindu Dharmakeerthi (EE), Jagmeet Singh (EE), Cody Liu (EE), Osama Almulla (EE), Bilal Ahmed (EE), Kai Sun (EE), Tomas Antune (CS), Logan Kenwright (CS), Ryan Smith (CS), Ross Porter (CS) and Jeremy Towers (EE) are your TAs
-- You could either get support in-person during the dedicated lab sessions shown on the lab planner or seek support remotely using Piazza, Slack and Zoom/Hangouts if preferred working off-site
+ - Osama Almulla (PhD), Patrick Lawton (PhD), Vahid Zahiri (PhD), Jagmeet Singh (PhD), Cody Liu (PhD), Bilal Ahmed (PhD), Kai Sun (PhD), Lily Zhang (PhD), Ross Porter (PhD), Shaun Kyle (PIV), Elizabeth Yap (PIV), Andrey Chukhraev (PIII), Sean McKeown (PIII) and Earlene Babatte (PIII) are your TAs
+- You could get support in-person during the dedicated lab sessions shown on the lab planner 
+ - We will also provide support remotely using Piazza, Slack and Zoom/Hangouts 
  - You may also request additional staff assisted evening support/tutorial sessions (online or on-campus)
- - All software needed for this course can be accessed from home if you prefer to work remotely
+ - All software needed for this course can be accessed from home 
 - Recorded media will be provided to support your learning 
-- We will communicate all course related information via Canvas (and post them also on Slack)
+- We will communicate all course related information via Canvas and Slack
 
 ---
 name: S35
 
 # Enrolment & Software Installation
 
-- Prerequisite for this course are ELECTENG 202 and COMPSYS 201
+- Prerequisite for this course are ELECTENG 291 (or ELECTENG 202) and COMPSYS 201
  - If you have failed any of these courses, please contact us to check if your enrolment is still valid
-- Students are also expected to have passed ELECTENG 101 and ELECTENG 210
- - ELECTENG 209 heavily relies on the knowledge you should have gained from core ECSE papers (i.e. ELECTENG 101, ELECTENG 202, ELECTENG 210 and COMPSYS 201)
+- Students are also expected to have passed ELECTENG 101 
+ - ELECTENG 209 heavily relies on the knowledge you should have gained from core ECSE papers (i.e. ELECTENG 101, ELECTENG 202/291 and COMPSYS 201)
  - To help you revise, teaching material from these courses are also made available through the Canvas page for ELECTENG 209
 - In some cases, even if you do not meet the prerequisites, after an interview, we may allow you to continue with the course, but we will have to partner you with a suitable group 
- - Email Su with a copy to Duleepa for more information
-- Follow details on the EE209 Canvas Homepage to get setup on Piazza, Slack and GitHub
-- Guides detailing how to obtain and install your personal copy of the software we will use in this course (Atmel Studio, Proteus VSM, Altium Designer, LTspice, GitHub Desktop, etc.) are available on Canvas
+ - Contact Duleepa for more information
+- Follow details on Canvas or the [course website](https://uoa-ece209.github.io/extra.html) to get setup on Piazza, Slack and GitHub
+ - Guides detailing how to obtain and install your personal copy of the software we will use in this course (Atmel Studio, Proteus VSM, Altium Designer, LTspice, GitHub Desktop, etc.) are available
 
 ---
 name: S36
 
 # Building a Prototype
 
-- All practical components associated with the project are optional 
+- This is a design project and you are expected to develop a hardware prototype 
  - This includes breadboarding, assembling PCBs, testing hardware, building final prototype, etc.
- - This is because of the possibility of a lock-down due to COVID-19
-- If you wish to develop a prototype, we will provide you the resources and the support needed
- - Contact Duleepa for further information (ideally you should be doing this as a team)
+- We will provide resources and tools to get started on the project before you get to the stage of building your own prototype analog circuitry
+ - You can use Proteus VSM and the Xplained Mini 328PB development boards to develop and validate most of your software
+ - We will provide a hardware emulator that can be connected with the Xplained Mini 328PB for further debugging and validation by emulating the signals you expect to get from your own analog circuitry
 - The lab benches in MDLS 5 and MDLS 6 will be equipped with low-voltage AC power sources and variable load banks
- - The sources generate a 14 V<sub>RMS</sub>, 500 Hz AC voltage
+ - The sources generate 12.6 V<sub>RMS</sub> to 15.4 V<sub>RMS</sub>, 500 Hz AC voltage
  - The variable resistor in the load can be used to change the VA drawn by it between 2.5VA and 7.5VA
-- You will be given an Xplained Mini 328PB to use as your digital controller
- - The ATmega328PB on it is configured to operate at a 16 MHz system clock
-- Minor changes need to be made to your hardware and software designs, which you developed and tested with LTspice and Proteus 
+- We will have a number of workshops to teach you how to build and test your hardware
 
 ---
 name: S25
