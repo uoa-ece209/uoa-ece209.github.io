@@ -226,12 +226,9 @@ name: S1b
 
 # Lecture Quiz 
 
-- The link to access the lecture quiz is http://q.xorro.com/quvt 
- - Use your username to login (i.e. UPI in the form *abcd001*)
- - Quiz is available for 3 days and allows multiple attempts
-- Alternatively scan the QR code below
-
-.center[<img src="img/QR.gif" width="300px">]
+- The lecture quiz is now available on Canvas
+ - Quiz is available for 3 days and allows 3 attempts
+ - Best of the 3 attempts taken as the final score
 
 ---
 
@@ -736,7 +733,7 @@ void uart_init(uint32_t baud_rate){
                           //To improve readability we should aim to write this in the form "UCSR0B = (1&#60;&#60;TXEN0);"
   UCSR0C = 0b00000110;    //UMSEL0[1..0]=00 (UART mode), UPM0[1..0]=00 (no parity), 
                           //USBS0=0 (1 stop-bit), UCSZ0[1..0]=11 (8 data bits)
-  UBRR0 = 800000 / (16 * baud_rate) - 1;
+  UBRR0 = 2000000 / (16 * baud_rate) - 1;
                           //Set UBRR0 as per baud rate formula
 }
 ```
@@ -837,7 +834,7 @@ name: S34
 
 .codes[
 ```c
-#define F_CPU 800000UL                    //Defining system clock frequency
+#define F_CPU 2000000UL                     //Defining system clock frequency
 
 #include <avr/io.h>                         //Needed for using the macros for register addresses
 #include <string.h>                         //Needed for using strlen()
@@ -958,7 +955,7 @@ name: S39
  - All team members must therefore understand every part of the design
 - It is critical that you complete the pre-lab of the UART lab before your lab session so that you can get help with the later parts of the lab
  - Please do not waste the opportunity to get support in the labs 
- - With 160 students in the class, closer to due dates, there will be limited opportunities to ask for help 
+ - With many students in the class, closer to due dates, there will be limited opportunities to ask for help 
 - You need to demonstrate UART transmission during your midsemester review 
 
 ---

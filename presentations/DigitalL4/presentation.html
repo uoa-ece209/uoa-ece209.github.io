@@ -208,11 +208,11 @@ name: S1a
 
 # Learning Objectives
 
-- How do the ADC samples of the voltage and current waveforms relate to the analogue signals?
+- How do the ADC samples of the voltage and current waveforms relate to the analog signals?
 - What do we need to be aware of when extracting information from sampled waveforms?
 - How can we calculate the peak value of a sampled waveform?
  - Using digital signal processing techniques
- - Using analogue peak detector circuitry to aid digital processing
+ - Using analog peak detector circuitry to aid digital processing
 - How can we calculate the RMS value of a sampled waveform?
  - Approximating the RMS using peak value of a sinusoidal waveforms 
  - Using Riemann sum to evaluate the RMS formula 
@@ -229,12 +229,9 @@ name: S1b
 
 # Lecture Quiz 
 
-- The link to access the lecture quiz is http://q.xorro.com/quvt 
- - Use your username to login (i.e. UPI in the form *abcd001*)
- - Quiz is available for 3 days and allows multiple attempts
-- Alternatively scan the QR code below
-
-.center[<img src="img/QR.gif" width="300px">]
+- The lecture quiz is now available on Canvas
+ - Quiz is available for 3 days and allows 3 attempts
+ - Best of the 3 attempts taken as the final score
 
 ---
 
@@ -267,7 +264,7 @@ name: S2
 - The differential amplifier provide a gain G<sub>vo</sub> and an offset V<sub>off</sub>
  - In your design G<sub>vo</sub> = R<sub>2</sub> / R<sub>1</sub> 
 - The gain of the passive RC filter, G<sub>vf</sub>, is 1 in your design
-- The analogue signal at the ADC, V<sub>vf</sub>, is therefore 
+- The analog signal at the ADC, V<sub>vf</sub>, is therefore 
 
 \\[ V\_{vf} = G\_{vs} G\_{vo} V\_{AC} + V\_{off} \\]
 
@@ -284,7 +281,7 @@ name: S3
 - The differential amplifier provide a gain G<sub>io</sub> and an offset V<sub>off</sub>
  - In your design G<sub>io</sub> = R<sub>2</sub> / R<sub>1</sub> 
 - The gain of the passive RC filter, G<sub>if</sub>, is 1 in your design
-- The analogue signal at the ADC, V<sub>if</sub>, is therefore 
+- The analog signal at the ADC, V<sub>if</sub>, is therefore 
 
 \\[ V\_{if} = G\_{is} G\_{io} I\_{L} + V\_{off} \\]
 
@@ -296,9 +293,9 @@ name: S4
 
 .center[<img src="img/VoltageData.png" height="165">]
 
-- In this lecture, lets assume V<sub>vf</sub> at ADC0 is sampled and converted to an ADC value every 2ms
- - Project specifications limits maximum sampling rate to 1kHz and therefore if repeatedly a sample of V<sub>vf</sub> is taken followed by a sample of V<sub>if</sub> then each V<sub>vf</sub> sample will be 2ms apart
-- Alternatively V<sub>vf</sub> can be continuously sampled over a few periods to take samples of V<sub>vf</sub> every 1ms  
+- In this lecture, lets assume a 50Hz V<sub>vf</sub> at ADC0 is sampled and converted to an ADC value every 2ms
+- Note that project specifications limits maximum sampling rate to 10kHz and therefore if repeatedly a sample of V<sub>vf</sub> is taken followed by a sample of V<sub>if</sub> then each V<sub>vf</sub> sample will be 0.2ms apart
+ - Alternatively V<sub>vf</sub> can be continuously sampled over a few periods to take samples of V<sub>vf</sub> every 0.1ms  
  - Need zero crossing detector to correctly align the V<sub>if</sub> samples taken after this with the V<sub>vf</sub> samples
 - From the ADC data we can estimate the AC source voltage at i<sup>th</sup> sample point since 
 \\[ V\_{AC}[i] = \left( ADC0Value[i] \times 5/1024 - V\_{off} \right) / \left( G\_{vs} G\_{vo} \right) \\]
@@ -311,9 +308,9 @@ name: S5
 
 .center[<img src="img/CurrentData.png" height="165">]
 
-- Similar to V<sub>vf</sub> lets assume V<sub>if</sub> at ADC1 is sampled and converted to an ADC value every 2ms
- - Project specifications limits maximum sampling rate to 1kHz and therefore if repeatedly a sample of V<sub>vf</sub> is taken followed by a sample of V<sub>if</sub> then each V<sub>if</sub> sample will be 2ms apart
-- Alternatively V<sub>if</sub> can be continuously sampled over a few periods to take samples of V<sub>if</sub> every 1ms  
+- Similar to V<sub>vf</sub> lets assume a 50Hz V<sub>if</sub> at ADC1 is sampled and converted to an ADC value every 2ms
+- Project specifications limits maximum sampling rate to 10kHz and therefore if repeatedly a sample of V<sub>vf</sub> is taken followed by a sample of V<sub>if</sub> then each V<sub>if</sub> sample will be 0.2ms apart
+ - Alternatively V<sub>if</sub> can be continuously sampled over a few periods to take samples of V<sub>if</sub> every 0.1ms  
  - Need zero crossing detector to correctly align the V<sub>if</sub> samples with the V<sub>vf</sub> samples
 - From the ADC data we can estimate the AC load current at i<sup>th</sup> sample point since 
 \\[ I\_{L}[i] = \left( ADC1Value[i] \times 5/1024 - V\_{off} \right) / \left( G\_{is} G\_{io} \right) \\]

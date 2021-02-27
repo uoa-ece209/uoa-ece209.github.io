@@ -229,12 +229,9 @@ name: S1b
 
 # Lecture Quiz 
 
-- The link to access the lecture quiz is http://q.xorro.com/quvt 
- - Use your username to login (i.e. UPI in the form *abcd001*)
- - Quiz is available for 3 days and allows multiple attempts
-- Alternatively scan the QR code below
-
-.center[<img src="img/QR.gif" width="300px">]
+- The lecture quiz is now available on Canvas
+ - Quiz is available for 3 days and allows 3 attempts
+ - Best of the 3 attempts taken as the final score
 
 ---
 
@@ -667,8 +664,8 @@ name: S25
 
 - Lets develop an initialization function to configure TC0 to operate in the [CTC mode](https://ee209-2020class.github.io/presentations/DigitalL5/presentation.html#30)
 - We want TC0 to generate an interrupt every 1ms 
-- Since the ATmega328P uses a 0.8MHz system clock to achieve this 
- - We will use a prescaler of 8 and load 99 to OCR0A 
+- Since the ATmega328P uses a 2MHz system clock to achieve this 
+ - We will use a prescaler of 8 and load 249 to OCR0A 
 - We also have to enable *TIMER0 COMPA* interrupt by setting the OCIE0A bit
  - We will also start the timer by setting CS0[2..0] to 010 
 
@@ -677,7 +674,7 @@ name: S25
 //This function configures TC0 to generate a TIMER0 COMPA interrupt every 1ms
 void tc0_init_1ms_interrupt(void){
   TCCR0A = 0b00000010;    //WGM0[2..0] should be set to 010 for CTC mode
-  OCR0A = 99;             //Loading OCR0A with 99 to get a period of 1ms
+  OCR0A = 249;            //Loading OCR0A with 249 to get a period of 1ms
   TIMSK0 = 0b00000010;    //Enable output compare match A interrupt
   TCCR0B = 0b00000010;    //Initialize CS0[2..0] to 010 so that timer runs with a prescaler of 8
 }

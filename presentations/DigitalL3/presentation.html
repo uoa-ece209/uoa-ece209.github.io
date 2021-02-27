@@ -190,7 +190,7 @@ count: false
 
 ## ELECTENG 209
 # Embedded Software Design 
-### Analogue to Digital Conversion 
+### Analog to Digital Conversion 
 
 .TitleAuthor[Duleepa J Thrimawithana]
 
@@ -208,9 +208,9 @@ name: S1a
 
 # Learning Objectives
 
-- What are analogue and digital signals?
-- Why do we want to process digital signals rather than analogue signals?
-- What is an analogue to digital converter (ADC)?
+- What are analog and digital signals?
+- Why do we want to process digital signals rather than analog signals?
+- What is an analog to digital converter (ADC)?
 - Why do we need ADCs?
 - How do we characterize ADCs?
 - Common ADC implementations 
@@ -224,12 +224,9 @@ name: S1b
 
 # Lecture Quiz 
 
-- The link to access the lecture quiz is http://q.xorro.com/quvt 
- - Use your username to login (i.e. UPI in the form *abcd001*)
- - Quiz is available for 3 days and allows multiple attempts
-- Alternatively scan the QR code below
-
-.center[<img src="img/QR.gif" width="300px">]
+- The lecture quiz is now available on Canvas
+ - Quiz is available for 3 days and allows 3 attempts
+ - Best of the 3 attempts taken as the final score
 
 ---
 
@@ -238,7 +235,7 @@ layout: false
 count: false
 .logo-title[]
 
-# Analogue and Digital Signals
+# Analog and Digital Signals
 ### Understanding the Differences  
 
 ---
@@ -253,19 +250,19 @@ name: template_slide
 
 name: S2
 
-# Analogue vs Digital Signals
+# Analog vs Digital Signals
 
 .left-column[
-- Analogue signals are continuous in both time and amplitude
+- Analog signals are continuous in both time and amplitude
  - Often sensitive to noise
- - Most physical signals are analogue
- - Most electrical sensors produce analogue electrical signals
- - Can be converted to a digital signal via an analogue to digital converter (ADC)
+ - Most physical signals are analog
+ - Most electrical sensors produce analog electrical signals
+ - Can be converted to a digital signal via an analog to digital converter (ADC)
 - Digital signals are discrete in both time and amplitude
  - More resistant to noise
- - Cannot exactly reproduce analogue signals
+ - Cannot exactly reproduce analog signals
  - Some electrical sensors can output digital signals
- - Can be converted to an analogue signal via a digital to analogue converter (DAC)
+ - Can be converted to an analog signal via a digital to analog converter (DAC)
 ]
 
 .right-column[
@@ -296,17 +293,17 @@ name: S4
 
 # Processing Signals 
 
-- Originally almost all electronics performed analogue signal processing
+- Originally almost all electronics performed analog signal processing
  - Used standard components such as resistors, capacitors, transistors
-- Analogue signal processing is often complicated
+- Analog signal processing is often complicated
  - Usually requires custom hardware
- - Designing analogue signal processing circuitry takes time and therefore is expensive
-- Specialized application, like fail-safe systems, require analogue signal processing
+ - Designing analog signal processing circuitry takes time and therefore is expensive
+- Specialized application, like fail-safe systems, require analog signal processing
 - For many general applications it is beneficial to move the processing onto a digital platform like a microcontroller
  - Multiple different signal processing operations can be performed by the same hardware
  - It is easy to modify the processing by modifying the code 
-- Since most real-world signals are analogue, we must convert them into digital signals before we can process them using a microcontroller
- - When converting analogue signals to digital signals we lose some information
+- Since most real-world signals are analog, we must convert them into digital signals before we can process them using a microcontroller
+ - When converting analog signals to digital signals we lose some information
 
 ---
 name: S5
@@ -316,10 +313,10 @@ name: S5
 .center[<img src="img/System.png" height="200">]
 
 - The smart energy monitor needs to measure voltage and current to determine power drawn by the load
-- Voltage and current are analogue electrical signals and therefore they need to be converted into digital signals in order to use your microcontroller to perform signal processing
-- We will use the ADC peripheral on the ATmega328P to convert analogue electrical signals to digital signals
- - The ADC only accepts analogue voltage signals that are in the range between 0V and VCC (e.g. 5V)
- - Because of this you designed circuitry to convert the voltage and current you wish to measure into two analogue voltage signals that falls within this range
+- Voltage and current are analog electrical signals and therefore they need to be converted into digital signals in order to use your microcontroller to perform signal processing
+- We will use the ADC peripheral on the ATmega328P to convert analog electrical signals to digital signals
+ - The ADC only accepts analog voltage signals that are in the range between 0V and VCC (e.g. 5V)
+ - Because of this you designed circuitry to convert the voltage and current you wish to measure into two analog voltage signals that falls within this range
 
 ---
 
@@ -328,7 +325,7 @@ layout: false
 count: false
 .logo-title[]
 
-# Analogue to Digital Converters
+# Analog to Digital Converters
 ### Fundamentals Principles
 
 ---
@@ -342,14 +339,14 @@ name: template_slide
 ---
 name: S6
 
-# Analogue to Digital Conversion
+# Analog to Digital Conversion
 
-- An analogue to digital converter (ADC) converts an analogue signal to a digital one
-- We know that an analogue signal is continuous in both time and amplitude, whereas a digital signal is not
-- Therefore, the analogue signal needs to be digitized/discretized  
- - A process known as sampling is used to convert the analogue signal into discrete time steps
- - A process known as quantization is used to convert the analogue into discrete amplitudes
-- The analogue to digital conversion process introduce error
+- An analog to digital converter (ADC) converts an analog signal to a digital one
+- We know that an analog signal is continuous in both time and amplitude, whereas a digital signal is not
+- Therefore, the analog signal needs to be digitized/discretized  
+ - A process known as sampling is used to convert the analog signal into discrete time steps
+ - A process known as quantization is used to convert the analog into discrete amplitudes
+- The analog to digital conversion process introduce error
  - For example during quantization information is lost
 
 .center[<img src="img/ADCProcess.png" height="180">]
@@ -361,7 +358,7 @@ name: S7
 
 - The size of the time intervals the signal is split into, referred to as sample time, is dependent on the sampling frequency (also called sampling rate), measured in hertz
 \\[ t\_{sample} = \frac{1}{f\_{sample}} \\]
-- Higher sampling rates allow the original analogue signal to be captured more accurately
+- Higher sampling rates allow the original analog signal to be captured more accurately
  - However this requires faster ADC hardware, and more memory to store the digital data
 - To accurately capture a signal the sampling rate must be greater than the Nyquist frequency
  - Nyquist frequency is equal to twice the highest frequency present in the signal
@@ -373,7 +370,7 @@ name: S8
 
 - The full voltage range is broken into discrete intervals
 - The number of number of bits available in an ADC to represent the amplitude of a signal determine the number of discrete voltage intervals, as the number of intervals is equal to 2<sup>bits</sup>
-- As an example, lets consider an ADC with a full voltage range of 5V and examine how it will represent a 3.2V analogue signal if this ADC had 1-bit, 2-bits and 3-bits to represent an analogue signal 
+- As an example, lets consider an ADC with a full voltage range of 5V and examine how it will represent a 3.2V analog signal if this ADC had 1-bit, 2-bits and 3-bits to represent an analog signal 
 
 .center[<img src="img/Quantization.png" height="270">]
 
@@ -384,10 +381,10 @@ name: S9
 
 - Lets examine how a 3-bit ADC would represent a sin wave with an amplitude of 2.5V and an offset of 2.5V
  - Assume the ADC has a full voltage range of 5V
- - The analogue signal is sampled every 2ms
+ - The analog signal is sampled every 2ms
  - A 3-bit ADC can break the full voltage range into 8 different intervals (i.e. 2<sup>3</sup>) 
- - The analogue voltage samples are represented by digital numbers depending on which voltage interval each samples falls into (e.g. 3.97V is represented by '110' while 4.9V is represented by '111')
-- Higher the bits in the ADC the more accurately we can represent an analogue signal 
+ - The analog voltage samples are represented by digital numbers depending on which voltage interval each samples falls into (e.g. 3.97V is represented by '110' while 4.9V is represented by '111')
+- Higher the bits in the ADC the more accurately we can represent an analog signal 
 
 .center[<img src="img/3bitADC.png" height="170">]
 
@@ -397,10 +394,10 @@ name: S10
 # Characteristics of an ADC (PI)
 
 - Acquisition time
- - How long it takes for the ADC hardware to acquire a sample of the analogue signal
+ - How long it takes for the ADC hardware to acquire a sample of the analog signal
  - This includes switching multiplexers, charging internal capacitors, waiting for transients to settle, etc. 
 - Conversion time
- - Time taken by the ADC to convert the sample of the analogue signal into a digital number
+ - Time taken by the ADC to convert the sample of the analog signal into a digital number
 - Total sampling time
  - This is the total time taken to make a single ADC reading and is therefore the sum of both the acquisition time and conversion time
  - The maximum sampling rate/frequency is limited by the minimum total sampling time
@@ -445,7 +442,7 @@ name: S13
 # Example: Sampling Rate and Resolution
 
 .questions[
-An ADC is used to convert an analogue signal that is between 0V and 3V to a digital signal. This ADC has a minimum acquisition time of 140ns, and a minimum conversion time of 360ns.   
+An ADC is used to convert an analog signal that is between 0V and 3V to a digital signal. This ADC has a minimum acquisition time of 140ns, and a minimum conversion time of 360ns.   
 - What is the maximum sampling rate for the ADC? 
 - What is the maximum frequency that can be present in a signal such that the ADC could still accurately measure the signal?
 - What should be the minimum reference voltage that could be used in this design? 
@@ -476,11 +473,11 @@ name: S14
 
 # The Sampling Process (PI)
 
-- [Recall](#S7) that we want to take samples of the analogue signal at discrete points in time
+- [Recall](#S7) that we want to take samples of the analog signal at discrete points in time
 - This is because the quantization process takes time as it is not an instantaneous process
  - During the quantization process we need to keep the signal being converted constant 
-- This is achieved by using a sample and hold circuit to capture a “snapshot” of the analogue signal and store it until the quantization process is completed
- - The characteristics of the sample and hold circuit are important when designing the analogue circuitry that produce the input signal to the ADC
+- This is achieved by using a sample and hold circuit to capture a “snapshot” of the analog signal and store it until the quantization process is completed
+ - The characteristics of the sample and hold circuit are important when designing the analog circuitry that produce the input signal to the ADC
  - Ideally the input to the ADC should be coming from a low impedance source
 
 .center[<img src="img/SampleHold.png" height="150">]
@@ -506,9 +503,9 @@ name: S16
 
 # The Quantization Process 
 
-- The sample of the analogue signal is converted to a digital number over a series of ADC clock cycles
+- The sample of the analog signal is converted to a digital number over a series of ADC clock cycles
  - Hence the name “successive approximation”, an algorithm that dates back to the 1500s
-- At each cycle, the sample of the analogue signal is compared to an internally generated voltage that is half the remaining amplitude interval (starts with half the value of V<sub>ref</sub>)
+- At each cycle, the sample of the analog signal is compared to an internally generated voltage that is half the remaining amplitude interval (starts with half the value of V<sub>ref</sub>)
  - If sample higher than internal voltage, output bit of this cycle is set to 1, otherwise 0
  - As an example lets see how an ADC with a V<sub>ref</sub> of 2.56V converts a 1.89V sample 
 
@@ -519,7 +516,7 @@ name: S17
 
 # SAR Conversion in Tabular Format
 
-- Lets examine how an 8-bit SAR ADC that has a 2.56V V<sub>ref</sub> converts a sample of an analogue signal that has an amplitude of 1.89V.
+- Lets examine how an 8-bit SAR ADC that has a 2.56V V<sub>ref</sub> converts a sample of an analog signal that has an amplitude of 1.89V.
  - Has 256 amplitude intervals and the step size is 10mv (i.e. 2.56/256)
 - Result of the conversion is 10111101b (i.e. 189) which equates to 189mV (i.e. 189 x 10mV)
 
@@ -546,7 +543,7 @@ name: S19
 
 # Multiple ADC Channels
 
-- When using an MCU, often more than one analogue signal needs to be converted
+- When using an MCU, often more than one analog signal needs to be converted
 - Rather than having multiple ADC units connected to a single pin each, a single ADC unit is often used 
  - The pins are connected to the ADC unit via a multiplexer
 - The inputs are called “ADC channels”
@@ -599,7 +596,7 @@ name: S21
 # ATmega328P ADC Pins
 
 - In the ATmega328P there are 8 ADC pins (PC0 to PC5 together with ADC6 and ADC7)
- - By default these pins are configured as analogue inputs (this is not always the case)
+ - By default these pins are configured as analog inputs (this is not always the case)
 - Though AIN0 and AIN1 also accept analog inputs they are used for the comparator
 
 .center[<img src="img/328PPins.png" width="320">]
@@ -694,7 +691,7 @@ name: S26
 
 .center[<img src="img/ADCSRB.png" width="600">]
 
-- .color-grey[ACME:	*Analogue Comparator Multiplexer Enable*]
+- .color-grey[ACME:	*Analog Comparator Multiplexer Enable*]
 - ADTS[2..0]:	*Auto Trigger Source* when ADATE bit is set, these bits selects which source will initiate an ADC conversion
 
 .center[<img src="img/ADCAutoTrigger.png" width="600">]
@@ -706,7 +703,7 @@ name: S27
 
 .center[<img src="img/DIDR0.png" width="600">]
 
-- ADCxD: *Digital Input Disable* when ADC0-ADC5 pins are used as analogue inputs the digital input buffer on the corresponding pin can be disabled by setting the ADCxD bit to save power (ADC6 & ADC7 do not have buffers)
+- ADCxD: *Digital Input Disable* when ADC0-ADC5 pins are used as analog inputs the digital input buffer on the corresponding pin can be disabled by setting the ADCxD bit to save power (ADC6 & ADC7 do not have buffers)
 
 ---
 name: S28
@@ -788,7 +785,7 @@ name: S32
 
 .codes[
 ```c
-#define F_CPU 800000UL                      //Defining system clock frequency
+#define F_CPU 2000000UL                      //Defining system clock frequency
 
 #include <avr/io.h>                         //Needed for using the macros for register addresses
 #include <stdio.h>                          //Needed for printf()
@@ -836,14 +833,14 @@ name: S34
 
 - Your ADC function is blocking and your MCU cannot do anything while taking an ADC reading
  - For the project you will have to use an ADC interrupt 
- - The ADC also need to be triggered based on a timer event to take an ADC reading every 1ms
+ - The ADC also need to be triggered based on a timer event to take an ADC reading every 0.1ms
 - You must understand examples you use for the lab or the project
  - Your individual understanding will be assessed during all assessments 
  - During 2nd test you will have to develop a C program yourself and simulate it on Proteus
  - All team members must therefore understand every part of the design
 - It is critical that you complete the pre-lab of the ADC lab before your lab session so that you can get help with the later parts of the lab
  - Please do not waste the opportunity to get support in the labs 
- - With 160 students in the class, closer to due dates, there will be limited opportunities to ask for help 
+ - With many students in the class, closer to due dates, there will be limited opportunities to ask for help 
 
 
 ---
