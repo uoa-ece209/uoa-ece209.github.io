@@ -209,7 +209,7 @@ name: S1a
 - What are the differences between microcontrollers and reconfigurable integrated circuits?
 - Reasons for using a microcontroller in your design
 - Features that needs to be considered when selecting a microcontroller
-- Key features of an ATmega328P microcontroller 
+- Key features of ATmega328P and ATmega328PB microcontrollers 
 - Revising C programing basics
  - Variables and data types
  - Operators 
@@ -225,12 +225,9 @@ name: S1b
 
 # Lecture Quiz 
 
-- The link to access the lecture quiz is http://q.xorro.com/quvt 
- - Use your username to login (i.e. UPI in the form *abcd001*)
- - Quiz is available for 3 days and allows multiple attempts
-- Alternatively scan the QR code below
-
-.center[<img src="img/QR.gif" width="300px">]
+- The lecture quiz is now available on Canvas
+ - Quiz is available for 3 days and allows 3 attempts
+ - Best of the 3 attempts taken as the final score
 
 ---
 
@@ -339,15 +336,14 @@ name: S6
 
 - Configure the Digital I/O, ADC, UART and Timer peripherals of the microcontroller with appropriate settings for the project
 - Take ADC samples of signals representing source current and voltage
- - Samples need to be taken every 1ms or slower using a timer to meet our design specifications
+ - Samples need to be taken every 0.1ms or slower using a timer to meet our design specifications
  - First sample taken need to be synchronized with the zero crossing of the voltage signal
  - Aim to collect 20 or more samples of each signal 
-- Use the samples collected to calculate peak current, RMS voltage, power and energy
- - Search for the maximum value in the samples collected to determine peak current
- - Perform numeric calculations using rectangular rule to determine the RMS voltage and power 
- - Sum the power at regular intervals to determine the energy consumption 
+- Use the samples collected to calculate peak voltage, RMS current, and power 
+ - Search for the maximum value in the samples collected to determine peak voltage
+ - Perform numeric calculations using rectangular rule to determine the RMS current and power 
 - Every 1s send latest data over the UART
- - Data should be in the format "Parameter = XXXX Unit \n" (e.g. Vrms = 14.50 V)
+ - Data should be in the format "Parameter = XXX Unit \n" (e.g. Peak Voltage is: 20.1 V)
 - Using Digital I/O, control the 7-segment display to show new data every 1s 
  - Refresh the digits at a rate of at least 30 Hz with the aid of a timer
 
@@ -508,7 +504,7 @@ name: S13
 - The most common ones, which we will cover in more detail during the course, are
  - General Purpose Input Output (GPIO): Allows generating/reading high or low (digital) signals
  - UART (Universal Asynchronous Receiver Transmitter): Sends and receives binary data using a simple serial protocol
- - Analogue to Digital Converters (ADC): Converts an analogue voltage into a digital value
+ - Analog to Digital Converters (ADC): Converts an analog voltage into a digital value
  - Timers: allow real-time measurements and executing realtime tasks   
 - The above listed common I/O peripherals are generally sufficient for simple projects like ours
 - There are many more I/O peripherals that we won’t cover but can be important for more complicated projects and these include
@@ -538,7 +534,7 @@ name: S14
 ---
 name: S15
 
-# Why are We Using an ATmega328P?
+# Why an ATmega328P/ATmega328PB?
 
 - To select an appropriate microcontroller for our project we need to estimate the requirements for the functional parameters we looked at
  - Determining for example the required I/O peripherals and operating voltage are somewhat straightforward 
@@ -546,7 +542,7 @@ name: S15
 - As discussed previously there are many non-functional aspects to think about
  - Cost, availability and support (e.g. application notes, tutorials, books, development tools, libraries, etc.) are very important
  - In many situations we may prefer a familiar device or a device that is easier to use and has a shorter learning curve since development time is a big part of the project cost
-- The ATmega328P has all the peripherals we need and has sufficient memory and computational power but also more importantly it is one of the easiest to use, we are familiar with it (learnt in COMPSYS 201) and there is ample support (e.g. https://community.atmel.com)
+- The ATmega328P/ATmega328PB has all the peripherals we need and has sufficient memory and computational power but also more importantly it is one of the easiest to use, we are familiar with it (learnt in COMPSYS 201) and there is ample support (e.g. https://community.atmel.com)
 
 ---
 name: S16
@@ -572,10 +568,24 @@ name: S17
  - External and internal interrupt sources
  - Operates from 2.7V to 5.5V from -40°C to 125°C 
 - As with COMPSYS 201 we will use the Atmel Studio IDE for development
-- We will use the ATmega328PB Xplained Mini evaluation kit to avoid having to build additional circuitry
- - Code written for the ATmega328P is forward compatible with ATmega328PB
 - When getting started, the most important resource available is the [ATmega328P](http://ww1.microchip.com/downloads/en/DeviceDoc/Atmel-7810-Automotive-Microcontrollers-ATmega328P_Datasheet.pdf) datasheet
  - Lists all of the parameters and explains how the I/O peripherals work and how to use them
+
+---
+name: S17b
+
+# ATmega328P vs ATmega328PB
+
+- Proteus VSM, which we will use to simulate and debug modules of the embedded software program, only provide an ATmega328P model 
+- However, we will use the ATmega328PB Xplained Mini evaluation kit in our prototype to avoid having to build additional circuitry
+- Fortunately, code written for the ATmega328P is forward compatible with ATmega328PB
+ - Some inbuilt macros might need minor modifications so alway test your modules on an ATmega328PB Xplained Mini after validating it in Proteus VSM
+- The main differences between the ATmega328P and the ATmega328PB are
+ - ATmega328PB has an additional USART module, SPI module and a TWI module
+ - ATmega328PB has 2 additional Timer/Counters
+ - ATmega328PB has additional IO pin functionalities
+- In the lectures we will only consider the ATmega328P 
+ - Examples discussed in the lectures will work on both devices
 
 ---
 name: S18
@@ -592,8 +602,8 @@ name: S19
 
 # Your Energy Monitor Implementation
 
-- To implement the energy monitor you need to design a PCB that will contain the analogue hardware, an ATmega328PB Xplained Mini and the provided 7-segment display as well as HM-10 BLE module 
- - To make a compact design you can replace the Xplained Mini with an ATmega328P IC and the support circuitry required for the ATmega328P
+- To implement the energy monitor you need to design a PCB that will contain the analog hardware, an ATmega328PB Xplained Mini and the provided 7-segment display as well as HM-10 BLE module 
+ - To make a compact design you can replace the Xplained Mini with an ATmega328P/ATmega328PB IC and the support circuitry required for it
 
 .center[
 <img src="img/FinalDesign.png" height="275">
@@ -629,9 +639,9 @@ name: S20
 - Once we have validated the functionality of the software, we then download *ELF* or *HEX* file onto the MCU program memory
 - You will start noticing the benefits of using software as you can iterate through the design much faster in comparison to the time required to iterate hardware
 - Your first lab will focus on setting up your development environment and getting a simple program running on Proteus
- - You could also try to run the same program on an Xplained Mini
+ - You could also run the same program on an Xplained Mini
 - The lab will walk you through all of the steps required, so don’t worry if it doesn’t all make sense just yet
- - There are many steps involved in compiling code, debugging on Atmel Studio, simulating on Proteus and finally programming the MCU
+ - There are many steps involved in compiling code, debugging on Atmel Studio, simulating on Proteus and finally programming the physical MCU
 
 ---
 name: S21
@@ -718,7 +728,7 @@ name: S23
 .codes[
 ```c
 static volatile char glob_tom, glob_harry, glob_will;   
-                                            //Declaring global variables (initialized to 0 at start)    
+                                            //Declaring global variables with file scope (initialized to 0)    
 
 int main(void){
   uint8_t loc_tom = 5;                    //Declaring and initializing the variable to 5
