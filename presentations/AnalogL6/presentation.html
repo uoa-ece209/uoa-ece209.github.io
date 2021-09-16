@@ -82,13 +82,13 @@
       }
 
       .left-column-s {
-        width: 75%;
+        width: 50%;
         float: left;
         word-wrap: break-word;
       }
      
       .right-column-s {
-        width: 20%;
+        width: 45%;
         float: right;
         word-wrap: break-word;
       }
@@ -200,7 +200,7 @@ layout: true
 name: template_slide
 
 .logo-slide[]
-.footer[[Duleepa J Thrimawithana](https://www.linkedin.com/in/duleepajt), Department of Electrical, Computer and Software Engineering (2020)]
+.footer[[Duleepa J Thrimawithana](https://www.linkedin.com/in/duleepajt), Department of Electrical, Computer and Software Engineering (2021)]
 
 ---
 
@@ -247,10 +247,9 @@ layout: true
 name: template_slide
 
 .logo-slide[]
-.footer[[Duleepa J Thrimawithana](https://www.linkedin.com/in/duleepajt), Department of Electrical, Computer and Software Engineering (2020)]
+.footer[[Duleepa J Thrimawithana](https://www.linkedin.com/in/duleepajt), Department of Electrical, Computer and Software Engineering (2021)]
 
 ---
-
 name: S2
 
 # Resistors
@@ -259,25 +258,121 @@ name: S2
 \\[ R\_{dc} = \frac{\rho l}{A} \\]
 - A resistor is thus made using a conductor that has specific length and a cross-sectional area, which gives the required resistance
  - The conductor is typically arranged as a helix to reduce the size of the resistor 
-- As a practical resistor uses a certain length of wire,typically in a helix arrangment, it not only has resistance but also has some inductance 
- - A practical resistor can be modelled as a resistance, R, and an Equivalent Eeries Inductance, ESL
+- As a practical resistor uses a certain length of wire,typically in a helix arrangement, it not only has resistance but also has some inductance 
+ - A practical resistor can be modelled as a resistance, R, and an Equivalent Series Inductance, ESL
 
 ---
-
 name: S3
 
 # Film Resistors
 
-.center[<img src="img/metal_film.png" height="100"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <img src="img/smt.png" height="100">
+.center[<img src="img/metal_film.png" height="100"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <img src="img/smt.png" height="100">    
 
 .credits[TH and SMT film resistors taken from [[1]](https://eepower.com/resistor-guide/resistor-materials/metal-film-resistor/#), [[2]](https://www.mouser.com/new/vishay/vishay-ptn-resistors/)]
 ]
 
 - Constructed by depositing a conducting film of carbon, metal or metal oxide on to an non-conducting substrate like ceramic
  - Most common type of resistors used in electronics circuitry 
+ - The type of conducting film used lead to some unique properties 
 - A high precision helix grooved on to the conducting film using a laser allows much smaller tolerances in resistance
  - An epoxy coating is used to protect the conducting film 
 - These resistors are rated to about 125V-350V and the power rating can be up to a few Watts 
+
+---
+name: S4
+
+# Wirewound Resistors
+
+.center[<img src="img/Wirewound-Resistor.jpg" height="130"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <img src="img/Wirewound-Resistor2.jpg" height="130">    
+
+.credits[Wirewound resistors with metal and ceramic housing taken from [[3]](https://passive-components.eu/resistors-wirewound-resistors-construction-pulse-load-and-types/), [[4]](https://circuit.direct/products/5-watt-wirewound-resistor-with-10-tolerance-pack-of-10-r-xx-5w-10pk?variant=2368415812)]
+]
+
+- Constructed by winding a thin metal alloy wire in form of a helix around an insulator
+ - Winding is encapsulated in a non-conducting potting material 
+ - Some devices have a metal housing with fins to dissipate the heat effectively (i.e., a heatsink)
+- These resistors have high-current and high-power ratings 
+ - Typically used as load resistors (e.g., variable load used in this project)
+- The larger number of turns and the cross-sectional area result in a significantly higher ESL 
+ - Thus, not suitable in some applications (e.g., current sense resistor)
+
+---
+name: S5
+
+# Potentiometers 
+
+.center[<img src="img/potentiometer.png" height="130"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <img src="img/pot.jpg" height="130">    
+
+.credits[Potentiometer construction and example devices taken from [[5]](https://www.etechnog.com/2021/07/potentiometer-diagram-symbol-construction.html), [[6]](https://www.u-buy.com.tw/en/product/5H00LR2-bojack-10k-ohm-breadboard-trim-potentiometer-with-knob-for-arduino-p103-3-terminal-pin-blue-variable)]
+]
+
+- Constructed using a sliding or a rotating contact to provide an adjustable resistance
+- Usually a three terminal resistor where there is a terminal at each of the resistor 
+ - The third terminal is connected to the sliding/rotating contact 
+- The third terminal forms an adjustable voltage divider 
+ - Commonly used in applications such as volume control 
+- Can be used in places where the resistance need to be trimmed/calibrated to provide greater accuracy
+ - Value can change over time for example due to vibrations
+
+
+---
+name: S6
+
+# Resistor Marking
+
+.left-column-s[
+- TH axial type resistors predominantly use a 4 or a 5 or a 6 band colour-coding system to indicate their resistance and tolerance 
+- SMT and a few TH resistor types use a numbering scheme to indicate resistance 
+ - First 2 numbers represent the two most significant digits of the value 
+ - The last number is the ten-to-the-power multiplier (e.g., 10x10<sup>4</sup> &ohm; and 10x10<sup>5</sup> &ohm;  )
+.center[<img src="img/smt2.jpg" height="60"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <img src="img/smt3.jpg" height="60">   
+.credits[SMT resistor marking taken from [[7]](https://learn.sparkfun.com/tutorials/resistors/decoding-resistor-markings)]
+]
+]
+
+.right-column-s[
+.center[<img src="img/ResistorsMarking.png" height="380"> 
+.credits[TH axial resistor marking taken from [[7]](https://learn.sparkfun.com/tutorials/resistors/decoding-resistor-markings)]
+]
+]
+
+---
+name: S7
+
+# Resistance Measurement 
+
+.center[<img src="img/MeasurementR.jpg" height="170"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <img src="img/benchtop.jpg" height="170">   
+.credits[Handheld multimeter measuring resistance and a bench multimeter taken from [[8]](https://learn.adafruit.com/multimeters/resistance), [[9]](https://nz.rs-online.com/web/p/multimeters/1739960/)]
+]
+
+- A handheld or a bench multimeter can be used to measure resistance of a resistor
+ - Switch the multimeter in to the resistance measurement option
+- Make sure the black lead is plugged to *COM* or *LO* terminal and the red lead to *&ohm;* terminal
+ - If measuring large resistors avoid touching the terminals of the resistor to reduce error
+- Measuring resistance of a resistor while in circuit (i.e., on PCB) is often not possible
+ - Devices connected to it on the PCB will introduce an error in to the measurement 
+
+---
+name: S8
+
+# Resistor Parameters
+
+.left-column[
+- There are many device parameters to consider when selecting each resistor used in a design
+ - Resistance value 
+ - Tolerance
+ - Temperature coefficient
+ - Power rating
+ - Voltage rating
+ - Parasitic inductance (ESL)
+ - Type of resistor (i.e., carbon composition, film, wire wound, ceramic, foil, etc.)
+ - Package (i.e., through-hole, surface-mount, axial, 0805, etc.)
+- In addition, cost, availability, lifecycle, etc. needs to be considered 
+]
+
+.right-column[
+
+]
 
 ---
 
@@ -286,8 +381,36 @@ layout: false
 count: false
 .logo-title[]
 
-# Acknowledgments 
-#### The latter part of the lecture was drafted together with Travis Scott 
+# Capacitors
+### Practical Considerations 
+
+---
+layout: true
+name: template_slide
+
+.logo-slide[]
+.footer[[Duleepa J Thrimawithana](https://www.linkedin.com/in/duleepajt), Department of Electrical, Computer and Software Engineering (2021)]
+
+---
+name: S9
+
+# Capacitors
+
+- The capacitance of a capacitor made using two conducting plates, where each plate has an area, A, separated by, d, and uses insulation material between the plates with a permittivity, &epsilon;<sub>r</sub>&epsilon;<sub>0</sub>, is given by,
+\\[ C = \frac{\epsilon\_r \epsilon\_0 A}{d} \\]
+- A capacitor is thus made using conducting plates that has specific area and a separation, which gives the required capacitance
+ - The plates typically arranged like a multilayer "wrap" to reduce the size of the capacitor 
+- A practical capacitor not only has capacitance but also has some inductance and resistance
+ - Can be modelled as a capacitor, C, an Equivalent Series Inductance, ESL and an Equivalent Series Resistance, ESR
+
+---
+
+class: title-slide
+layout: false
+count: false
+.logo-title[]
+
+# Questions?
 
     </textarea>
 
