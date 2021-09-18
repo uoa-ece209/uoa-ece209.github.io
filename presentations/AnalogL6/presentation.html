@@ -270,7 +270,7 @@ name: S3
 
 .center[<img src="img/metal_film.png" height="100"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <img src="img/smt.png" height="100">    
 
-.credits[TH and SMT film resistors taken from [[1]](https://eepower.com/resistor-guide/resistor-materials/metal-film-resistor/#), [[2]](https://www.mouser.com/new/vishay/vishay-ptn-resistors/)]
+.credits[TH and SMT film resistor construction taken from [[1]](https://eepower.com/resistor-guide/resistor-materials/metal-film-resistor/#), [[2]](https://www.mouser.com/new/vishay/vishay-ptn-resistors/)]
 ]
 
 - Constructed by depositing a conducting film of carbon, metal or metal oxide on to an non-conducting substrate like ceramic
@@ -373,7 +373,9 @@ name: S8
 ]
 
 .right-column[
-
+.center[<img src="img/THSize.gif" height="150">    <img src="img/SMTSizes.png" height="200">    
+.credits[TH and SMT resistor sizes taken from [[10]](http://newautoinsurance.review) and [[11]](https://www.newmatik.com/knowledge-base/KB-EN-00928/resistor-case-sizes)]
+]
 ]
 
 ---
@@ -413,7 +415,7 @@ name: S10
 # Electrolytic Capacitors (PI)
 
 .center[<img src="img/AlElV2.png" height="200">  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <img src="img/ElCap.jpg" height="200">   
-.credits[Electrolytic capacitor taken from [[10]](https://www.mdpi.com/1424-8220/20/13/3740/htm), [[11]](https://nz.rs-online.com/web/p/aluminium-capacitors/7472207/)]
+.credits[Electrolytic capacitor construction taken from [[10]](https://www.mdpi.com/1424-8220/20/13/3740/htm), [[11]](https://nz.rs-online.com/web/p/aluminium-capacitors/7472207/)]
 ]
 - Electrolytic capacitors are polarized and therefore can only be used in DC circuits
  - Negative terminal is usually identified by the marking and also is the shorter lead
@@ -422,7 +424,7 @@ name: S10
  - The aluminum foil is etched to create an uneven surface and increase area
 
 ---
-name: S10
+name: S11
 
 # Electrolytic Capacitors (PII)
 
@@ -433,7 +435,7 @@ name: S10
  - Not suitable for high-frequency applications or decoupling
  - ESR is higher at lower operating temperatures 
 - The electrolyte eventually dries off, leading to failure of the capacitor
- - Life time few thousand hours to few tens of thousand hours
+ - Life time few thousands hours to few tens of thousands of hours
  - Life degrade rapidly with increasing operating temperature
 ]
 .right-column[
@@ -443,32 +445,127 @@ name: S10
 ]
 
 ---
-name: S11
-
-# Film Capacitors
-
-
----
 name: S12
 
-# Ceramic Capacitors (PI)
+# Film Capacitors (PI)
 
----
-name: S12
+.center[<img src="img/FilmCap1.png" height="150">  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <img src="img/FilmCap2.png" height="150">   &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <img src="img/FilmCap3.png" height="150">   
+.credits[Film capacitor construction taken from [[14]](https://chargedevs.com/features/a-closer-look-at-film-capacitors/)]
+]
 
-# Ceramic Capacitors (PII)
+- Made by wrapping a large number of layers of two metal foils that are separated by a dielectric material 
+ - The dielectric material can be paper, polyester, polystyrene, polypropylene, etc.
+- In some the dielectric foil has a thin conducting layer deposited instead of using a metal foil 
+ - These are termed metalized foil capacitors 
+- Extremely long life time in the order of many hundreds of thousands of hours
+ - As with electrolytic capacitors, life time decrease with increasing temperature
+ - Some film capacitors have self-healing properties 
 
 ---
 name: S13
 
-# Capacitance Measurement 
+# Film Capacitors (PII)
+
+.center[ <img src="img/FilmProp.png" height="190">   
+.credits[ESR, voltage de-rating & capacitance change with frequency taken taken from [[15]](https://redexpert.we-online.com/)]
+]
+
+- Because of the thickness of the dielectric film, capacitance values are limited to 100s of &mu;F 
+- The voltage rating can be as high as 10kV
+ - Though capacitance is unaffected by voltage, at higher frequencies voltage applied should be reduced
+- The metal foil used as electrodes helps dramatically reduce the ESR to well below 100m&ohm;
+ - Though ESL of larger capacitors can be significant, film capacitors are good for decoupling
+- Good for high-frequency applications as capacitance is unaffected by frequency   
 
 ---
 name: S14
 
+# Ceramic Capacitors (PI)
+
+.center[<img src="img/CeramicStc2.png" height="150">  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <img src="img/CeramicStc.jpg" height="150">   
+.credits[Ceramic SMT and TH capacitor construction taken from [[16]](https://www.physics-and-radio-electronics.com/electronic-devices-and-circuits/passive-components/capacitors/ceramiccapacitor.html), [[17]](https://passive-components.eu/capacitors-introduction-to-ceramic-capacitors/)]
+]
+
+- Made using alternating layers of ceramic and metal where the ceramic is used as the dielectric
+- Because of the thickness of the dielectric, capacitance values are limited to 10s of &mu;F 
+- The voltage ratings can be as high as 10s of kVs owing to properties of ceramic dielectric 
+- The metal plates used as electrodes helps dramatically reduce the ESR to well below 100m&ohm;
+ - ESL is also quite small and therefore widely used as decoupling capacitors
+- Extremely long life time in the order of many hundreds of thousands of hours
+ - Life time decrease with increasing temperature as well as with mechanical forces like vibrations
+
+---
+name: S15
+
+# Ceramic Capacitors (PII)
+
+.center[ <img src="img/X7RProp.png" height="190">   
+.credits[ESR, voltage impact & temperature impact for X7R capacitors taken taken from [[15]](https://redexpert.we-online.com/)]
+]
+
+- The properties of the dielectric lead to different temperature coefficients and a few other characteristics 
+ - Ceramic capacitors are thus often categorized based on their temperature coefficient 
+ - X7R and C0G/NP0 are the two most common ceramic capacitors categories/types
+- X7R capacitors are are usually cheaper and they have higher capacitances up to 10s of &mu;F
+ - Their capacitance degrade significantly with voltage applied and temperature 
+ - They are not quite suitable for applications such as filters and resonant circuits 
+
+---
+name: S16
+
+# Ceramic Capacitors (PIII)
+
+.center[ <img src="img/NP0Prop.png" height="190">   
+.credits[ESR, voltage impact & temperature impact for C0G/NP0 capacitors taken taken from [[15]](https://redexpert.we-online.com/)]
+]
+
+- C0G/NP0 capacitors are are usually expensive and their capacitances are limited to a few &mu;F
+ - At higher voltages capacitor values are limited to a few tens of nF
+- Their capacitance remain constant regardless of the voltage applied or the temperature  
+ - They are thus suitable for applications such as filters and resonant circuits 
+
+---
+name: S17
+
+# Capacitor Marking
+
+.left-column-s[
+- TH electrolytic capacitors usually have the capacitance with the unit printed on the package 
+- SMT electrolytic capacitors usually have the capacitance in &mu;F printed on the package  
+- TH film and ceramic capacitors often use a 3 digit code to indicate capacitance in pF
+ - First 2 numbers represent the two most significant digits of the value
+ - The last number is the ten-to-the-power multiplier (e.g., 10x10<sup>4</sup> pF)
+- SMT film and ceramic capacitors capacitors often do not have any marking
+]
+
+.right-column-s[
+.center[<img src="img/ElecMarking2.jpg" height="100"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  <img src="img/ElecMarking.jpg" height="120">   
+
+<img src="img/FilmMarking.png" height="170">   
+.credits[Resistor marking taken from [[11]](https://nz.rs-online.com/web/p/aluminium-capacitors/7472207/), [[18]](https://forum.digikey.com/t/smt-electrolytic-capacitor-with-no-voltage-rating/974) and [[19]](https://electronics.stackexchange.com/questions/240258/date-code-in-components-marking)]
+]
+]
+
+---
+name: S18
+
+# Capacitance Measurement 
+
+.center[<img src="img/MeasureC.jpg" height="170"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <img src="img/LCR.jpg" height="170">   
+.credits[Measuring capacitance using multimeter or an LCR meter taken from [[20]](https://www.fluke.com/en-us/learn/blog/electrical/what-is-capacitance), [[21]](https://www.meilhaus.de/en/bk89x.htm)]
+]
+
+- Before measuring a capacitor make sure it is discharged as a charged capacitor can damage the measurement equipment 
+- Some multimeters allow capacitance measurement 
+ - Select the capacitance measurement setting to use this feature 
+ - Black lead should be plugged to *COM* or *LO* terminal and the red lead to *&ohm;* or *V* terminal
+- For precise measurement of capacitance, ESR and ESL, we can use an LCR meter
+
+---
+name: S19
+
 # Capacitor Parameters
 
-.left-column[
 - There are many device parameters to consider when selecting each capacitor used in a design
  - Capacitance value & tolerance
  - Equivalent Series Inductance (ESL)
@@ -479,11 +576,35 @@ name: S14
  - Type of capacitor (i.e., electrolytic, ceramic, film, tantalum, polymer, electric double-layer, etc.)
  - Package (i.e., through-hole, surface-mount, radial, 0805, etc.)
 - In addition, cost, availability, lifecycle, etc. needs to be considered 
-]
 
-.right-column[
+---
 
-]
+class: title-slide
+layout: false
+count: false
+.logo-title[]
+
+# Diodes and Zener Diodes
+### Practical Considerations 
+
+---
+layout: true
+name: template_slide
+
+.logo-slide[]
+.footer[[Duleepa J Thrimawithana](https://www.linkedin.com/in/duleepajt), Department of Electrical, Computer and Software Engineering (2021)]
+
+---
+name: S20
+
+# Diodes
+
+- A two terminal device made using semiconductor material with a P-N junction
+ - Terminal connected to P-doped region is called the anode and the one connected to the N-doped region is called the cathode
+- When the anode is at a higher potential than the cathode (i.e., V<sub>AK</sub> is positive), diode is forward biased and current flow from anode to cathode
+ - Forward voltage drop, V<sub>F</sub>, can be in the range 0.2V to about 2.5V depending on the type
+
+[1](https://commons.wikimedia.org/wiki/File:PN_diode_with_electrical_symbol.svg)
 
 ---
 
