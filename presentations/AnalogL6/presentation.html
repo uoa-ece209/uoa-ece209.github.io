@@ -138,7 +138,7 @@
       }
 
       .zoom175:hover {
-        transform: scale(1.75) translateY(-20%) translateX(-20%); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+        transform: scale(1.75) translateY(-20%) translateX(0%); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
       }
 
       .color-grey{
@@ -642,6 +642,23 @@ name: S22
 .right-column[.center[<img src="img/DiodeSw.png" height="400">]
 ]
 
+---
+name: S23
+
+# Testing a Diode 
+
+
+.center[<img src="img/DiodeTest.jpg" height="160"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <img src="img/benchtop.jpg" height="160">   
+.credits[Handheld multimeter testing diode and a bench multimeter taken from [[8]](https://www.fluke.com/en-us/learn/blog/digital-multimeters/how-to-test-diodes), [[9]](https://nz.rs-online.com/web/p/multimeters/1739960/)]
+]
+
+- A handheld or a bench multimeter can be used to test a diode
+ - Switch the multimeter in to the diode measurement option
+- Make sure the black lead is plugged to *COM* or *LO* terminal and the red lead to *&ohm;* terminal
+- Touch red lead to anode of the diode and black lead to cathode of the diode
+ - If the diode is good it should read the forward voltage drop of diode
+ - If diode is damaged it will either read open circuit or a near 0V forward drop 
+- Swap the leads and ensure it reads open circuit as the diode is now reverse biased 
 
 ---
 name: S23
@@ -711,12 +728,30 @@ name: S26
 
 # Ground Planes
 
+.zoom175[
+.center[<img src="img/GroundPlane.gif" height="200">]
+]
+
+- Current carrying traces emit electromagnetic noise as the magnitude of current changes 
+ - Field emitted not only couples to neighboring traces but also to outside world 
+- The amount of field coupled from one trace to the other as well as field emitted to the outside world can be reduced using a ground plane
+ - The changes in current induces eddy currents in ground plane inturn producing a "cancelling field" 
+- Alternatively, return trace can be placed straight below current path to reduce field emitted 
 
 ---
 name: S27
 
 # Decoupling Capacitors
 
+.center[<img src="img/Decoup.png" height="180">]
+
+- PCB traces and vias introduce inductance in addition to ESL of the bulk capacitors
+ - This could be in the range of a few nH to tens of nH
+- Trace inductances and ESL of bulk capacitors resist changes in the current demand
+ - In example, when LED is turned on, inductor resists increase in current and as a result V<sub>sw1</sub> dips
+- A decoupling capacitor near the "consumer" helps meet its instantaneous current demand 
+ - The decoupling capacitor keeps V<sub>sw2</sub> nearly constant and minimize generation of electrical noise
+- Size of decoupling capacitor depends on current drawn by "consumer" and parasitic inductances
 
 ---
 
