@@ -538,18 +538,17 @@ name: S15
 
 # Circuit Analysis - Step 2
 
-- Use KVL and KCL to relate Vs and Is
- - We will need as many relations as the number of unknown Vs and Is
- - KVL and KIL applies equally to DC, AC and transient analysis 
-- KVL states that voltages across each circuit element in a closed loop of a circuit adds to zero
-- KIL states that currents entering and leaving a circuit node must be zero
+- Use KVL and KCL to relate voltages and currents in each branch of the circuit
+ - We will need as many relations as the number of unknown voltages and currents
+ - KVL and KIL applies equally to DC, AC steady-state and transient analysis 
+- KVL states that voltages across each circuit element in a closed loop of a circuit should add to zero
+- KIL states that sum of currents entering and leaving a circuit node should be zero
 
 ---
 name: S10
 
 # Circuit Analysis - Step 3
 
-**edit**
 - Solve the simultaneus equations obtaind from KVL and KIL
 - As an example for circuit here there are 4 Is and 3Vs, and the equations to solve are 
  - From KIL
@@ -561,11 +560,11 @@ name: S32
 # Example: AC Steady-State Analysis
 
 .questions[
-Determine current flowing through each of the circuits below using phasor domain and time domain
+Determine current flowing through each of the 2 AC circuits below at steady-state using phasor-domain and time-domain analysis techniques.
 ]
 
 .center[
-<img src="img/D.png" width="750">
+<img src="img/Example1.png" height="130">
 ]
 
 ---
