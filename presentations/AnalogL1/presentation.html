@@ -430,8 +430,8 @@ name: S12
 - Current is a measure of how many electrons are flowing through a circuit branch
 - Voltage is a measure of the charge imbalance that provides the force to move the electrons through a circuit branch
 - Resistance of a circuit branch is a measure of how hard it is for the electrons to flow through that branch
-- Ohm's law relates voltage, current and resistance 
-\\[ V = IR  \quad \text{OR} \quad v\_{(t)} = i\_{(t)}R \\]
+- Ohm's law relates voltage, current and resistance of a resistor 
+\\[ V\_{DC} = I\_{DC}R  \quad \text{OR} \quad v\_{(t)} = i\_{(t)}R \\]
 ]
 
 .right-column[
@@ -539,17 +539,21 @@ name: S15
 # Circuit Analysis - Step 2
 
 - Use KVL and KCL to relate voltages and currents in each branch of the circuit
- - We will need as many relations as the number of unknown voltages and currents
- - KVL and KIL applies equally to DC, AC steady-state and transient analysis 
-- KVL states that voltages across each circuit element in a closed loop of a circuit should add to zero
-- KIL states that sum of currents entering and leaving a circuit node should be zero
+ - We will need as many relations as the number of unknown voltages or currents
+ - KVL and KCL applies equally to DC, AC steady-state and transient analysis 
+- KVL states that voltages across each circuit element in a closed loop (e.g., KVL<sub>1</sub>, KVL<sub>2</sub> and KVL<sub>3</sub> indicated in circuit) of a circuit should add to zero
+- KCL states that sum of currents entering and leaving a circuit (e.g., KCL<sub>1</sub> indicated in circuit) node should be zero
+
+.center[<img src="img/Step2.png" height="200">]
 
 ---
 name: S10
 
 # Circuit Analysis - Step 3
 
-- Solve the simultaneus equations obtaind from KVL and KIL
+.center[<img src="img/Step2.png" height="200">]
+
+- Solve the simultaneus equations from KVL and KCL by substituting for V & I relationships from 1st step
 - As an example for circuit here there are 4 Is and 3Vs, and the equations to solve are 
  - From KIL
  - From KVL  
@@ -563,9 +567,7 @@ name: S32
 Determine current flowing through each of the 2 AC circuits below at steady-state using phasor-domain and time-domain analysis techniques.
 ]
 
-.center[
-<img src="img/Example1.png" height="130">
-]
+.center[<img src="img/Example1.png" height="130">]
 
 ---
 
