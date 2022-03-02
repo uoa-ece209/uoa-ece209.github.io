@@ -551,12 +551,15 @@ name: S10
 
 # Circuit Analysis - Step 3
 
-.center[<img src="img/Step2.png" height="200">]
+.center[<img src="img/Step2.png" height="190">]
 
 - Solve the simultaneus equations from KVL and KCL by substituting for V & I relationships from 1st step
-- As an example for circuit here there are 4 Is and 3Vs, and the equations to solve are 
- - From KIL
- - From KVL  
+- As an example for circuit here there are 3 unknown Is and Vs, and the 3 equations to solve are
+ - At node KCL<sub>1</sub>: `\( \quad I_{in} - I_{1} - I_{2} = 0 \)`
+ - From loop KVL<sub>1</sub>: `\( \quad V_{in} -  V_{1} - V_{3} = 0 \quad \Rightarrow \quad V_{in} = I_{1}R_{1} + (I_{1} + I_{2})R_{3} \)`
+ - From loop KVL<sub>2</sub>: `\( \quad V_{1} - V_{2} = 0 \quad \Rightarrow \quad I_{1}R_{1} = I_{2}R_{2} \)`
+- Solving the 2 KVL equations and substituting circuit parameters we get `\( I_{1} = I_{2} = 0.5A \ \ \text{&} \ \ I_{in} = 1A \)`
+ - Could have used a circuit transformation to combine R<sub>1</sub> & R<sub>2</sub> in parallel and simplified the analysis
 
 ---
 name: S32
