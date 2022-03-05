@@ -547,7 +547,7 @@ name: S15
 .center[<img src="img/Step2.png" height="200">]
 
 ---
-name: S10
+name: S16
 
 # Circuit Analysis - Step 3
 
@@ -562,9 +562,9 @@ name: S10
  - Could have used a circuit transformation to combine R<sub>1</sub> & R<sub>2</sub> in parallel and simplified the analysis
 
 ---
-name: S32
+name: S17
 
-# Example: AC Steady-State Analysis
+# Example 1: AC Steady-State Analysis
 
 .questions[
 Determine current flowing through each of the 2 AC circuits below at steady-state using time-domain and phasor-domain analysis techniques. Which analysis technique is easier to use? Sketch the time-domain voltage and current waveforms as well as the voltage and current phasors for each circuit. 
@@ -590,7 +590,7 @@ name: template_slide
 .logo-slide[]
 .footer[[Duleepa J Thrimawithana](https://www.linkedin.com/in/duleepajt), Department of Electrical, Computer and Software Engineering (2020)]
 ---
-name: S10
+name: S18
 
 # What is Electrical Power
 
@@ -604,7 +604,111 @@ name: S10
 - Note, AC circuits may not always use sinusoidal sources, and they can be of any wave shape
 
 ---
+name: S19
 
+# Real Power in AC Circuits 
+
+.left-column-s[
+- Real power by **definition is the average of p<sub>(t)</sub> over a time period, T<sub>p</sub>**
+- Consider the resistive load in ['Example 1'](#S17), which only consumes real power
+- From our analysis we know that 
+\\[ v\_{L(t)} = V\_{L(pk)} \ cos (1000 \pi t) \quad \text{and} \quad i\_{L(t)} = V\_{L(pk)} \ cos (1000 \pi t) / R\\]
+- Instantaneous power in the resistive load in ['Example 1'](#S17) is therefore
+\\[ p\_{L(t)} = \frac {V^2\_{L(pk)}} {R} \ cos ^2 (1000 \pi t) = \frac {V^2\_{L(pk)}} {2R} \left[ \ cos (2000 \pi t) + 1 \right] \\]
+- Real power delivered to the resistive load in ['Example 1'](#S17) is therefore
+\\[ P = \int\_{0}^{T\_p} p\_{L(t)}\,dt \  = \int\_{0}^{T\_p} v\_{(t)} i\_{(t)} \,dt \  = V^2\_{L(pk)}/2R \\]
+]
+
+.right-column-s[
+.center[<img src="img/RealPower.png" width="180">]
+]
+
+---
+name: S20
+
+# Root Mean Square (RMS) of Signals
+
+- RMS value of an AC voltage or a current is defined to provide a measure of (real) power dissipated in a resistive load in an AC circuit 
+- Using the definition of real power and Ohm's law power dissipated in a resistive load is given by
+
+---
+name: S21
+
+# Reactive Power in AC Circuits
+
+
+---
+name: S22
+
+# Apparent Power in AC Circuits
+
+
+---
+name: S23
+
+# Notes on Simplified Expressions
+
+---
+name: S24
+
+# Example 2: Complex Loads
+
+.questions[
+Using phasor-domain analysis techniques determine the RMS current flowing through the complex load below. Sketch v<sub>L(t)</sub>, i<sub>L(t)</sub> and p<sub>(t)</sub>. Determine the real, reactive and apparent power consumed by the complex load. What is the power factor? If the load is operated for 10 minutes determine energy consumption of the load. 
+]
+
+.center[<img src="img/RLLoad.png" height="130">]
+
+
+---
+
+class: title-slide
+layout: false
+count: false
+.logo-title[]
+
+# Voltage Sensing
+### Analysis & Design 
+
+---
+
+layout: true
+name: template_slide
+
+.logo-slide[]
+.footer[[Duleepa J Thrimawithana](https://www.linkedin.com/in/duleepajt), Department of Electrical, Computer and Software Engineering (2020)]
+---
+name: S18
+
+# Voltage Sensing 
+
+
+
+---
+
+class: title-slide
+layout: false
+count: false
+.logo-title[]
+
+# Current Sensing
+### Analysis & Design 
+
+---
+
+layout: true
+name: template_slide
+
+.logo-slide[]
+.footer[[Duleepa J Thrimawithana](https://www.linkedin.com/in/duleepajt), Department of Electrical, Computer and Software Engineering (2020)]
+---
+name: S18
+
+# Current Sensing
+
+
+
+---
 class: title-slide
 layout: false
 count: false
