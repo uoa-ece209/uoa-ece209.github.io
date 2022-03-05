@@ -595,7 +595,7 @@ name: S18
 # What is Electrical Power
 
 - In DC circuits operating at steady-state, there only exists real power 
-- In AC circuits operating at steady-state, electrical power is divided in to real power, imaginary power and apparent power 
+- In AC circuits operating at steady-state, electrical power is divided in to **real power (P)**, **reactive power (Q)** and **apparent power (S)**
 - Real power transfer happens when electrons move through circuit elements that dissipate, store or convert energy in moving electrons
  - These circuit elements include resistors (dissipate energy), batteries (store energy), LEDs (convert energy), etc. 
 - In AC circuits, inductive and capacitive circuit elements result in reactive power since the absorb energy in electrons during half of the time period and release this energy during the other half 
@@ -632,29 +632,42 @@ name: S20
 - Using the definition of real power and Ohm's law, power dissipated in a resistive load is given by
 \\[ P = \int\_{0}^{T\_p} p\_{L(t)}\,dt \  = \int\_{0}^{T\_p} v\_{(t)} i\_{(t)} \,dt \  = \frac {1} {R} \int\_{0}^{T\_p} v^2\_{(t)} \,dt \ \overset{\underset{\mathrm{OR}}{}}{=} \ R \int\_{0}^{T\_p} i^2\_{(t)} \,dt\\\]
 - From this, we could develop the definition of RMS value of an AC voltage or a current as
-\\[ V\_{RMS} = \sqrt{ \int\_{0}^{T\_p} v^2\_{(t)} \,dt } \quad \text{and} \quad  I\_{RMS} = \sqrt{ \int\_{0}^{T\_p} i^2\_{(t)} \,dt} \\]
-- Using the definition of real power and Ohm's law, power dissipated in a resistive load is given by
-\\[ P = \int\_{0}^{T\_p} p\_{L(t)}\,dt \  = \int\_{0}^{T\_p} v\_{(t)} i\_{(t)} \,dt \  = \frac {1} {R} \int\_{0}^{T\_p} v^2\_{(t)} \,dt \ \overset{\underset{\mathrm{OR}}{}}{=} \ R \int\_{0}^{T\_p} i^2\_{(t)} \,dt\\\]
+\\[ V^2\_{RMS} =  \int\_{0}^{T\_p} v^2\_{(t)} \,dt  \quad \text{and} \quad  I^2\_{RMS} = \int\_{0}^{T\_p} i^2\_{(t)} \,dt \\]
+- As an example, RMS value of a **sinusoidal** AC voltage (and similarly a current) is give by
+\\[ V\_{RMS} = \sqrt{ \int\_{0}^{T\_p} V^2\_{L(pk)} \ cos ^2 (\omega t) \,dt } = \sqrt{ \int\_{0}^{T\_p} \frac {V^2\_{L(pk)}} {2} \ \left[ cos(2\omega t) + 1 \right] \,dt } = \frac {V\_{L(pk)}} {\sqrt{2}}\\]
 
 ---
 name: S21
 
-# Reactive Power in AC Circuits
+# Example 2: Calculating the RMS
 
+.questions[
+An square wave voltage source, V<sub>sq</sub>, is used to power an light bulb, which is modelled as a fixed resistance, R<sub>L</sub>. Determine the RMS value of the voltage. Using the RMS calculated, determine the power consumed by the light bulb.
+]
+
+.center[<img src="img/?.png" height="130">]
 
 ---
 name: S22
 
 # Apparent Power in AC Circuits
 
+- Apparent power is a measure of the voltage and current required to drive an AC circuit 
+- The definition of apparent power is therefore simply
+\\[ S = V\_{RMS}I\_{RMS} \\]
 
 ---
 name: S23
 
-# Notes on Simplified Expressions
+# Reactive Power in AC Circuits
 
 ---
 name: S24
+
+# Notes on Simplified Expressions
+
+---
+name: S25
 
 # Example 2: Complex Loads
 
