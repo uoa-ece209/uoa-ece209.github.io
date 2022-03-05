@@ -629,7 +629,12 @@ name: S20
 # Root Mean Square (RMS) of Signals
 
 - RMS value of an AC voltage or a current is defined to provide a measure of (real) power dissipated in a resistive load in an AC circuit 
-- Using the definition of real power and Ohm's law power dissipated in a resistive load is given by
+- Using the definition of real power and Ohm's law, power dissipated in a resistive load is given by
+\\[ P = \int\_{0}^{T\_p} p\_{L(t)}\,dt \  = \int\_{0}^{T\_p} v\_{(t)} i\_{(t)} \,dt \  = \frac {1} {R} \int\_{0}^{T\_p} v^2\_{(t)} \,dt \ \overset{\underset{\mathrm{OR}}{}}{=} \ R \int\_{0}^{T\_p} i^2\_{(t)} \,dt\\\]
+- From this, we could develop the definition of RMS value of an AC voltage or a current as
+\\[ V\_{RMS} = \sqrt{ \int\_{0}^{T\_p} v^2\_{(t)} \,dt } \quad \text{and} \quad  I\_{RMS} = \sqrt{ \int\_{0}^{T\_p} i^2\_{(t)} \,dt} \\]
+- Using the definition of real power and Ohm's law, power dissipated in a resistive load is given by
+\\[ P = \int\_{0}^{T\_p} p\_{L(t)}\,dt \  = \int\_{0}^{T\_p} v\_{(t)} i\_{(t)} \,dt \  = \frac {1} {R} \int\_{0}^{T\_p} v^2\_{(t)} \,dt \ \overset{\underset{\mathrm{OR}}{}}{=} \ R \int\_{0}^{T\_p} i^2\_{(t)} \,dt\\\]
 
 ---
 name: S21
