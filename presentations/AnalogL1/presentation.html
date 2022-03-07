@@ -449,7 +449,8 @@ name: S13
 # What is Circuit Analysis?
 
 - An electronic circuit is made of passive elements and active elements
- - Passive elements mainly include Resistors, inductors and capacitors while active elements include BJTs, diodes, ICs, etc.  
+ - Passive elements mainly include resistors, inductors and capacitors 
+ - Active elements include BJTs, diodes, ICs, etc.  
 - Working out voltage across and current through elements of a circuit is referred to as circuit analysis 
  - This is usually a 3 step process 
  - But, sometimes you may start with a circuit transformation to simplify the analysis
@@ -594,11 +595,11 @@ name: S18
 
 # What is Electrical Power
 
-- In DC circuits operating at steady-state, there only exists real power 
+- In DC circuits operating at steady-state, there is only real power (can be consumed or generated)
 - In AC circuits operating at steady-state, electrical power is divided in to **real power (P in W)**, **reactive power (Q in VAR)** and **apparent power (|S| in VA)**
 - Real power transfer happens when electrons move through circuit elements that dissipate, store or convert energy in moving electrons
  - These circuit elements include resistors (dissipate energy), batteries (store energy), LEDs (convert energy), etc. 
-- In AC circuits, inductive and capacitive circuit elements result in reactive power since the absorb energy in electrons during part of the time period and release this energy during the remainder 
+- In AC circuits, inductive and capacitive circuit elements result in reactive power since they absorb energy from electrons during part of the time period and release this energy during the remainder of the period 
 - To understand and define real, reactive and apparent power we use **instantaneous power** given by 
 \\[ p\_{(t)} = v\_{(t)} i\_{(t)} \\]
 - Note, AC circuits may not always use sinusoidal sources, and they can be of any wave shape
@@ -744,7 +745,9 @@ name: S18
 
 # Voltage Sensing 
 
-
+- The signal conditioning circuitry and the microcontroller can only process very low voltages
+ - Typically signal amplitudes should be 5V or lower 
+- The functionality of the voltage sensor circuitry is to step-down the voltage to be measured to a safer level that can be passed through the signal conditioning circuitry to the microcontroller 
 
 ---
 
