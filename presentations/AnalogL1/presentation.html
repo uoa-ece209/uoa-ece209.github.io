@@ -697,7 +697,7 @@ name: S24
 ]
 
 ---
-name: S24
+name: S25
 
 # Notes on Simplified Expressions
 
@@ -712,7 +712,7 @@ name: S24
  - In these situations, fundamental relationships we derived help us determine P, S, Q and RMSs 
 
 ---
-name: S25
+name: S26
 
 # Example 3: Complex Loads
 
@@ -741,13 +741,58 @@ name: template_slide
 .logo-slide[]
 .footer[[Duleepa J Thrimawithana](https://www.linkedin.com/in/duleepajt), Department of Electrical, Computer and Software Engineering (2020)]
 ---
-name: S18
+name: S27
 
 # Voltage Sensing 
 
 - The signal conditioning circuitry and the microcontroller can only process very low voltages
- - Typically signal amplitudes should be 5V or lower 
+ - Electrical specifications of the devices mainly sets the signal amplitudes that can be processed   
+ - For most designs, signal amplitudes should be kept at 5V or smaller 
 - The functionality of the voltage sensor circuitry is to step-down the voltage to be measured to a safer level that can be passed through the signal conditioning circuitry to the microcontroller 
+- The most common approach is to use a voltage divider to implement the voltage sensor
+ - The voltage divider is designed to step-down the voltage to be measured to the required level 
+\\[ v\_{vs(t)} = v\_{L(t)} \ R\_b/(R\_a + R\_b) \\]
+<div style="line-height:50%;">
+  <br>
+</div>
+.center[<img src="img/VoltageDiv.png" height="140">]
+
+---
+name: S28
+
+# Recommended Implementation 
+
+.center[<img src="img/VoltageSensSys.png" height="180">]
+
+- In your project the voltage divider can be connected across the 2 terminals of the AC source 
+- A pair of back-to-back Zener diodes, Z<sub>1</sub> & Z<sub>2</sub>, can be added for protection against for example voltage surges that might by present across v<sub>L</sub>
+ - Under normal operation the Zener diodes do not impact the behavior of the voltage divider
+- When selecting R<sub>a</sub> & R<sub>b</sub> we also need to minimize power dissipation in them while making sure sufficiently large signal-to-noise ratio (SNR) and low sensitivity to the environment 
+ - These are contradicting requirements and design is about making a good tradeoff 
+
+---
+name: S29
+
+# Example Design Process 
+
+- Lets design our voltage divider to step-down v<sub>L</sub> to an amplitude no greater than 1V<sub>pk-pk</sub>
+ - In the labs you will be guided to determine a more suitable peak-peak amplitude
+- We need to consider the highest v<sub>L</sub> to be measured measured (i.e., 15.4V) when designing the voltage divider to achieve V<sub>vs(pk-pk)</sub> &le; 1V
+- Using this information we can derive the relation
+\\[ V\_{vs(pk-pk)} = V\_{L(pk-pk)} \ R\_b/(R\_a + R\_b) \quad \Rightarrow \quad 1 \geq 15.4\times 2\sqrt{2} \ R\_b/(R\_a + R\_b) \quad \Rightarrow \quad R\_a \geq 41.4 R\_b\\]
+- The power dissipated as loss in R<sub>a</sub> & R<sub>b</sub> can be expressed as
+\\[ P\_{vs-loss} = V^2\_{L(RMS)}/(R\_a + R\_b) \\]
+- To determine appropriates values for R<sub>a</sub> & R<sub>b</sub> we need to minimize P<sub>vs-loss</sub> while making sure sufficiently large signal-to-noise ratio (SNR) and low sensitivity to the environment
+ - For UG work, avoid using resistance values greater than 500k&ohm; to minimize sensitivity
+
+---
+name: S30
+
+# Example 4: SNR and Sensitivity 
+
+.questions[
+Discuss. 
+]
 
 ---
 
