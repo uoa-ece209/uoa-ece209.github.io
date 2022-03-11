@@ -816,7 +816,56 @@ name: S18
 
 # Current Sensing
 
+- The signal conditioning circuitry and the microcontroller prefer processing **voltages**
+- The functionality of the current sensor is to derive a voltage proportional to the current through it 
+- The most common approach is to insert a small a current sense resistor in the path of current flow
+ - Current sense resistor should be sufficiently small so it does not impact the load current
+ - The voltage across the current sense resistor is proportional to the current through it since 
+\\[ v\_{is(t)} = i\_{L(t)} R\_s \\]
+- Alternatively, [hall-effect sensors](https://www.allegromicro.com/en/insights-and-innovations/technical-documents/hall-effect-sensor-ic-publications/non-intrusive-hall-effect-current-sensing-techniques-for-power-electronics) (AC or DC) or [current transformers](https://www.electronics-tutorials.ws/transformer/current-transformer.html) (AC only) can be used
 
+<div style="line-height:50%;">
+  <br>
+</div>
+.center[<img src="img/CurrentSens.png" height="140">]
+
+---
+name: S28
+
+# Recommended Implementation 
+
+.center[<img src="img/CurrentSensSys.png" height="180">]
+
+- In your project the current sense resistor is connected in series with the AC load 
+- A pair of back-to-back Zener diodes, Z<sub>3</sub> & Z<sub>4</sub>, can be added for protection against for example current surges that might by present in i<sub>L</sub>
+ - Under normal operation the Zener diodes do not impact the behavior of the voltage divider
+- When selecting R<sub>s</sub> we also need to minimize power dissipation in them while making sure sufficiently large signal-to-noise ratio (SNR) and low sensitivity to the environment 
+ - These are contradicting requirements and design is about making a good tradeoff 
+
+---
+name: S29
+
+# Example Design Process 
+
+- Lets design our R<sub>s</sub> to have a power dissipation, P<sub>is-loss</sub>, no greater than 50mW 
+ - In the labs you will be guided to determine a more suitable 
+- We need to consider the highest i<sub>L</sub> to be measured measured to ensure P<sub>is-loss</sub> &le; 50mW
+ - Highest I<sub>L(RMS)</sub> is at lowest V<sub>L(RMS)</sub> and highest VA specified (i.e., I<sub>L(RMS)</sub> = 7.5VA/13.6V = 0.55A<sub>RMS</sub>)
+- Using this information we can derive the relation
+\\[ P\_{is-loss} = I^2\_{L(RMS)} R\_s \quad \Rightarrow \quad 0.05 \geq 0.55^2 R\_s \quad \Rightarrow \quad R\_s \leq 165 m\Omega \\]
+- If R<sub>s</sub> is choosen as 160m&Omega;, V<sub>is</sub> measured at both highest and lowest i<sub>L</sub> are
+\\[ V\_{is(pk-pk)-highest} = 0.55\times 2\sqrt{2}\times 0.16 \approx 250mV \\]
+\\[ V\_{is(pk-pk)-lowest} = 0.16\times 2\sqrt{2}\times 0.16 \approx 72mV\\]
+- To determine an appropriate value for R<sub>s</sub> we need to minimize P<sub>vs-loss</sub>, size and cost while making sure sufficiently large signal-to-noise ratio (SNR)
+
+---
+name: S30
+
+# Example 4: SNR and Sensitivity 
+
+.questions[
+Using power dissipation, signal-to-noise ratio (SNR), cost and size as figures of merit, discuss the advantages and disadvantages of choosing an R<sub>s</sub> that is much greater than or smaller than what we calculated in the example design. What other aspects would you consider when selecting R<sub>s</sub>? How can we improve the measurement accuracy specially at lower i<sub>L</sub> values?
+]
 
 ---
 class: title-slide
