@@ -631,11 +631,11 @@ name: S20
 
 - RMS value of an AC voltage or a current is defined to provide a measure of (real) power dissipated in a resistive load in an AC circuit 
 - Using the definition of real power and Ohm's law, power dissipated in a resistive load is given by
-\\[ P = \int\_{0}^{T\_L} p\_{L(t)}\,dt \  = \int\_{0}^{T\_L} v\_{(t)} i\_{(t)} \,dt \  = \frac {1} {R} \int\_{0}^{T\_L} v^2\_{(t)} \,dt \ \overset{\underset{\mathrm{OR}}{}}{=} \ R \int\_{0}^{T\_L} i^2\_{(t)} \,dt\\\]
+\\[ P = \frac{1} {T\_L} \int\_{0}^{T\_L} p\_{L(t)}\,dt \  = \frac{1} {T\_L} \int\_{0}^{T\_L} v\_{(t)} i\_{(t)} \,dt \  = \frac {1} {RT\_L} \int\_{0}^{T\_L} v^2\_{(t)} \,dt \ \overset{\underset{\mathrm{OR}}{}}{=} \ \frac{R} {T\_L} \int\_{0}^{T\_L} i^2\_{(t)} \,dt\\\]
 - From this, we could develop the definition of RMS value of an AC voltage or a current as
-\\[ V^2\_{RMS} =  \int\_{0}^{T\_L} v^2\_{(t)} \,dt  \quad \text{and} \quad  I^2\_{RMS} = \int\_{0}^{T\_L} i^2\_{(t)} \,dt \\]
+\\[ V^2\_{RMS} =  \frac{1} {T\_L} \int\_{0}^{T\_L} v^2\_{(t)} \,dt  \quad \text{and} \quad  I^2\_{RMS} = \frac{1} {T\_L} \int\_{0}^{T\_L} i^2\_{(t)} \,dt \\]
 - As an example, RMS value of a **sinusoidal** AC voltage (and similarly a current) is give by
-\\[ V\_{RMS} = \sqrt{ \int\_{0}^{T\_L} V^2\_{L(pk)} \ cos ^2 (\omega\_{L} t) \,dt } = \sqrt{ \int\_{0}^{T\_L} \frac {V^2\_{L(pk)}} {2} \ \left[ cos(2\omega\_{L} t) + 1 \right] \,dt } = \frac {V\_{L(pk)}} {\sqrt{2}}\\]
+\\[ V\_{RMS} = \sqrt{ \frac{1} {T\_L} \int\_{0}^{T\_L} V^2\_{L(pk)} \ cos ^2 (\omega\_{L} t) \,dt } = \sqrt{ \frac{1} {T\_L} \int\_{0}^{T\_L} \frac {V^2\_{L(pk)}} {2} \ \left[ cos(2\omega\_{L} t) + 1 \right] \,dt } = \frac {V\_{L(pk)}} {\sqrt{2}}\\]
 
 ---
 name: S21
