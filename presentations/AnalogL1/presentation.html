@@ -617,7 +617,7 @@ name: S19
 - Instantaneous power in the resistive load in ['Example 1'](#S17) is therefore
 \\[ p\_{L(t)} = \frac {V^2\_{L(pk)}} {R} \ cos ^2 (1000 \pi t) = \frac {V^2\_{L(pk)}} {2R} \left[ \ cos (2000 \pi t) + 1 \right] \\]
 - Real power delivered to the resistive load in ['Example 1'](#S17) is therefore
-\\[ P = \int\_{0}^{T\_L} p\_{L(t)}\,dt \  = \int\_{0}^{T\_L} v\_{(t)} i\_{(t)} \,dt \  = V^2\_{L(pk)}/2R \\]
+\\[ P = \frac{1} {T\_L} \int\_{0}^{T\_L} p\_{L(t)}\,dt \  = \frac{1} {T\_L} \int\_{0}^{T\_L} v\_{(t)} i\_{(t)} \,dt \  = V^2\_{L(pk)}/2R \\]
 ]
 
 .right-column-s[
@@ -689,7 +689,7 @@ name: S24
 - Instantaneous power in the inductive load in ['Example 1'](#S17) is therefore
 \\[ p\_{L(t)} = \frac {V^2\_{L(pk)}} {\omega\_{L} L} \ cos (1000 \pi t) \ cos (1000 \pi t - \pi/2) = \frac {V^2\_{L(pk)}} {2\omega\_{L} L}  \ sin (2000 \pi t) \\]
 - Real and reactive power delivered to the inductive load in ['Example 1'](#S17) are
-\\[ P = \int\_{0}^{T\_L} p\_{L(t)}\,dt \  = 0 \quad \text{and} \quad Q = \frac {V^2\_{L(pk)}} {2\omega\_{L} L} = \frac {V^2\_{L(RMS)}} {\omega\_{L} L} \\]
+\\[ P = \frac{1} {T\_L}\int\_{0}^{T\_L} p\_{L(t)}\,dt \  = 0 \quad \text{and} \quad Q = \frac {V^2\_{L(pk)}} {2\omega\_{L} L} = \frac {V^2\_{L(RMS)}} {\omega\_{L} L} \\]
 ]
 
 .right-column-s[
