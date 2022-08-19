@@ -298,7 +298,7 @@ name: S4
  - Alternatively V<sub>vf</sub> can be continuously sampled over a few periods to take samples of V<sub>vf</sub> every 0.1ms  
  - Need zero crossing detector to correctly align the V<sub>if</sub> samples taken after this with the V<sub>vf</sub> samples
 - From the ADC data we can estimate the AC source voltage at i<sup>th</sup> sample point since 
-\\[ V\_\text{AC}[i] = \frac {\mathtt{ADC0Value}[i] \times \frac{5}{1024} - V\_\text{off}} {G\_\text{vs} G\_\text{vo}} \\]
+\\[ V\_\text{AC}[i] = \tfrac {\mathtt{ADC0Value}[i] \times \frac{5}{1024} - V\_\text{off}} {G\_\text{vs} G\_\text{vo}} \\]
 
 ---
 
@@ -313,7 +313,7 @@ name: S5
  - Alternatively V<sub>if</sub> can be continuously sampled over a few periods to take samples of V<sub>if</sub> every 0.1ms  
  - Need zero crossing detector to correctly align the V<sub>if</sub> samples with the V<sub>vf</sub> samples
 - From the ADC data we can estimate the AC load current at i<sup>th</sup> sample point since 
-\\[ I\_\text{L}[i] = \frac {\mathtt{ADC1Value}[i] \times \frac{5}{1024} - V\_\text{off}} {G\_\text{is} G\_\text{io}} \\]
+\\[ I\_\text{L}[i] = \tfrac {\mathtt{ADC1Value}[i] \times \frac{5}{1024} - V\_\text{off}} {G\_\text{is} G\_\text{io}} \\]
 
 ---
 name: S6
