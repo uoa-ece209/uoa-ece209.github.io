@@ -1,6 +1,6 @@
-# ELECTENG/COMPSYS 209 Teaching Matrial
+# ELECTENG/COMPSYS 209 Teaching Material
 
-- The repository contains teaching material developed for ELECTENG/COMPSYS 209
+- This repository contains teaching material developed for ELECTENG/COMPSYS 209
 
 
 # Suggested Changes
