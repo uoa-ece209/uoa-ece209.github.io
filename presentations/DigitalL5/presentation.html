@@ -258,8 +258,8 @@ name: S2
 - We also want to monitor activities, and want to determine for how long or how often they occur
  - As an example consider having to measure how long a button is pressed for
 - All microcontrollers have a notion of time based on its clock, as each clock period is a function of the system clock frequency
-\\[ T\_{system\\\_clk} = \frac{1}{f\_{system\\\_clk}} \\]
-- Timers are peripherals which enable us to convert the `\(T_{system\_clk}\)` either into actions in real time or to measure events in real time
+\\[ T\_\mathtt{system\\\_clk} = \frac{1}{f\_\mathtt{system\\\_clk}} \\]
+- Timers are peripherals which enable us to convert the `\(T_\mathtt{system\_clk}\)` either into actions in real time or to measure events in real time
 
 ---
 
@@ -268,7 +268,7 @@ name: S3
 # Timing Without Timer Peripherals
 
 - The microcontroller processor also has a notion of time from the system clock since the duration of each execution cycle is also
-\\[ T\_{cpu\\\_clk} = \frac{1}{f\_{cpu\\\_clk}} \\]
+\\[ T\_\mathtt{cpu\\\_clk} = \frac{1}{f\_\mathtt{cpu\\\_clk}} \\]
 - We could implement timing in software by using for example a 'dummy' block of code that uses up execution cycles
  - This is at the expense of taking up the processor time
 - We also need to know exactly how many clock cycles it took to execute the block of code used for timing 
@@ -388,13 +388,13 @@ name: S11
 
 - Prescaler
  - The clock divider which divides the system clock to create the timer clock
-\\[ f\_{timer\\\_clk} = \frac{f\_{system\\_clk}}{\text{Prescaler}} \\]
+\\[ f\_\mathtt{timer\\\_clk} = \frac{f\_\mathtt{system\\\_clk}}{\text{Prescaler}} \\]
 - Bits
  - The number of bits allocated to the count register
-\\[ 0 \leqslant \text{count} < 2^{bits} \\]
+\\[ 0 \leqslant \text{count} < 2^\text{bits} \\]
 - Resolution
  - This is the minimum time interval the timer can measure and is equal to one timer clock period
-\\[ \text{Resolution} = \frac{1}{f\_{timer\\_clk}} \\]
+\\[ \text{Resolution} = \frac{1}{f\_\mathtt{timer\\\_clk}} \\]
 
 
 ---
@@ -404,7 +404,7 @@ name: S12
 
 - Range
  - This is the maximum time interval the timer can measure
-\\[ \text{Range} = \text{Resolution} \times \left( 2^{bits} - 1 \right) \\]
+\\[ \text{Range} = \text{Resolution} \times \left( 2^\text{bits} - 1 \right) \\]
 - Top
  - The count value at which the count is reset
  - Top must be less than or equal to the maximum possible count value which can be stored with the available bits
@@ -720,7 +720,7 @@ name: S28
 - We often want to produce a periodically pulsating signals that has a fixed time period (T<sub>p</sub>)
  - The pulsating signal is high (logic 1) for a certain portion of T<sub>p</sub> and this time is called the on-time (T<sub>on</sub>)
  - For the remainder of T<sub>p</sub> the pulsating signal is low (logic 0) and this time is called the off-time (T<sub>off</sub>)
-\\[ T\_{p} = T\_{on} + T\_{off} \\]
+\\[ T\_\text{p} = T\_\text{on} + T\_\text{off} \\]
 - In many application we control the duration of T<sub>on</sub> to control the “pulse width”
  - These signals are known as pulse-width modulated (PWM) signals
 
@@ -735,7 +735,7 @@ name: S29
  - V<sub>supply</sub> can be any voltage ranging from a few volts to thousands of volts
 - Pulsating V<sub>supply</sub> can be turned in to a DC signal by passing it through an analog low-pass filter 
  - The DC signal can be controlled using T<sub>on</sub>/T<sub>p</sub>, which is referred to as the duty-cycle (D)
-\\[ V\_{DC} = V\_{supply} \times T\_{on}/T\_{p} = D V\_{supply} \\]
+\\[ V\_\text{DC} = V\_\text{supply} \times \frac{T\_\text{on}}{T\_\text{p}} = D \cdot V\_\text{supply} \\]
 
 ---
 name: S30
@@ -748,8 +748,8 @@ name: S30
  - We can use this property to set T<sub>on</sub> of the PWM, by setting the output state of OCnA/OCnB to low when every time a compare match is achieved
 - The output state of OCnA/OCnB can be configured to be set to high when the count value resets
 - Since we have to add 1 when calculating periods, this results in a PWM output where 
-\\[ T\_{p} = \text{Resolution} \times \left( \text{Top} + 1 \right) = \left( \text{Top} + 1 \right) / f\_{timer\\\_clk}\\]
-\\[ T\_{on} = \text{Resolution} \times \left( \text{Compare} + 1 \right) = \left( \text{Compare} + 1 \right) / f\_{timer\\\_clk}\\]
+\\[ T\_\text{p} = \text{Resolution} \times \left( \text{Top} + 1 \right) = \frac{\text{Top} + 1}{f\_\mathtt{timer\\\_clk}}\\]
+\\[ T\_\text{on} = \text{Resolution} \times \left( \text{Compare} + 1 \right) = \frac{\text{Compare} + 1}{f\_\mathtt{timer\\\_clk}}\\]
 - The compare value can be changed between 0 and Top to change the duty-cycle between 0% and 100%
 
 ---

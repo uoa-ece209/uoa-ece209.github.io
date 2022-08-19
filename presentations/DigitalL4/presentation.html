@@ -266,7 +266,7 @@ name: S2
 - The gain of the passive RC filter, G<sub>vf</sub>, is 1 in your design
 - The analog signal at the ADC, V<sub>vf</sub>, is therefore 
 
-\\[ V\_{vf} = G\_{vs} G\_{vo} V\_{AC} + V\_{off} \\]
+\\[ V\_\text{vf} = G\_\text{vs} G\_\text{vo} V\_\text{AC} + V\_\text{off} \\]
 
 ---
 
@@ -283,7 +283,7 @@ name: S3
 - The gain of the passive RC filter, G<sub>if</sub>, is 1 in your design
 - The analog signal at the ADC, V<sub>if</sub>, is therefore 
 
-\\[ V\_{if} = G\_{is} G\_{io} I\_{L} + V\_{off} \\]
+\\[ V\_\text{if} = G\_\text{is} G\_\text{io} I\_\text{L} + V\_\text{off} \\]
 
 ---
 
@@ -298,7 +298,7 @@ name: S4
  - Alternatively V<sub>vf</sub> can be continuously sampled over a few periods to take samples of V<sub>vf</sub> every 0.1ms  
  - Need zero crossing detector to correctly align the V<sub>if</sub> samples taken after this with the V<sub>vf</sub> samples
 - From the ADC data we can estimate the AC source voltage at i<sup>th</sup> sample point since 
-\\[ V\_{AC}[i] = \left( ADC0Value[i] \times 5/1024 - V\_{off} \right) / \left( G\_{vs} G\_{vo} \right) \\]
+\\[ V\_\text{AC}[i] = \frac {\mathtt{ADC0Value}[i] \times \frac{5}{1024} - V\_\text{off}} {G\_\text{vs} G\_\text{vo}} \\]
 
 ---
 
@@ -313,7 +313,7 @@ name: S5
  - Alternatively V<sub>if</sub> can be continuously sampled over a few periods to take samples of V<sub>if</sub> every 0.1ms  
  - Need zero crossing detector to correctly align the V<sub>if</sub> samples with the V<sub>vf</sub> samples
 - From the ADC data we can estimate the AC load current at i<sup>th</sup> sample point since 
-\\[ I\_{L}[i] = \left( ADC1Value[i] \times 5/1024 - V\_{off} \right) / \left( G\_{is} G\_{io} \right) \\]
+\\[ I\_\text{L}[i] = \frac {\mathtt{ADC1Value}[i] \times \frac{5}{1024} - V\_\text{off}} {G\_\text{is} G\_\text{io}} \\]
 
 ---
 name: S6
@@ -410,13 +410,13 @@ name: S10
 - [Recall](#S7) that we have already learnt how to obtain the peak of a signal
 - Assuming this signal is sinusoidal, the peak value is related to the RMS value as given by
 
-\\[ RMS = \frac {Peak} {\sqrt{2}} \\]
+\\[ \text{RMS} = \frac {\text{Peak}} {\sqrt{2}} \\]
 
 - The assumption of a sinusoidal signal is not always correct, especially in a practical design, as V<sub>ac</sub> and I<sub>L</sub> are often distorted sinusoidal signals
  - The distortions in the signals lead to significant errors in the RMS estimate when using this method
 - We can improve the accuracy by developing software to implement the RMS formula given by
 
-\\[ V\_{AC\_{rms}} = \sqrt {\frac {1} {T\_p} \int\_{0}^{T\_p} {V\_{AC}^2 dt}}  \quad \text{OR} \quad I\_{L\_{rms}} = \sqrt {\frac {1} {T\_p} \int\_{0}^{T\_p} {I\_{L}^2 dt}}\\]
+\\[ V\_\text{AC(RMS)} = \sqrt {\frac {1} {T\_\text{p}} \int\_{0}^{T\_\text{p}} {V\_\text{AC}^2 \,dt}}  \quad \text{or} \quad I\_\text{L(RMS)} = \sqrt {\frac {1} {T\_\text{p}} \int\_{0}^{T\_\text{p}} {I\_\text{L}^2 \,dt}}\\]
 
 ---
 name: S11
@@ -446,7 +446,7 @@ name: S12
 - If we have taken N ADC samples at regular &#916;t<sub>sample</sub> intervals over one time period of the signal, the time period T<sub>p</sub> = N&#916;t<sub>sample</sub>
 - We can square each V<sub>AC</sub> or I<sub>L</sub> sample and use Riemann sum to numerically evaluate the RMS as given by
 
-\\[ V\_{AC\_{rms}}^2 = \frac {1}{N \Delta t\_{sample}} \sum\_{i=0}^{N-1} V\_{AC}^2[i] \Delta t\_{sample} \quad \text{OR} \quad I\_{L\_{rms}}^2 = \frac {1}{N \Delta t\_{sample}} \sum\_{i=0}^{N-1} I\_L^2[i] \Delta t\_{sample}\\]
+\\[ V\_\text{AC(RMS)}^2 = \frac {1}{N \Delta t\_\text{sample}} \sum\_{i=0}^{N-1} V\_\text{AC}^2[i] \cdot \Delta t\_\text{sample} \quad \text{or} \quad I\_\text{L(RMS)}^2 = \frac {1}{N \Delta t\_\text{sample}} \sum\_{i=0}^{N-1} I\_\text{L}^2[i] \cdot \Delta t\_\text{sample}\\]
 
 ---
 
@@ -505,13 +505,13 @@ name: S14
 - [Recall](#S10) that we have already learnt how to obtain the RMS of V<sub>AC</sub> and I<sub>L</sub>
 - Assuming V<sub>AC</sub> and I<sub>L</sub> are sinusoidal, the power is related to their RMS values and the power factor angle as given by
 
-\\[ P = V\_{AC\_{rms}} I\_{L\_{rms}} cos(\theta) \\]
+\\[ P = V\_\text{AC(RMS)} I\_\text{L(RMS)} \cos(\theta) \\]
 
 - The assumption of a sinusoidal signal is not always correct, especially in a practical design, as V<sub>ac</sub> and I<sub>L</sub> are often distorted sinusoidal signals
  - The distortions in the signals lead to significant errors in the power estimate when using RMSs and the power factor angle
 - We can improve the accuracy by developing software to implement the power formula given by
 
-\\[ P =  \frac {1} {T\_p} \int\_{0}^{T\_p} {V\_{AC} I\_{L} dt}  \\]
+\\[ P =  \frac {1} {T\_\text{p}} \int\_{0}^{T\_\text{p}} {V\_\text{AC} I\_\text{L} \,dt}  \\]
 
 ---
 name: S15
@@ -523,7 +523,7 @@ name: S15
  - Samples of V<sub>AC</sub> as well as I<sub>L</sub> are at regular &#916;t<sub>sample</sub> intervals
 - We can multiply each V<sub>AC</sub> sample with corresponding I<sub>L</sub> sample to numerically evaluate power as given by
 
-\\[ P = \frac {1}{N \Delta t\_{sample}} \sum\_{i=0}^{N-1} V\_{AC}[i] I\_L[i] \Delta t\_{sample} = \frac {1}{N } \sum\_{i=0}^{N-1} V\_{AC}[i] I\_L[i]\\]
+\\[ P = \frac {1}{N \Delta t\_\text{sample}} \sum\_{i=0}^{N-1} \left( V\_\text{AC}[i] \cdot I\_\text{L}[i] \cdot \Delta t\_\text{sample} \right) = \frac {1}{N} \sum\_{i=0}^{N-1} \left( V\_\text{AC}[i]\cdot I\_\text{L}[i] \right)\\]
 
 - Since the two ADC channels are sampled one after the other, there is a time delay between each sample of V<sub>AC</sub> and its corresponding I<sub>L</sub> sample
  - This can lead to a significant error in power calculation in the form of a phase-shift
@@ -542,13 +542,13 @@ name: S16
 .left-column[
 - The missing V<sub>AC</sub> and I<sub>L</sub> samples can be approximated using the average of the samples from either side (i.e. linear approximation)
 
-\\[ \bar{V}\_{AC}[i] = \left( V\_{AC}[i] + V\_{AC}[i+1] \right) / 2 \\]
-\\[ \bar{I}\_{L}[i] = \left( I\_{L}[i-1] + I\_{L}[i] \right) / 2 \\]
+\\[ \bar{V}\_\text{AC}[i] = \frac {V\_\text{AC}[i] + V\_\text{AC}[i+1]} {2} \\]
+\\[ \bar{I}\_\text{L}[i] = \frac {I\_\text{L}[i-1] + I\_\text{L}[i]} {2} \\]
 
 - How can we estimate the 11<sup>th</sup> sample of V<sub>AC</sub> and the -1<sup>th</sup> sample of I<sub>L</sub>?
 - Power can now be evaluated as given by
 
-\\[ P = \frac {1}{2N} \sum\_{i=0}^{N-1} \left[ V\_{AC}[i] \bar{I}\_L[i] + \bar{V}\_{AC}[i] I\_L[i] \right] \\]
+\\[ P = \frac {1}{2N} \sum\_{i=0}^{N-1} \left[ V\_\text{AC}[i] \cdot \bar{I}\_\text{L}[i] + \bar{V}\_\text{AC}[i] \cdot I\_\text{L}[i] \right] \\]
 
 ]
 

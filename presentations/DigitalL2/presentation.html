@@ -712,7 +712,7 @@ name: S28
 
 - The UBRR0 value defines the prescaler applied to used to the system clock (f<sub>osc</sub>) to obtain the UART clock (i.e. UART clock = (f<sub>osc</sub> / (UBRR0 + 1))
 - Under normal operation the UART clock needs to be 16 times the baud rate and therefore
-\\[ \text{Baud Rate} = \frac{f\_{osc}} {16 \times \left( UBRR0 + 1 \right) } \quad \text {or} \quad UBRR0 = \frac {f\_{osc}} {\left( \text {Baud Rate} \right) \times 16}  - 1\\]
+\\[ \text{Baud Rate} = \frac{f\_\text{osc}} {16 \times \left( \mathtt{UBRR0} + 1 \right) } \quad \text {or} \quad \mathtt{UBRR0} = \frac {f\_\text{osc}} {\left( \text {Baud Rate} \right) \times 16}  - 1\\]
 
 ---
 name: S29
