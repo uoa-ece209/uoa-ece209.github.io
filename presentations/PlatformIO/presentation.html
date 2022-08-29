@@ -338,6 +338,24 @@ name: S10
 
 name: S11
 
+# Fixing Upload Issues on Windows
+
+- The drivers installed by Microchip Studio may not work with PlatformIO
+1. Install [Zadig][zadig]
+2. Click `Options` > `List All Devices`
+3. Select `mEDBG CMSIS-DAP (Interface 0)`
+4. Change the driver to `libusbK` or `libusb-win32`
+5. Click `Replace Driver`
+6. Try to upload with PlatformIO again
+
+.center[<img src="img/Zadig.png" height="200px">]
+
+[zadig]: https://zadig.akeo.ie/
+
+---
+
+name: S12
+
 # Resources
 
 - [PlatformIO Documentation](https://docs.platformio.org/en/latest/)
