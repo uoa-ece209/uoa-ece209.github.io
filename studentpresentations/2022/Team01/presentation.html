@@ -217,70 +217,81 @@ layout: true
 name: template_slide
 
 .logo-slide[]
-.footer[[James Bao](https://www.linkedin.com/in/jamesnzl), [Dylan Chamberlain](https://www.linkedin.com/in/dylanchambo), Ammaar Marzook, and Rishi Shukla, Department of Electrical, Computer and Software Engineering (2022)]
+.footer[[James Bao](https://www.linkedin.com/in/jamesnzl), [Dylan Chamberlain](https://www.linkedin.com/in/dylanchambo), Ammaar Marzook, and [Rishi Shukla](https://www.linkedin.com/in/rishi-shukla-3896721b2/), Department of Electrical, Computer and Software Engineering (2022)]
 
 ---
-# Introduction
-- Home energy monitor to read voltage, current and power consumption
-- Display information on a local 7-segment display and on a mobile using Bluetooth
+name: S1
 
+# Project Goal
+<aside>
+  🎯 To develop an energy monitor with an opportunity to be used in a smart home to measure and display the energy consumed by appliances.
+</aside>
+
+<!-- TODO: Add Image for project goal (Potentially Final Box)  -->
 .center[<img src = "img/Xmini.jpg" width="30%" />]
 
 
 ---
 name: S2
 
-# Analog Design Considerations: Signal Amplification
-- $50\%$ range increase for ADC input by optimizing resistors chosen in the differential amplifier
-      - From $1.3\ V \leftrightarrow 2.9\ V$ to $0.9\ V \leftrightarrow 3.3\ V$
+# Overview of Features
 
+- Monitors the power consumption of a load
+- Precise measurements of voltage and current
+- Built-in display
+- Bluetooth output
+
+<!-- TODO: Add Image for project goal (Potentiall Images of BLE module and 7 Seg Display) -->
 .center[<img src="img/ADCInput.png" width="65%">]
 
 ---
 name: S3
 
-# Analog Design Considerations: Peak Dectector
-- Peak detected by sampling the voltage when an interrupt is triggered
-  * Interrupt generated using an analogue circuit
+# Project Management
 
+.left-column[
+- **Github**
+  - Used for version control, utilising pull requests and merging concepts to enable best practice
 
-.center[
-<img src = "img/peakDetectorSchem.png" width="49%" /> &nbsp;
-<img src = "img/peakDetector.png" width="49%" />
+- **Notion**
+  - Usage of the kanban board (equivalent to Trello), logbooks and meeting notes
+
+- **Slack**
+  - Used as a primary communication source to either discuss problems or schedule impromptu meetings, as well as have support channels from TAs/lecturers.
 ]
+.right-column[<img src = "img/GitLog.gif" width="120%" />]
 
 
 ---
 name: S4
 
-# Software Design Considerations
+# Hardware Implementation (PI)
 
-- Our key focus was to procure <b>modular</b> and <b>efficient</b> code
+For the hardware, as a team it was decided that the design would entail the following:
 
+- **MATLAB Validation Script**
+    - Implemented a script to validate calculations
+    - Performs a Monte Carlo-esque analysis across the entire project specification range
+    - Uses vectors and matrices to validate across all possible combinations of values
+
+<!-- TODO: Add Image for Matlab Script (Potentiall Images of BLE module and 7 Seg Display) -->
 .center[<img src = "img/DependencyGraph.svg" width="65%" />]
 
 
 ---
 name: S5
 
-# Software Design Considerations
+# Hardware Implementation (PII)
+- **SMT Design**
+  - An extra challenge to learn and experience
+  - Can mimic and experience industry standards of PCB design
+  - Allows the design to be more compact and portable, with the model created to fit in the palm of a hand (dimensions: $62\,\text{mm}\times72\,\text{mm}$)
+  - Logical layout to separate functional blocks and minimise trace lengths to avoid noise interference
+  - Large copper pours to maximise power carrying capability
+  - Separation of power ground and signal ground
+  - 7-segment display designed to fit over the board to optimise space efficiency and user-friendliness
 
-- Our custom `print()` function, which is built on top of our modular UART functions that automaticlly convert to 3 significant figures before transmitting
-
-.codes[
-```c
-#define rmsvoltage 14.5
-#define peakcurrent 125
-#define power 1.60
-int main()
-{
-	print("rms voltage is: %f", rmsvoltage);
-	print("peak current is: %d", peakcurrent);
-	print("power is: %f", power);
-}
-```
-]
-
+<!-- TODO: Add Image PCB Design -->
 .center[<img src="img/virtualTerminal.png" height="100">]
 
 
@@ -288,75 +299,140 @@ int main()
 
 name: S6
 
-# Software Design Considerations
+# Hardware Implementation (PIII)
 
-* Standard library `printf()` is just under a $kB$ in size
+- **Built-in Microcontroller**
+  - Industry-standard method for implementing a microcontroller
+  - Allowing compact design practice
+  - Increasing accuracy with minimal traces and components implemented to minimize load strain
 
-* Our custom `print()` function only consumes $244 \ bytes$
-	* Thats over $70\%$ reduction in size
-
-* Our custom print function retains all the convenient `printf()` syntax
-
-.code[
-```
-[Firmware/]$ nm --print-size -t d FW.ELF | grep -w 'print\|printf\|vfprintf'
-00003694 00000244 T print // 244 bytes 
-00005880 00000040 T printf
-00005920 00000934 T vfprintf // 974 bytes, 75% reduction
-[Firmware/]$ 
-```
-]
+<!-- TODO: Add Image of ATmega328PB on board -->
+.center[<img src="img/virtualTerminal.png" height="100">]
 
 ---
 name: S7
 
-# PCB Layout
-.center[
-	<img src="img/netw/PCBLayout3DAnnotated.png" width="50%"> &nbsp; &nbsp; &nbsp; &nbsp; 
-  <img src="img/netw/PCBLayout2D.png" width="30%">
+# Hardware Implementation (PIV)
+
+.left-column[
+- **Second Order Filter**
+  - To ensure that a clean signal is being produced to the ADC input channels, a second-order filter is in place
+
+- **BLE Module**
+  - Bluetooth Module is working and can be used to communicate via phone or using the web application (covered more in the software implementation)
+]
+<!-- TODO: Add Image of RC Filter Amplification and BLE Module-->
+.right-column[
+  <img src="img/virtualTerminal.png" height="100">
+  <img src="img/virtualTerminal.png" height="100">
 ]
 ---
 name: S8
 
-# Project Management
+# Hardware Implementation (PV)
 
-- Workflow planning and task management using Slack and Trello
+- **Precision Current Shunt Resistor**
+  - We have procured our own precision $100\,\text{m}\Omega \pm 1\%$ resistor with sufficient power rating to simplify our board layout
+- **Phase-Preserved Filters**
+  - We have deliberately selected our $RC$ filter values to apply the same phase offset to both current and voltage signal waveforms to maximise accuracy
 
-.center[
-<img src='img/Trello.png' width='55%' /> &nbsp; &nbsp; &nbsp; &nbsp;
-<img src='img/Trello2.png' width="30%" />
-]
+<!-- TODO: Add image of both filters showing the same filter values-->
+.center[<img src='img/Trello.png' width='55%' />]
 ---
 
 name: S9
 
-# Project Management
+# Firmware Implementation (PI)
 
-- Effective use of Git, rolling back when encountering issues with latest commit
-- Python script reads makefile to generate Atmel Studio Project so we are not limited to Atmel IDE
+- When creating our code, we wanted to ensure that the end result was:
+  - Efficient
+  - Modular
 
-<pre>
-<code style="text-align: center">
-+--------------+        +---------------+          +---------------+
-|              |        |               |          |               |
-|   Makefile   +-------->  genAtmel.py  +---------->  AtmelStudio  |
-|              |        |               |          | Project Files |
-+--------------+        +---------------+          +---------------+
-</code>
-</pre>
-.
-<img src='img/graph.svg' width='100%' />
-.center[** Git Commit Graph **]
+- **Modular Code**
+.center[<img src='img/ModularCode.png' width='55%' />]
 ---
 
+name: S10
+
+# Firmware Implementation (PII)
+
+- **State Machine**
+.center[<img src='img/StateMachine.png' width='100%' />]
+
+---
+
+name: S11
+
+# Firmware Implementation (PIII)
+
+- **Free-Running ADC**
+  - We are using the ADC in free-running mode to maximise our sampling frequency
+  - We are also sampling at a non-integer multiple of our signal waveform to capture more information about the signal
+
+- **Rolling Buffer**
+  - Allows us to reuse and load values into the voltage, current and power buffer arrays and average the values efficiently and quickly to be displayed
+
+- **Synchronisation of ADC and Display**
+  - Selecting the display refresh rate to roughly align with sampling across two waveform periods
+
+---
+
+name: S12
+
+# Software Implementation
+
+- **Software Features**
+
+  - Light and Dark Mode
+  - Fully responsive, with a mobile-first design
+  - **Monitor** - page plots all historical data saved in the database with new data as it is received in real-time
+  - **Calibrate** - Quickly view and calibrate our sampled ADC waveforms, and our amplifier gains, with a user-friendly mode switcher.
+
+  Check it out at [**https://cs209.jamesnzl.xyz**](https://cs209.jamesnzl.xyz)
+---
+
+name: S13
+
+.center[<img src='img/Software.png' width='100%' />]
+
+---
+name: S14
+
+# Hardware Enclosure
+
+- We have 3D printed an enclosure for our Smart Energy Monitor
+- Protects both the board and the user
+- Gives a more polished aesthetic to blend into the environment
+
+<!-- TODO: Add box images -->
+.center[<img src='img/' width='100%' /> <img src='img/' width='100%' />]
+
+---
+name: S14
+
+# Future Improvements
+
+- Crystal on top of the board
+  - DFM (design for manufacture)
+- Better BLE Module
+- BOM consolidation
+- UART Receive (send commands to configure gains)
+- EEPROM (save these configurations)
+  - DFM (design for manufacture)
+- Monitor fingerprinting/UUID (different boards different readings)
+- Graph more user-friendly
+  - Filter by months, and possibly show monthly readings/stats
+
+---
 class: title-slide
 layout: false
 count: false
 .logo-title[]
 
 # Acknowledgements
-#### Special thanks to Duleepa and the TA's 
-#### for their valuable feedback.
+
+#### 🙏 A thank you to Duleepa and all 209 staff for their valuable time, advice, and feedback.
+
 
     </textarea>
 
