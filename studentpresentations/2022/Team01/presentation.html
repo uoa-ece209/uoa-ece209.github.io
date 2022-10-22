@@ -220,6 +220,7 @@ name: template_slide
 .footer[[James Bao](https://www.linkedin.com/in/jamesnzl), [Dylan Chamberlain](https://www.linkedin.com/in/dylanchambo), Ammaar Marzook, and [Rishi Shukla](https://www.linkedin.com/in/rishi-shukla-3896721b2/), Department of Electrical, Computer and Software Engineering (2022)]
 
 ---
+
 name: S1
 
 # Project Goal
@@ -227,11 +228,10 @@ name: S1
   🎯 To develop an energy monitor with an opportunity to be used in a smart home to measure and display the energy consumed by appliances.
 </aside>
 
-<!-- TODO: Add Image for project goal (Potentially Final Box)  -->
-.center[<img src = "img/Xmini.jpg" width="30%" />]
-
+.center[<img src = "img/MonitorInBox1.png" width="45%" />]
 
 ---
+
 name: S2
 
 # Overview of Features
@@ -242,9 +242,10 @@ name: S2
 - Bluetooth output
 
 <!-- TODO: Add Image for project goal (Potentiall Images of BLE module and 7 Seg Display) -->
-.center[<img src="img/ADCInput.png" width="65%">]
+.center[<img src="img/" width="65%">]
 
 ---
+
 name: S3
 
 # Project Management
@@ -263,6 +264,7 @@ name: S3
 
 
 ---
+
 name: S4
 
 # Hardware Implementation (PI)
@@ -275,13 +277,15 @@ For the hardware, as a team it was decided that the design would entail the foll
     - Uses vectors and matrices to validate across all possible combinations of values
 
 <!-- TODO: Add Image for Matlab Script (Potentiall Images of BLE module and 7 Seg Display) -->
-.center[<img src = "img/DependencyGraph.svg" width="65%" />]
-
+.center[<img src = "img/" width="65%" />]
 
 ---
+
 name: S5
 
 # Hardware Implementation (PII)
+
+.left-column[
 - **SMT Design**
   - An extra challenge to learn and experience
   - Can mimic and experience industry standards of PCB design
@@ -290,10 +294,13 @@ name: S5
   - Large copper pours to maximise power carrying capability
   - Separation of power ground and signal ground
   - 7-segment display designed to fit over the board to optimise space efficiency and user-friendliness
+]
 
-<!-- TODO: Add Image PCB Design -->
-.center[<img src="img/virtualTerminal.png" height="100">]
-
+.right-column[
+<img src="img/PCB2.png" width="60%">
+</br>
+<img src="img/PCB1.png" width="60%">
+]
 
 ---
 
@@ -306,10 +313,10 @@ name: S6
   - Allowing compact design practice
   - Increasing accuracy with minimal traces and components implemented to minimize load strain
 
-<!-- TODO: Add Image of ATmega328PB on board -->
-.center[<img src="img/virtualTerminal.png" height="100">]
+.center[<img src="img/Microcontroller.png" width="45%">]
 
 ---
+
 name: S7
 
 # Hardware Implementation (PIV)
@@ -318,26 +325,28 @@ name: S7
 - **Second Order Filter**
   - To ensure that a clean signal is being produced to the ADC input channels, a second-order filter is in place
 
-- **BLE Module**
-  - Bluetooth Module is working and can be used to communicate via phone or using the web application (covered more in the software implementation)
+- **Phase-Preserved Filters**
+  - We have deliberately selected our $RC$ filter values to apply the same phase offset to both current and voltage signal waveforms to maximise accuracy
 ]
-<!-- TODO: Add Image of RC Filter Amplification and BLE Module-->
+
 .right-column[
-  <img src="img/virtualTerminal.png" height="100">
-  <img src="img/virtualTerminal.png" height="100">
+  <img src="img/SecondOrderFilters.png" width="100%">
 ]
+
 ---
+
 name: S8
 
 # Hardware Implementation (PV)
 
 - **Precision Current Shunt Resistor**
   - We have procured our own precision $100\,\text{m}\Omega \pm 1\%$ resistor with sufficient power rating to simplify our board layout
-- **Phase-Preserved Filters**
-  - We have deliberately selected our $RC$ filter values to apply the same phase offset to both current and voltage signal waveforms to maximise accuracy
+- **BLE Module**
+  - Bluetooth Module is working and can be used to communicate via phone or using the web application (covered more in the software implementation)
 
-<!-- TODO: Add image of both filters showing the same filter values-->
-.center[<img src='img/Trello.png' width='55%' />]
+<!-- TODO: Add image BLE module?-->
+.center[<img src='img/' width='55%' />]
+
 ---
 
 name: S9
@@ -405,7 +414,7 @@ name: S14
 - Gives a more polished aesthetic to blend into the environment
 
 <!-- TODO: Add box images -->
-.center[<img src='img/' width='100%' /> <img src='img/' width='100%' />]
+.center[<img src='img/MonitorInBox1.png' width='30%' /> <img src='img/MonitorInBox2.png' width='30%' />]
 
 ---
 name: S14
