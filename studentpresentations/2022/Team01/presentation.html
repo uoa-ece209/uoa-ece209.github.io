@@ -290,7 +290,7 @@ layout: true
 name: template_slide
 
 .logo-slide[]
-.footer[[James Bao](https://www.linkedin.com/in/jamesnzl), [Dylan Chamberlain](https://www.linkedin.com/in/dylanchambo), [Ammaar Marzook](https://www.linkedin.com/in/ammaar-marzook-1b455b234), and [Rishi Shukla](https://www.linkedin.com/in/rishi-shukla-3896721b2), Department of Electrical, Computer and Software Engineering (2022)]
+.footer[[James Bao](https://www.linkedin.com/in/jamesnzl), [Dylan Chamberlain](https://www.linkedin.com/in/dylanchambo), [Ammaar Marzook](https://www.linkedin.com/in/ammaar-marzook-1b455b234), and [Rishi Shukla](https://www.linkedin.com/in/rishi-shukla-3896721b2), Department of Electrical, Computer, and Software Engineering (2022)]
 
 ---
 
@@ -378,15 +378,19 @@ name: S7
 
 # Hardware Implementation (PI)
 
-For the hardware, as a team it was decided that the design would entail the following:
-
+.left-column[
 - **MATLAB Validation Script**
-    - Implemented a script to validate calculations
-    - Performs a Monte Carlo-esque analysis across the entire project specification range
-    - Uses vectors and matrices to validate across all possible combinations of values
+    - Implemented a script to validate hardware values
+    - Performs a Monte Carlo-esque analysis across the entire project specification range using vectors and matrices
 
-<!-- TODO: Add Image for Matlab Script (Potentiall Images of BLE module and 7 Seg Display) -->
-.center[<img src='img/' width='65%' />]
+  .center[
+  <img src='img/MATLAB.png' width='72.5%' />
+  ]
+]
+.right-column[
+<img src='img/MATLABOutput1.png' width='100%' />
+<img src='img/MATLABOutput2.png' width='100%' />
+]
 
 ---
 
@@ -394,22 +398,11 @@ name: S8
 
 # Hardware Implementation (PII)
 
-.left-column[
-- **SMT Design**
-  - An extra challenge to learn and experience
-  - Can mimic and experience industry standards of PCB design
-  - Allows the design to be more compact and portable, with the model created to fit in the palm of a hand (dimensions: $62\,\text{mm}\times72\,\text{mm}$)
-  - Logical layout to separate functional blocks and minimise trace lengths to avoid noise interference
-  - Large copper pours to maximise power carrying capability
-  - Separation of power ground and signal ground
-  - 7-segment display designed to fit over the board to optimise space efficiency and user-friendliness
-]
+- **Precision Current Shunt Resistor**
+  - Procured a precision $100\,\text{m}\Omega \pm 1\%$ shunt resistor from Digi-Key<sup>&reg;</sup>
+  - Simplifies our board layout and reduces part count
 
-.right-column[
-<img src='img/PCB2.png' width='60%'>
-</br>
-<img src='img/PCB1.png' width='60%'>
-]
+.center[<img src='img/ShuntResistor.png' width='60%' />]
 
 ---
 
@@ -417,12 +410,20 @@ name: S9
 
 # Hardware Implementation (PIII)
 
-- **Built-in Microcontroller**
-  - Industry-standard method for implementing a microcontroller
-  - Allowing compact design practice
-  - Increasing accuracy with minimal traces and components implemented to minimize load strain
+.left-column[
+- **Second Order Filter**
+  - Second-order low-pass differential filters
+  - Increased attenuation of high-frequency noise
+  - Ensures a clean signal is provided to the ADC
 
-.center[<img src='img/Microcontroller.png' width='40%'>]
+- **Phase-Preserved Filters**
+  - Deliberately selected $RC$ filter values to apply same phase offset to both signals
+  - Maximises accuracy as there is no net phase shift between voltage and current waveforms
+]
+
+.right-column[
+<img src='img/SecondOrderFilters.png' width='100%'>
+]
 
 ---
 
@@ -431,15 +432,22 @@ name: S10
 # Hardware Implementation (PIV)
 
 .left-column[
-- **Second Order Filter**
-  - To ensure that a clean signal is being produced to the ADC input channels, a second-order filter is in place
-
-- **Phase-Preserved Filters**
-  - We have deliberately selected our $RC$ filter values to apply the same phase offset to both current and voltage signal waveforms to maximise accuracy
+- **Surface Mount Design**
+  - An extra challenge to learn and experience
+  - Mimic industry standards of PCB design
+  - More compact and portable
+- **PCB Design Features**
+  - Large copper pours to maximise power carrying capability
+  - Separation of power ground and signal ground
+  - Designed to fit in the palm of a hand ($62\,\text{mm}\times72\,\text{mm}$)
+  - Logical layout
+     - Separated functional blocks
+     - Minimised trace lengths for noise resilience
+     - Integrated 7-segment display
 ]
 
 .right-column[
-  <img src='img/SecondOrderFilters.png' width='100%'>
+<img src='img/PCB.svg' width='100%'>
 ]
 
 ---
@@ -448,29 +456,48 @@ name: S11
 
 # Hardware Implementation (PV)
 
-- **Precision Current Shunt Resistor**
-  - We have procured our own precision $100\,\text{m}\Omega \pm 1\%$ resistor with sufficient power rating to simplify our board layout
-- **BLE Module**
-  - Bluetooth Module is working and can be used to communicate via phone or using the web application (covered more in the software implementation)
-
-<!-- TODO: Add image BLE module?-->
-.center[<img src='img/' width='55%' />]
+.center[
+<img src='img/PCB1.png' width='33%'> &nbsp;
+<img src='img/PCB2.png' width='33%'>
+]
 
 ---
 
 name: S12
 
-# Firmware Implementation (PI)
+# Hardware Implementation (PVI)
 
-- When creating our code, we wanted to ensure that the end result was:
-  - Efficient
-  - Modular
+.left-column[
+- **On-Board Microcontroller**
+  - Match industry practice
+     - Design for manufacture (DFM)
+  - More resilient to noise from shortest possible traces
+  - Avoid costly development board
 
-- **Modular Code**
-.center[<img src='img/ModularCode.png' width='55%' />]
+- **BLE Module**
+  - Communicate via serial terminal
+     - Mobile phone
+     - Smart Energy Challenge web application
+  - Transmit UART output wirelessly
+  - Receive calibrated gains
+]
+.right-column[
+<img src='img/PCB3.png' width='130%' style='margin-left: -30%;' />
+]
+
 ---
 
 name: S13
+
+# Firmware Implementation (PI)
+
+- We wanted to ensure that our firmware was **elegant**, **efficient**, and **modular**
+
+.center[<img src='img/ModularCode.png' width='75%' />]
+
+---
+
+name: S14
 
 # Firmware Implementation (PII)
 
@@ -479,7 +506,7 @@ name: S13
 
 ---
 
-name: S14
+name: S15
 
 # Firmware Implementation (PIII)
 
@@ -495,7 +522,7 @@ name: S14
 
 ---
 
-name: S15
+name: S16
 
 # Software Implementation
 
@@ -509,13 +536,13 @@ name: S15
   Check it out at [**https://cs209.jamesnzl.xyz**](https://cs209.jamesnzl.xyz)
 ---
 
-name: S16
+name: S17
 
 .center[<img src='img/Software.png' width='100%' />]
 
 ---
 
-name: S17
+name: S18
 
 # Hardware Enclosure
 
@@ -528,7 +555,7 @@ name: S17
 
 ---
 
-name: S18
+name: S19
 
 # Future Improvements
 
