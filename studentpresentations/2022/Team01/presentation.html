@@ -4,7 +4,7 @@
 <head>
   <title>Team 1 Presentation</title>
   <link rel='icon' type='image/svg+xml' href='img/Plug.svg' />
-  <meta charset="utf-8">
+  <meta charset='utf-8'>
   <style>
     @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
     @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
@@ -58,7 +58,7 @@
     }
 
     .logo-title {
-      content: "";
+      content: '';
       position: absolute;
       top: 15px;
       right: 15px;
@@ -70,7 +70,7 @@
     }
 
     .logo-slide {
-      content: "";
+      content: '';
       position: absolute;
       top: 35px;
       right: 15px;
@@ -106,7 +106,7 @@
     }
 
     .footer {
-      content: "";
+      content: '';
       position: absolute;
       bottom: 17px;
       color: gray;
@@ -180,7 +180,7 @@
     }
   </style>
 
-  <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
+  <link rel='stylesheet' href='http://yui.yahooapis.com/pure/0.6.0/pure-min.css'>
   <style>
     .smaller-font {
       font-size: 14px
@@ -190,13 +190,13 @@
   <!-- KaTeX and Mathjax support refer to below for syntax -->
   <!-- https://math.meta.stackexchange.com/questions/5020/mathjax-basic-tutorial-and-quick-reference -->
 
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.1/dist/katex.min.css" integrity="sha384-dbVIfZGuN1Yq7/1Ocstc1lUEm+AT+/rCkibIcC/OmWo5f0EA48Vf8CytHzGrSwbQ" crossorigin="anonymous">
+  <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/katex@0.10.1/dist/katex.min.css' integrity='sha384-dbVIfZGuN1Yq7/1Ocstc1lUEm+AT+/rCkibIcC/OmWo5f0EA48Vf8CytHzGrSwbQ' crossorigin='anonymous'>
 
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.1/dist/katex.min.js" integrity="sha384-2BKqo+exmr9su6dir+qCw08N2ZKRucY4PrGQPPWU1A7FtlCGjmEGFqXCv5nyM5Ij" crossorigin="anonymous"></script>
+  <script defer src='https://cdn.jsdelivr.net/npm/katex@0.10.1/dist/katex.min.js' integrity='sha384-2BKqo+exmr9su6dir+qCw08N2ZKRucY4PrGQPPWU1A7FtlCGjmEGFqXCv5nyM5Ij' crossorigin='anonymous'></script>
 
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.1/dist/contrib/auto-render.min.js" integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+  <script defer src='https://cdn.jsdelivr.net/npm/katex@0.10.1/dist/contrib/auto-render.min.js' integrity='sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI' crossorigin='anonymous' onload='renderMathInElement(document.body);'></script>
 
-  <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
+  <script type='text/javascript' async src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML'>
   </script>
 
   <style>
@@ -273,7 +273,7 @@
 </head>
 
 <body>
-  <textarea id="source">
+  <textarea id='source'>
 
 class: title-slide
 count: false
@@ -297,49 +297,84 @@ name: template_slide
 name: S1
 
 # Project Goal
-<aside>
-  🎯 To design and develop an energy monitor that may be used in a smart house to measure and display the amount of energy consumed by appliances.
-</aside>
 
+🎯 To design and develop an energy monitor that may be used in a smart house to measure and display the amount of energy consumed by appliances.
+
+.center[<img src='img/MonitorInBox2.png' width='35%' />]
 <!-- TODO: update this image -->
-.center[<img src = "img/MonitorInBox1.png" width="45%" />]
 
 ---
 
 name: S2
 
-# Overview of Features
+# Implementation Overview
 
-- Monitors the power consumption of a load
-- Precise measurements of voltage and current
-- Built-in display
-- Bluetooth output
-
-<!-- TODO: Add Image for project goal (Potentiall Images of BLE module and 7 Seg Display) -->
-.center[<img src="img/" width="65%">]
+- 🔌 Monitoring of real power consumption
+- 📏 Precise measurements of voltage and current
+- 🔁 Firmware state machine to manage complexity
+- 🔊 Output over UART and Bluetooth<sup>&reg;</sup> Low Energy
+- 📺 Built-in 7-segment display
+- 💻 Feature-rich and fully-responsive web application
+- 🧑‍💼 Industry-inspired project management
+  - ✅ GitHub Issues & Pull Requests
+  - 💬 Slack
+  - 📝 Notion
 
 ---
 
 name: S3
 
-# Project Management
+# Project Management (PI)
 
 .left-column[
-- **Github**
-  - Used for version control, utilising pull requests and merging concepts to enable best practice
+- **Git & GitHub**
+  - Version control, issue tracking, feature branches, and pull requests
+  - Collaborative development and review
 
-- **Notion**
-  - Usage of the kanban board (equivalent to Trello), logbooks and meeting notes
-
-- **Slack**
-  - Used as a primary communication source to either discuss problems or schedule impromptu meetings, as well as have support channels from TAs/lecturers.
+  <img src='img/Milestones.png' width='85%' />
 ]
-.right-column[<img src = "img/GitLog.gif" width="120%" />]
-
+.right-column[<img src='img/GitLog.gif' width='115%' style='margin-left: -15%;' />]
 
 ---
 
 name: S4
+
+# Project Management (PII)
+
+- **Git & GitHub**
+  - Version control, issue tracking, feature branches, and pull requests
+  - Collaborative development and review
+
+.center[
+<img src='img/Issues.png' width='49%' />
+<img src='img/PullRequest.png' width='49%' />
+]
+
+---
+
+name: S5
+
+# Project Management (PIII)
+
+- **Slack**
+  - Medium to discuss problems or schedule meetings, and consulting lecturers & TAs for support
+
+.center[<img src='img/Slack.png' width='75%' />]
+
+---
+
+name: S6
+
+# Project Management (PIV)
+
+- **Notion**
+  - Consolidation of project documentation and meeting notes
+
+.center[<img src='img/NotionDocumentation.jpeg' width='60%' />]
+
+---
+
+name: S7
 
 # Hardware Implementation (PI)
 
@@ -351,11 +386,11 @@ For the hardware, as a team it was decided that the design would entail the foll
     - Uses vectors and matrices to validate across all possible combinations of values
 
 <!-- TODO: Add Image for Matlab Script (Potentiall Images of BLE module and 7 Seg Display) -->
-.center[<img src = "img/" width="65%" />]
+.center[<img src='img/' width='65%' />]
 
 ---
 
-name: S5
+name: S8
 
 # Hardware Implementation (PII)
 
@@ -371,14 +406,14 @@ name: S5
 ]
 
 .right-column[
-<img src="img/PCB2.png" width="60%">
+<img src='img/PCB2.png' width='60%'>
 </br>
-<img src="img/PCB1.png" width="60%">
+<img src='img/PCB1.png' width='60%'>
 ]
 
 ---
 
-name: S6
+name: S9
 
 # Hardware Implementation (PIII)
 
@@ -387,11 +422,11 @@ name: S6
   - Allowing compact design practice
   - Increasing accuracy with minimal traces and components implemented to minimize load strain
 
-.center[<img src="img/Microcontroller.png" width="40%">]
+.center[<img src='img/Microcontroller.png' width='40%'>]
 
 ---
 
-name: S7
+name: S10
 
 # Hardware Implementation (PIV)
 
@@ -404,12 +439,12 @@ name: S7
 ]
 
 .right-column[
-  <img src="img/SecondOrderFilters.png" width="100%">
+  <img src='img/SecondOrderFilters.png' width='100%'>
 ]
 
 ---
 
-name: S8
+name: S11
 
 # Hardware Implementation (PV)
 
@@ -423,7 +458,7 @@ name: S8
 
 ---
 
-name: S9
+name: S12
 
 # Firmware Implementation (PI)
 
@@ -435,7 +470,7 @@ name: S9
 .center[<img src='img/ModularCode.png' width='55%' />]
 ---
 
-name: S10
+name: S13
 
 # Firmware Implementation (PII)
 
@@ -444,7 +479,7 @@ name: S10
 
 ---
 
-name: S11
+name: S14
 
 # Firmware Implementation (PIII)
 
@@ -460,7 +495,7 @@ name: S11
 
 ---
 
-name: S12
+name: S15
 
 # Software Implementation
 
@@ -474,12 +509,13 @@ name: S12
   Check it out at [**https://cs209.jamesnzl.xyz**](https://cs209.jamesnzl.xyz)
 ---
 
-name: S13
+name: S16
 
 .center[<img src='img/Software.png' width='100%' />]
 
 ---
-name: S14
+
+name: S17
 
 # Hardware Enclosure
 
@@ -491,7 +527,8 @@ name: S14
 .center[<img src='img/MonitorInBox1.png' width='30%' /> <img src='img/MonitorInBox2.png' width='30%' />]
 
 ---
-name: S14
+
+name: S18
 
 # Future Improvements
 
@@ -507,6 +544,7 @@ name: S14
   - Filter by months, and possibly show monthly readings/stats
 
 ---
+
 class: title-slide
 layout: false
 count: false
@@ -520,27 +558,27 @@ count: false
     </textarea>
 
   <!-- 
-    <script src="https://remarkjs.com/downloads/remark-latest.min.js">
+    <script src='https://remarkjs.com/downloads/remark-latest.min.js'>
     </script>
     -->
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML&delayStartupUntil=configured" type="text/javascript">
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML&delayStartupUntil=configured' type='text/javascript'>
   </script>
 
 
-  <script src="remark/remark.min.js" type="text/javascript">
+  <script src='remark/remark.min.js' type='text/javascript'>
   </script>
 
-  <script type="text/javascript">
+  <script type='text/javascript'>
     var hljs = remark.highlighter.engine;
   </script>
-  <script src="remark/terminal.language.js" type="text/javascript"></script>
+  <script src='remark/terminal.language.js' type='text/javascript'></script>
 
-  <script src="https://kit.fontawesome.com/a405eedf54.js" crossorigin="anonymous"></script>
-  <script src="remark/mark.min.js" type="text/javascript">
+  <script src='https://kit.fontawesome.com/a405eedf54.js' crossorigin='anonymous'></script>
+  <script src='remark/mark.min.js' type='text/javascript'>
   </script>
 
-  <script type="text/javascript">
+  <script type='text/javascript'>
 
     var options = {};
 
@@ -549,10 +587,10 @@ count: false
       // or if you want to use $...$ for math,
       renderMathInElement(document.body, {
         delimiters: [ // mind the order of delimiters(!?)
-          { left: "$$", right: "$$", display: true },
-          { left: "$", right: "$", display: false },
-          { left: "\\[", right: "\\]", display: true },
-          { left: "\\(", right: "\\)", display: false },
+          { left: '$$', right: '$$', display: true },
+          { left: '$', right: '$', display: false },
+          { left: '\\[', right: '\\]', display: true },
+          { left: '\\(', right: '\\)', display: false },
         ]
       });
     };
@@ -600,9 +638,9 @@ count: false
     MathJax.Hub.Configured();
 
     //Terminal style highligting code
-    var highlighted = document.querySelectorAll("code.terminal span.hljs-ansi");
+    var highlighted = document.querySelectorAll('code.terminal span.hljs-ansi');
     Array.prototype.forEach.call(highlighted, function (next) {
-      next.insertAdjacentHTML("beforebegin", next.textContent);
+      next.insertAdjacentHTML('beforebegin', next.textContent);
       next.parentNode.removeChild(next);
     });
 
