@@ -533,25 +533,117 @@ name: S15
 
 name: S16
 
-# Software Implementation
+# Software Implementation (PI)
 
-- **Software Features**
+.left-column[
+- **Technology Stack**
+   - Next.js with React, and deployed on Vercel
+   - Firebase with Firestore as a database
+   - Browser's `WebBluetooth` API
 
-  - Light and Dark Mode
-  - Fully responsive, with a mobile-first design
-  - **Monitor** - page plots all historical data saved in the database with new data as it is received in real-time
-  - **Calibrate** - Quickly view and calibrate our sampled ADC waveforms, and our amplifier gains, with a user-friendly mode switcher.
+- **Application Features**
+   - Fully-tested light & dark mode
+   - Fully responsive, with a mobile-first design
+   - [Open Graph](https://ogp.me/) protocol for SEO and social media link previews
 
-  Check it out at [**https://cs209.jamesnzl.xyz**](https://cs209.jamesnzl.xyz)
+<br />
+🌐 Check it out at [**https://cs209.jamesnzl.xyz**](https://cs209.jamesnzl.xyz)
+]
+.right-column[
+<img src='img/SoftwareMobile.jpg' width='68%' />
+]
+
 ---
 
 name: S17
 
-.center[<img src='img/Software.png' width='100%' />]
+# Software Implementation (PII)
+
+- **Light and Dark Modes**
+   - Defaults to browser/system preference
+   
+.center[
+<img src='img/Software.png' width='48%' /> &nbsp;
+<img src='img/MonitorLight.png' width='48%' />
+]
 
 ---
 
 name: S18
+
+# Software Implementation (PIII)
+
+- **Open Graph Metadata**
+   - Search engine optimisation and social media link previews
+
+.center[
+<img src='img/SlackOG.png' width='48%' /> &nbsp;
+<img src='img/DiscordOG.png' width='35%' />
+]
+
+
+---
+
+name: S19
+
+# Software Implementation (PIV)
+
+- **Monitor Page**
+   - Plots historical data from Firestore and new data in real-time
+   - [`em6`](http://em6live.co.nz/) API to retrieve Auckland's current energy price and carbon emissions
+   - Zoom on $x$-axis
+
+.center[
+<img src='img/MonitorDark.png' width='43%' /> &nbsp;
+<img src='img/MonitorZoom.png' width='29%' /> &nbsp;
+]
+
+---
+
+name: S20
+
+# Software Implementation (PV)
+
+- **Calibration Page**
+  - Quickly view sampled ADC waveforms and calibrate digital signal processing gains
+  - Switch between `Samples` and `Gains` mode
+
+.center[
+<img src='img/CalibrateSamples.png' width='47%' />
+<img src='img/CalibrateGains.png' width='47%' />
+]
+
+---
+
+name: S21
+
+# Software Implementation (PVI)
+
+- **Samples Mode**
+   - Plot sampled waveforms from serial data
+   - Display received data in a serial terminal
+
+.center[
+<img src='img/Samples.png' width='57%' />
+]
+
+---
+
+name: S22
+
+# Software Implementation (PVII)
+
+- **Gains Mode**
+   - Input fields to re-calibrate voltage and current gains
+   - Received with UART and persisted in EEPROM
+
+.center[
+<img src='img/GainsFull.png' width='57%' />
+]
+
+---
+
+name: S23
 
 # Hardware Enclosure
 
@@ -566,7 +658,7 @@ name: S18
 
 ---
 
-name: S19
+name: S24
 
 # Future Improvements
 
@@ -577,7 +669,7 @@ name: S19
   - Better BLE Module
   - BOM consolidation
 - **Firmware**
-  - Calibrate gains
+  - Implement gain calibration
      - UART Rx
      - EEPROM
 - **Software**
@@ -589,7 +681,7 @@ name: S19
 <br />
 <br />
 <br />
-<img src='img/Gains.png' width='160%' style='margin-left: -60%' />
+<img src='img/Gains.png' width='160%' style='margin-left: -65%' />
 ]
 
 ---
