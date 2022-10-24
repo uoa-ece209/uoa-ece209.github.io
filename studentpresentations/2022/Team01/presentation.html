@@ -502,7 +502,9 @@ name: S14
 # Firmware Implementation (PII)
 
 - **State Machine**
-.center[<img src='img/StateMachine.png' width='100%' />]
+    - Manage timings and simplify complexity
+
+.center[<img src='img/StateMachine.png' width='85%' />]
 
 ---
 
@@ -511,14 +513,15 @@ name: S15
 # Firmware Implementation (PIII)
 
 - **Free-Running ADC**
-  - We are using the ADC in free-running mode to maximise our sampling frequency
-  - We are also sampling at a non-integer multiple of our signal waveform to capture more information about the signal
+  - Maximise our sampling frequency
+  - Non-integer multiple of signal frequency to capture more information
 
 - **Rolling Buffer**
-  - Allows us to reuse and load values into the voltage, current and power buffer arrays and average the values efficiently and quickly to be displayed
+  - Ergonomically take rolling averages of processed voltage, current, and power
+  - Implemented as a circular/ring buffer to reuse same contiguous memory space
 
-- **Synchronisation of ADC and Display**
-  - Selecting the display refresh rate to roughly align with sampling across two waveform periods
+- **ADC & Display Synchronisation**
+  - Selected display refresh rate to roughly align with ADC sampling period
 
 ---
 
