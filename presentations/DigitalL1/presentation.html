@@ -988,7 +988,7 @@ name: S32
 # Example: Reading Input & Driving LED (PI)
 
 .questions[
-Develop a program to read the input from a push-button and control an LED. As shown by the Proteus schematic below, one end of the push-button is connected PB7 on ATmega328P while the other end is connected to the ground. The pull-up resistor, `\( R_1 \)`, ensures the voltage at PB7 is pulled to 5V (i.e. VCC supplied to the MCU) when the push-button is released. The filter capacitor, `\( C_1 \)`, is used for debouncing. When the push-button is pressed it creates 0V at PB7, when released PB7 will be 5V. LED is connected to PB5 through a current limiting resistor, `\( R_2 \)`. Generating 5V at PB5 will create a current to flow turning-on the LED (i.e. `\( I_{LED} =  \left ( 5 - V_{f} \right ) / R_2 \)` where `\( V_f \approx 2V\)` for a yellow LED). Setting PB5 to 0V will turn-off the LED. 
+Develop a program to read the input from a push-button and control an LED. As shown by the Proteus schematic below, one end of the push-button is connected PB7 on ATmega328P while the other end is connected to the ground. The pull-up resistor, `\( R_1 \)`, ensures the voltage at PB7 is pulled to 5V (i.e. VCC supplied to the MCU) when the push-button is released. The filter capacitor, `\( C_1 \)`, is used for debouncing. When the push-button is pressed it creates 0V at PB7, when released PB7 will be 5V. LED is connected to PB5 through a current limiting resistor, `\( R_2 \)`. Generating 5V at PB5 will create a current to flow turning-on the LED (i.e. `\( I_\text{LED} =  \left ( 5 - V_\text{f} \right ) / R_2 \)` where `\( V_\text{f} \approx 2\, \text{V}\)` for a yellow LED). Setting PB5 to 0V will turn-off the LED. 
 ]
 
 .center[

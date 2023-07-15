@@ -357,7 +357,7 @@ name: S7
 # The Sampling Process
 
 - The size of the time intervals the signal is split into, referred to as sample time, is dependent on the sampling frequency (also called sampling rate), measured in hertz
-\\[ t\_{sample} = \frac{1}{f\_{sample}} \\]
+\\[ t\_\text{sample} = \frac{1}{f\_\text{sample}} \\]
 - Higher sampling rates allow the original analog signal to be captured more accurately
  - However this requires faster ADC hardware, and more memory to store the digital data
 - To accurately capture a signal the sampling rate must be greater than the Nyquist frequency
@@ -401,7 +401,7 @@ name: S10
 - Total sampling time
  - This is the total time taken to make a single ADC reading and is therefore the sum of both the acquisition time and conversion time
  - The maximum sampling rate/frequency is limited by the minimum total sampling time
-\\[ f\_{sample(max)} = \frac{1}{t\_{acquisition(min)} + t\_{conversion(min)}} \\]
+\\[ f\_\text{sample(max)} = \frac{1}{t\_\text{acquisition(min)} + t\_\text{conversion(min)}} \\]
 - We will learn more about the acquisition process and the conversion process soon
 
 ---
@@ -418,7 +418,7 @@ name: S11
  - This specifies the voltage which the input signal is compared to (e.g. 5V) and therefore signals larger than the reference voltage cannot be accurately converted
 - Step size (V<sub>step</sub>)
  - This is the smallest signal that can be determined by the ADC and is a function of both the resolution and the reference voltage
-\\[ V\_{step} = \frac{V\_{ref}}{2^{resolution}} \\]
+\\[ V\_\text{step} = \frac{V\_\text{ref}}{2^\text{resolution}} \\]
 
 
 ---
@@ -530,7 +530,7 @@ name: S18
 - The acquisition time must be long enough to allow the sample and hold capacitor to charge
  - This is dependent on the source impedance (R<sub>signal</sub>) of the signal being measured
  - The capacitor is fully charged after approximately 5 time constants (&#964;)
- \\[ \tau = (R\_{signal} + R\_{sample}) C\_{sample} \\]
+ \\[ \tau = (R\_\text{signal} + R\_\text{sample}) C\_\text{sample} \\]
 - The conversion time is dependent on the resolution and the cycle time
  - One cycle is required per bit of resolution
  - Shorter cycle times will result in faster conversions, but the minimum cycle time will be limited by the ADC hardware capability, as well as the clock speed of the MCU
@@ -821,7 +821,7 @@ name: S33
  - It is measured in Least-Significant-Bits (LSB)
 - Given that one LSB is equal one step size, we can determine how many volts the converted reading might differ from the actual value
 
-\\[ V\_{\text{Absolute Error}} = V\_{\text{step}} \times  LSB\_{\text{Absolute Error}}  \\]
+\\[ V\_{\text{Absolute Error}} = V\_{\text{step}} \times  \mathtt{LSB}\_{\text{Absolute Error}}  \\]
 
 \\[ V\_{\text{ADC}} - V\_{\text{Absolute Error}} \leqslant V\_{\text{Actual}} \leqslant V\_{\text{ADC}} + V\_{\text{Absolute Error}}  \\]
 
