@@ -210,7 +210,7 @@ name: S1a
 - Reasons for using a microcontroller in your design
 - Features that needs to be considered when selecting a microcontroller
 - Key features of ATmega328P and ATmega328PB microcontrollers 
-- Revising C programing basics
+- Revising C programming basics
  - Variables and data types
  - Operators 
  - Control statements & functions
@@ -811,7 +811,7 @@ int main(void){
 
   //IF-ELSE statements - E.g. Checking if NUMTOCHECK is a prime number
   for(uint8_t cnt2 =2; cnt2 < NUMTOCHECK; cnt2++){
-    if( (NUMTOCHECK % cnt2) == 0 ){ //If NUMTOCHECK can be divided by a nummber less than that its not a prime
+    if( (NUMTOCHECK % cnt2) == 0 ){ //If NUMTOCHECK can be divided by a number less than that its not a prime
       is_prime = 0;                 //Clears the flag
       break;                        //Breaks the FOR loop as no need to continue
     }
@@ -851,11 +851,11 @@ int main(void){
 
 bool check_prime(uint8_t chk_no){ //Function returns true if chk_no is a prime
   for(uint8_t cnt1=2; cnt1 < chk_no; cnt1++){
-    if( (chk_no % cnt1) == 0){    //If chk_no can be divided by a nummber less than that its not a prime
+    if( (chk_no % cnt1) == 0){    //If chk_no can be divided by a number less than that its not a prime
       return false;               //Return false to the function caller
     }
   }
-  return true;                    //If chk_no cannot be divided by a nummber less than that its a prime
+  return true;                    //If chk_no cannot be divided by a number less than that its a prime
 }
 ```
 ]
@@ -890,7 +890,7 @@ name: S27
 - This means we can write to them in code just like any other variable
  - The manufacturer provides files with macros for the address of each peripheral
  - Using these we can refer to peripherals by name (e.g. DDRB), rather than their address (e.g. 0x0024)
- - In our case *#inlcude <span>&#60;</span>avr/io.h<span>&#62;</span>* defines the peripheral names we will use
+ - In our case *#include <span>&#60;</span>avr/io.h<span>&#62;</span>* defines the peripheral names we will use
 ]
 .right-column[
 .center[
@@ -1124,7 +1124,7 @@ count: false
       
       MathJax.Hub.Configured();
       
-      //Terminal style highligting code
+      //Terminal style highlighting code
       var highlighted = document.querySelectorAll("code.terminal span.hljs-ansi");
       Array.prototype.forEach.call(highlighted, function(next) {
         next.insertAdjacentHTML("beforebegin", next.textContent);

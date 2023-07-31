@@ -377,7 +377,7 @@ name: S10
 # Hardware Functional Requirements  
 
 - Sensors need to be designed to sense the voltage as well as the current
- - Voltage sensor needs to produce a scalled down **voltage signal**, v<sub>v(t)</sub>, representative of v<sub>L(t)</sub>
+ - Voltage sensor needs to produce a scaled down **voltage signal**, v<sub>v(t)</sub>, representative of v<sub>L(t)</sub>
  - Current sensor needs to produce a **voltage signal**, v<sub>i(t)</sub>, representative of load current, i<sub>L(t)</sub>
  - The peak-to-peak amplitude of v<sub>v(t)</sub> and v<sub>i(t)</sub> should be 5V or lower 
 - Amplifiers need to be designed to level-shift the **voltage signals** derived from the sensors
@@ -399,7 +399,7 @@ name: S11
 
 - Often there are multiple suitable solutions to an engineering problem 
  - Selection of final solution is based on technical merits as well as non-technical aspects like cost, time-to-market, resource requirements, etc.
-- Design is therefore an interactive process to strike a balance between different tradeoffs in order to reach an appropriate and refined solution to an engineering problem
+- Design is therefore an interactive process to strike a balance between different trade-offs in order to reach an appropriate and refined solution to an engineering problem
  - Sometimes this might not be the most technically superior solution 
 
 ---
@@ -768,7 +768,7 @@ name: S28
 - A pair of back-to-back Zener diodes, Z<sub>1</sub> & Z<sub>2</sub>, can be added for protection against for example voltage surges that might by present across v<sub>L</sub>
  - Under normal operation the Zener diodes do not impact the behavior of the voltage divider
 - When selecting R<sub>a</sub> & R<sub>b</sub> we also need to minimize power dissipation in them while making sure sufficiently large signal-to-noise ratio (SNR) and low sensitivity to the environment 
- - These are contradicting requirements and design is about making a good tradeoff 
+ - These are contradicting requirements and design is about making a good trade-off 
 
 ---
 name: S29
@@ -840,7 +840,7 @@ name: S28
 - A pair of back-to-back Zener diodes, Z<sub>3</sub> & Z<sub>4</sub>, can be added for protection against for example current surges that might by present in i<sub>L</sub>
  - Under normal operation the Zener diodes do not impact the behavior of the voltage divider
 - When selecting R<sub>s</sub> we also need to minimize power dissipation in them while making sure sufficiently large signal-to-noise ratio (SNR) and low sensitivity to the environment 
- - These are contradicting requirements and design is about making a good tradeoff 
+ - These are contradicting requirements and design is about making a good trade-off 
 
 ---
 name: S29
@@ -852,7 +852,7 @@ name: S29
  - Highest I<sub>L(RMS)</sub> is at lowest V<sub>L(RMS)</sub> and highest VA specified (i.e., I<sub>L(RMS)</sub> = 7.5VA/13.6V = 0.55A<sub>RMS</sub>)
 - Using this information we can derive the relation
 \\[ P\_{is-loss} = I^2\_{L(RMS)} R\_s \quad \Rightarrow \quad 0.05 \geq 0.55^2 R\_s \quad \Rightarrow \quad R\_s \leq 165 m\Omega \\]
-- If R<sub>s</sub> is choosen as 160m&Omega;, V<sub>is</sub> measured at both highest and lowest i<sub>L</sub> are
+- If R<sub>s</sub> is chosen as 160m&Omega;, V<sub>is</sub> measured at both highest and lowest i<sub>L</sub> are
 \\[ V\_{is(pk-pk)-highest} = 0.55\times 2\sqrt{2}\times 0.16 \approx 250mV \\]
 \\[ V\_{is(pk-pk)-lowest} = 0.16\times 2\sqrt{2}\times 0.16 \approx 72mV\\]
 - To determine an appropriate value for R<sub>s</sub> we need to minimize P<sub>vs-loss</sub>, size and cost while making sure sufficiently large signal-to-noise ratio (SNR)
@@ -961,7 +961,7 @@ count: false
       
       MathJax.Hub.Configured();
       
-      //Terminal style highligting code
+      //Terminal style highlighting code
       var highlighted = document.querySelectorAll("code.terminal span.hljs-ansi");
       Array.prototype.forEach.call(highlighted, function(next) {
         next.insertAdjacentHTML("beforebegin", next.textContent);
