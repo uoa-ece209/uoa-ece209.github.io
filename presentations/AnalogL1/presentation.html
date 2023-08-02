@@ -849,12 +849,12 @@ name: S29
 
 - Lets design our R<sub>s</sub> to have a power dissipation, P<sub>is-loss</sub>, no greater than 50mW as an example
 - We need to consider the highest i<sub>L</sub> to be measured measured to ensure P<sub>is-loss</sub> &le; 50mW
- - Highest I<sub>L(RMS)</sub> is at lowest V<sub>L(RMS)</sub> and highest VA specified (i.e., I<sub>L(RMS)</sub> = 7.5VA/13.6V = 0.55A<sub>RMS</sub>)
+ - Highest I<sub>L(RMS)</sub> is at lowest V<sub>L(RMS)</sub> and highest VA specified (i.e., I<sub>L(RMS)</sub> = 7.5VA/12.6V = 0.595A<sub>RMS</sub>)
 - Using this information we can derive the relation
-\\[ P\_{is-loss} = I^2\_{L(RMS)} R\_s \quad \Rightarrow \quad 0.05 \geq 0.55^2 R\_s \quad \Rightarrow \quad R\_s \leq 165 m\Omega \\]
-- If R<sub>s</sub> is chosen as 160m&Omega;, V<sub>is</sub> measured at both highest and lowest i<sub>L</sub> are
-\\[ V\_{is(pk-pk)-highest} = 0.55\times 2\sqrt{2}\times 0.16 \approx 250mV \\]
-\\[ V\_{is(pk-pk)-lowest} = 0.16\times 2\sqrt{2}\times 0.16 \approx 72mV\\]
+\\[ P\_{is-loss} = I^2\_{L(RMS)} R\_s \quad \Rightarrow \quad 0.05 \geq 0.595^2 R\_s \quad \Rightarrow \quad R\_s \leq 141 m\Omega \\]
+- If R<sub>s</sub> is chosen as 120m&Omega;, V<sub>is</sub> measured at both highest and lowest i<sub>L</sub> are
+\\[ V\_{is(pk-pk)-highest} = 0.595\times 2\sqrt{2}\times 0.12 \approx 200mV \\]
+\\[ V\_{is(pk-pk)-lowest} = 0.16\times 2\sqrt{2}\times 0.12 \approx 54mV\\]
 - To determine an appropriate value for R<sub>s</sub> we need to minimize P<sub>vs-loss</sub>, size and cost while making sure sufficiently large signal-to-noise ratio (SNR)
 
 ---
