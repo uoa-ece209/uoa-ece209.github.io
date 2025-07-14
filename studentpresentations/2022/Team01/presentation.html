@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Team 1 Presentation</title>
+  <link rel='icon' type='image/svg+xml' href='img/Plug.svg' />
+  <meta charset='utf-8'>
+  <style>
+    @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+    @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+    @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+
+    body {
+      font-family: 'Droid Serif';
+      line-height: 1.6;
+    }
+
+    h1,
+    h2,
+    h3 {
+      font-family: 'Yanone Kaffeesatz';
+      font-weight: bold;
+      color: #00467F;
+    }
+
+    h1 {
+      margin-top: 30px !important;
+      margin-bottom: 30px !important;
+    }
+
+    .remark-code,
+    .remark-inline-code {
+      font-family: 'Ubuntu Mono';
+    }
+
+    .TitleAuthor {
+      color: white;
+      font-weight: normal;
+    }
+
+    .title-slide .remark-slide-number {
+      display: none;
+    }
+
+    .title-slide h1,
+    h2,
+    h3,
+    h4,
+    .title-slide a {
+      text-align: left;
+      color: white;
+      line-height: 0.7;
+      font-weight: bold;
+    }
+
+    .title-slide {
+      vertical-align: middle;
+      background-color: #00467F;
+    }
+
+    .logo-title {
+      content: '';
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      height: 88px;
+      width: 267px;
+      background-repeat: no-repeat;
+      background-size: contain;
+      background-image: url(https://cdn.auckland.ac.nz/assets/central/central-services/mediaandmarketing/uoa-logos-2015/uoa-logo-2015-reverse.png);
+    }
+
+    .logo-slide {
+      content: '';
+      position: absolute;
+      top: 35px;
+      right: 15px;
+      height: 96px;
+      width: 100px;
+      background-repeat: no-repeat;
+      background-size: contain;
+      background-image: url(https://cpb-ap-se2.wpmucdn.com/blogs.auckland.ac.nz/dist/d/79/files/2015/10/uoa-v-colour2.png);
+    }
+
+    .left-column {
+      width: 65%;
+      float: left;
+      word-wrap: break-word;
+    }
+
+    .right-column {
+      width: 30%;
+      float: right;
+      word-wrap: break-word;
+    }
+
+    .left-column-s {
+      width: 75%;
+      float: left;
+      word-wrap: break-word;
+    }
+
+    .right-column-s {
+      width: 20%;
+      float: right;
+      word-wrap: break-word;
+    }
+
+    .footer {
+      content: '';
+      position: absolute;
+      bottom: 17px;
+      color: gray;
+      font-size: 10pt;
+    }
+
+    @page {
+      size: 1210px 681px;
+      margin: 0;
+    }
+
+    @media print {
+      .remark-slide-scaler {
+        width: 100% !important;
+        height: 100% !important;
+        transform: scale(1) !important;
+        top: 0 !important;
+        left: 0 !important;
+      }
+    }
+
+    .credits {
+      font-size: 12px;
+      line-height: 10px !important;
+      font-family: 'Droid Serif';
+    }
+
+    .codes {
+
+      line-height: 20px !important;
+    }
+
+    .questions {
+      font-size: 20px;
+      line-height: 28px !important;
+      font-family: 'Droid Serif';
+    }
+
+    .zoom175 {
+      transition: transform .2s;
+      /* Animation */
+    }
+
+    .zoom175:hover {
+      transform: scale(1.75) translateY(-20%)
+        /* translateX(-20%);  */
+        /* (Note: if the zoom is too large, it will go outside of the viewport) */
+    }
+
+    .zoom400 {
+      transition: transform .2s;
+      /* Animation */
+    }
+
+    .zoom400:hover {
+      transform: scale(4) translateY(-50%)
+        /* translateX(-20%);  */
+        /* (Note: if the zoom is too large, it will go outside of the viewport) */
+    }
+
+    .zoom120 {
+      transition: transform .2s;
+    }
+
+    .zoom120:hover {
+      transform: scale(1.2);
+    }
+
+    .color-grey {
+      color: #919191;
+    }
+  </style>
+
+  <link rel='stylesheet' href='http://yui.yahooapis.com/pure/0.6.0/pure-min.css'>
+  <style>
+    .smaller-font {
+      font-size: 14px
+    }
+  </style>
+
+  <!-- KaTeX and Mathjax support refer to below for syntax -->
+  <!-- https://math.meta.stackexchange.com/questions/5020/mathjax-basic-tutorial-and-quick-reference -->
+
+  <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/katex@0.10.1/dist/katex.min.css' integrity='sha384-dbVIfZGuN1Yq7/1Ocstc1lUEm+AT+/rCkibIcC/OmWo5f0EA48Vf8CytHzGrSwbQ' crossorigin='anonymous'>
+
+  <script defer src='https://cdn.jsdelivr.net/npm/katex@0.10.1/dist/katex.min.js' integrity='sha384-2BKqo+exmr9su6dir+qCw08N2ZKRucY4PrGQPPWU1A7FtlCGjmEGFqXCv5nyM5Ij' crossorigin='anonymous'></script>
+
+  <script defer src='https://cdn.jsdelivr.net/npm/katex@0.10.1/dist/contrib/auto-render.min.js' integrity='sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI' crossorigin='anonymous' onload='renderMathInElement(document.body);'></script>
+
+  <script type='text/javascript' async src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML'>
+  </script>
+
+  <style>
+    /* Table Style */
+    .tg {
+      border-collapse: collapse;
+      border-color: #9ABAD9;
+      border-spacing: 0;
+    }
+
+    .tg td {
+      background-color: #EBF5FF;
+      border-color: #9ABAD9;
+      border-style: solid;
+      border-width: 1px;
+      color: #444;
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+      overflow: hidden;
+      padding: 2px 10px;
+      word-break: normal;
+    }
+
+    .tg th {
+      background-color: #409cff;
+      border-color: #9ABAD9;
+      border-style: solid;
+      border-width: 1px;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+      font-weight: normal;
+      overflow: hidden;
+      padding: 2px 10px;
+      word-break: normal;
+    }
+
+    .tg .tg-dzaw {
+      background-color: #4F81BD;
+      color: #FFF;
+      font-weight: bold;
+      text-align: left;
+      vertical-align: top
+    }
+
+    .tg .tg-sabo {
+      background-color: #ebf5ff;
+      color: #000000;
+      text-align: left;
+      vertical-align: top
+    }
+
+    .tg .tg-096r {
+      color: #000000;
+      text-align: left;
+      vertical-align: top
+    }
+
+    .tg .tg-jayl {
+      background-color: #d2e4fc;
+      color: #000000;
+      text-align: left;
+      vertical-align: top
+    }
+
+    .tg .tg-ig71 {
+      background-color: #D2E4FC;
+      color: #000000;
+      text-align: left;
+      vertical-align: top
+    }
+  </style>
+
+</head>
+
+<body>
+  <textarea id='source'>
+
+class: title-slide
+count: false
+.logo-title[]
+
+# Smart Energy Monitor
+### Team 01
+
+.TitleAuthor[James Bao, Dylan Chamberlain, Ammaar Marzook, and Rishi Shukla]
+
+---
+
+layout: true
+name: template_slide
+
+.logo-slide[]
+.footer[[James Bao](https://www.linkedin.com/in/jamesnzl), [Dylan Chamberlain](https://www.linkedin.com/in/dylanchambo), [Ammaar Marzook](https://www.linkedin.com/in/ammaar-marzook-1b455b234), and [Rishi Shukla](https://www.linkedin.com/in/rishi-shukla-3896721b2), Department of Electrical, Computer, and Software Engineering (2022)]
+
+---
+
+name: S1
+
+# Project Goal
+
+🎯 To design and develop an energy monitor that may be used in a smart house to measure and display the amount of energy consumed by appliances.
+
+<br />
+<br />
+.center[<img src='img/System.png' width='80%' />]
+
+---
+
+name: S2
+
+# Implementation Overview
+
+.left-column[
+- 🔌 Monitoring of real power consumption
+- 📏 Precise measurements of voltage and current
+- 🔁 Firmware state machine to manage complexity
+- 🔊 Output over UART and Bluetooth<sup>&reg;</sup> Low Energy
+- 📺 Built-in 7-segment display
+- 💻 Feature-rich and fully-responsive web application
+- 🧑‍💼 Industry-inspired project management
+  - ✅ GitHub Issues & Pull Requests
+  - 💬 Slack
+  - 📝 Notion
+]
+.right-column[<img src='img/Box.png' width='85%' />]
+
+---
+
+name: S3
+
+# Project Management (PI)
+
+.left-column[
+- **Git & GitHub**
+  - Version control, issue tracking, feature branches, and pull requests
+  - Collaborative development and review
+
+  <img src='img/Milestones.png' width='85%' />
+]
+.right-column[<img src='img/GitLog.gif' width='115%' style='margin-left: -15%;' />]
+
+---
+
+name: S4
+
+# Project Management (PII)
+
+- **Git & GitHub**
+  - Version control, issue tracking, feature branches, and pull requests
+  - Collaborative development and review
+
+.center[
+<img src='img/Issues.png' width='49%' />
+<img src='img/PullRequest.png' width='49%' />
+]
+
+---
+
+name: S5
+
+# Project Management (PIII)
+
+- **Slack**
+  - Medium to discuss problems or schedule meetings, and consulting lecturers & TAs for support
+
+.center[<img src='img/Slack.png' width='75%' />]
+
+---
+
+name: S6
+
+# Project Management (PIV)
+
+- **Notion**
+  - Consolidation of project documentation and meeting notes
+
+.center[<img src='img/NotionDocumentation.jpeg' width='60%' />]
+
+---
+
+name: S7
+
+# Hardware Implementation (PI)
+
+.left-column[
+- **MATLAB Validation Script**
+    - Implemented a script to validate hardware values
+    - Performs a Monte Carlo-esque analysis across the entire project specification range using vectors and matrices
+
+  .center[
+  <img src='img/MATLAB.png' width='72.5%' />
+  ]
+]
+.right-column[
+<img src='img/MATLABOutput1.png' width='100%' />
+<img src='img/MATLABOutput2.png' width='100%' />
+]
+
+---
+
+name: S8
+
+# Hardware Implementation (PII)
+
+- **Precision Current Shunt Resistor**
+  - Procured a precision $100\,\text{m}\Omega \pm 1\%$ shunt resistor from Digi-Key<sup>&reg;</sup>
+  - Simplifies our board layout and reduces part count
+
+.center[<img src='img/ShuntResistor.png' width='60%' />]
+
+---
+
+name: S9
+
+# Hardware Implementation (PIII)
+
+.left-column[
+- **Second Order Filter**
+  - Second-order low-pass differential filters
+  - Increased attenuation of high-frequency noise
+  - Ensures a clean signal is provided to the ADC
+
+- **Phase-Preserved Filters**
+  - Deliberately selected $RC$ filter values to apply same phase offset to both signals
+  - Maximises accuracy as there is no net phase shift between voltage and current waveforms
+]
+
+.right-column[
+<img src='img/SecondOrderFilters.png' width='100%'>
+]
+
+---
+
+name: S10
+
+# Hardware Implementation (PIV)
+
+.left-column[
+- **Surface Mount Design**
+  - An extra challenge to learn and experience
+  - Mimic industry standards of PCB design
+  - More compact and portable
+- **PCB Design Features**
+  - Large copper pours to maximise power carrying capability
+  - Separation of power ground and signal ground
+  - Designed to fit in the palm of a hand ($62\,\text{mm}\times72\,\text{mm}$)
+  - Logical layout
+     - Separated functional blocks
+     - Minimised trace lengths for noise resilience
+     - Integrated 7-segment display
+]
+
+.right-column[
+<img src='img/PCB.svg' width='100%'>
+]
+
+---
+
+name: S11
+
+# Hardware Implementation (PV)
+
+.center[
+<img src='img/PCB1.png' width='30%'> &nbsp;
+<img src='img/PCB2.png' width='30%'> &nbsp;
+<img src='img/PCB3.png' width='30%' />
+]
+
+---
+
+name: S12
+
+# Hardware Implementation (PVI)
+
+.left-column[
+- **On-Board Microcontroller**
+  - Match industry practice
+     - Design for manufacture (DFM)
+  - More resilient to noise from shortest possible traces
+  - Avoid costly development board
+
+- **BLE Module**
+  - Communicate via serial terminal
+     - Mobile phone
+     - Smart Energy Challenge web application
+  - Transmit UART output wirelessly
+  - Receive calibrated gains
+]
+.right-column[
+<img src='img/PCBReal.png' width='105%' style='margin-left: -5%;' />
+]
+
+---
+
+name: S13
+
+# Firmware Implementation (PI)
+
+- We wanted to ensure that our firmware was **elegant**, **efficient**, and **modular**
+
+.center[<img src='img/ModularCode.png' width='75%' />]
+
+---
+
+name: S14
+
+# Firmware Implementation (PII)
+
+- **State Machine**
+    - Manage timings and simplify complexity
+
+.center[<img src='img/StateMachine.png' width='85%' />]
+
+---
+
+name: S15
+
+# Firmware Implementation (PIII)
+
+- **Free-Running ADC**
+  - Maximise our sampling frequency
+  - Non-integer multiple of signal frequency to capture more information
+
+- **Rolling Buffer**
+  - Ergonomically take rolling averages of processed voltage, current, and power
+  - Implemented as a circular/ring buffer to reuse same contiguous memory space
+
+- **ADC & Display Synchronisation**
+  - Selected display refresh rate to roughly align with ADC sampling period
+
+---
+
+name: S16
+
+# Software Implementation (PI)
+
+.left-column[
+- **Technology Stack**
+   - Next.js with React, and deployed on Vercel
+   - Firebase with Firestore as a database
+   - Browser's `WebBluetooth` API
+
+- **Application Features**
+   - Fully-tested light & dark mode
+   - Fully responsive, with a mobile-first design
+   - [Open Graph](https://ogp.me/) protocol for SEO and social media link previews
+
+<br />
+🌐 Check it out at [**cs209.jamesnzl.xyz**](https://cs209.jamesnzl.xyz)
+]
+.right-column[
+<img src='img/SoftwareMobile.jpg' width='68%' />
+]
+
+---
+
+name: S17
+
+# Software Implementation (PII)
+
+- **Light and Dark Modes**
+   - Defaults to browser/system preference
+   
+.center[
+<img src='img/Software.png' width='48%' /> &nbsp;
+<img src='img/MonitorLight.png' width='48%' />
+]
+
+---
+
+name: S18
+
+# Software Implementation (PIII)
+
+- **Open Graph Metadata**
+   - Search engine optimisation and social media link previews
+
+.center[
+<img src='img/SlackOG.png' width='48%' /> &nbsp;
+<img src='img/DiscordOG.png' width='35%' />
+]
+
+
+---
+
+name: S19
+
+# Software Implementation (PIV)
+
+- **Monitor Page**
+   - Plots historical data from Firestore and new data in real-time
+   - [`em6`](http://em6live.co.nz/) API to retrieve Auckland's current energy price and carbon emissions
+   - Zoom on $x$-axis
+
+.center[
+<img src='img/MonitorDark.png' width='43%' /> &nbsp;
+<img src='img/MonitorZoom.png' width='29%' /> &nbsp;
+]
+
+---
+
+name: S20
+
+# Software Implementation (PV)
+
+- **Calibration Page**
+  - Quickly view sampled ADC waveforms and calibrate digital signal processing gains
+  - Switch between `Samples` and `Gains` mode
+
+.center[
+<img src='img/CalibrateSamples.png' width='47%' />
+<img src='img/CalibrateGains.png' width='47%' />
+]
+
+---
+
+name: S21
+
+# Software Implementation (PVI)
+
+- **Samples Mode**
+   - Plot sampled waveforms from serial data
+   - Display received data in a serial terminal
+
+.center[
+<img src='img/Samples.png' width='57%' />
+]
+
+---
+
+name: S22
+
+# Software Implementation (PVII)
+
+- **Gains Mode**
+   - Input fields to re-calibrate voltage and current gains
+   - Received with UART and persisted in EEPROM
+
+.center[
+<img src='img/GainsFull.png' width='57%' />
+]
+
+---
+
+name: S23
+
+# Hardware Enclosure
+
+- 3D printed enclosure for our Smart Energy Monitor
+- Protects both the board and the user
+- Gives a more polished aesthetic to blend into the environment
+
+.center[
+<img src='img/MonitorInBox1.png' width='20%' /> &nbsp; &nbsp; &nbsp; &nbsp;
+<img src='img/MonitorInBox2.png' width='25%' />
+]
+
+---
+
+name: S24
+
+# Future Improvements
+
+.left-column[
+- **Hardware**
+  - Crystal on top of the board
+     - DFM (design for manufacture)
+  - Better BLE Module
+  - BOM consolidation
+- **Firmware**
+  - Implement gain calibration
+     - UART Rx
+     - EEPROM
+- **Software**
+  - Monitor fingerprinting/UUIDs
+  - Graph usability
+     - Filters and aggregate reporting
+]
+.right-column[
+<br />
+<br />
+<br />
+<img src='img/Gains.png' width='160%' style='margin-left: -65%' />
+]
+
+---
+
+class: title-slide
+layout: false
+count: false
+.logo-title[]
+
+# Ngā mihi nui!
+
+#### 🙏 Thank you to Duleepa and all other COMPSYS 209 staff for their valuable time, advice, and feedback.
+
+<br />
+### Want more?
+#### Check out our full project documentation at [**cs209.jamesnzl.xyz/documentation**](https://cs209.jamesnzl.xyz/documentation)!
+
+    </textarea>
+
+  <!-- 
+    <script src='https://remarkjs.com/downloads/remark-latest.min.js'>
+    </script>
+    -->
+
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML&delayStartupUntil=configured' type='text/javascript'>
+  </script>
+
+
+  <script src='remark/remark.min.js' type='text/javascript'>
+  </script>
+
+  <script type='text/javascript'>
+    var hljs = remark.highlighter.engine;
+  </script>
+  <script src='remark/terminal.language.js' type='text/javascript'></script>
+
+  <script src='https://kit.fontawesome.com/a405eedf54.js' crossorigin='anonymous'></script>
+  <script src='remark/mark.min.js' type='text/javascript'>
+  </script>
+
+  <script type='text/javascript'>
+
+    var options = {};
+
+    var renderMath = function () {
+      renderMathInElement(document.body);
+      // or if you want to use $...$ for math,
+      renderMathInElement(document.body, {
+        delimiters: [ // mind the order of delimiters(!?)
+          { left: '$$', right: '$$', display: true },
+          { left: '$', right: '$', display: false },
+          { left: '\\[', right: '\\]', display: true },
+          { left: '\\(', right: '\\)', display: false },
+        ]
+      });
+    };
+
+    var slideshow = remark.create({
+      ratio: '16:9',
+      slideNumberFormat: '%current%',
+      countIncrementalSlides: false,
+      renderMath,
+      highlightLanguage: 'c',
+      highlightStyle: 'github',
+      navigation: {
+        // Enable or disable navigating using scroll
+        // Default: true
+        // Alternatives: false
+        scroll: true,
+
+        // Enable or disable navigation using touch
+        // Default: true
+        // Alternatives: false
+        touch: true,
+
+        // Enable or disable navigation using click
+        // Default: false
+        // Alternatives: true
+        click: false,
+      },
+
+    });
+
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+        processEscapes: true
+      }
+    });
+
+    MathJax.Hub.Queue(function () {
+      $(MathJax.Hub.getAllJax()).map(function (index, elem) {
+        return (elem.SourceElement());
+      }).parent().addClass('has-jax');
+    });
+
+    MathJax.Hub.Configured();
+
+    //Terminal style highligting code
+    var highlighted = document.querySelectorAll('code.terminal span.hljs-ansi');
+    Array.prototype.forEach.call(highlighted, function (next) {
+      next.insertAdjacentHTML('beforebegin', next.textContent);
+      next.parentNode.removeChild(next);
+    });
+
+    window.addEventListener('load', function () {
+      RemarkSearch.create({ 'position': 'top-left', 'caseSensitive': false, 'showIcon': true, 'autoSearch': true });
+    });
+
+
+  </script>
+</body>
+
+</html>
