@@ -291,12 +291,9 @@ name: S4
 
 # ADC Data Representing Voltage
 
-.center[<img src="img/VoltageData.png" height="165">]
+.center[<img src="img/VoltageData.png" height="200">]
 
 - In this lecture, lets assume a 50Hz V<sub>vf</sub> at ADC0 is sampled and converted to an ADC value every 2ms
-- Note that project specifications limits maximum sampling rate to 10kHz and therefore if repeatedly a sample of V<sub>vf</sub> is taken followed by a sample of V<sub>if</sub> then each V<sub>vf</sub> sample will be 0.2ms apart
- - Alternatively V<sub>vf</sub> can be continuously sampled over a few periods to take samples of V<sub>vf</sub> every 0.1ms  
- - Need zero crossing detector to correctly align the V<sub>if</sub> samples taken after this with the V<sub>vf</sub> samples
 - From the ADC data we can estimate the AC source voltage at i<sup>th</sup> sample point since 
 \\[ V\_{AC}[i] = \left( ADC0Value[i] \times 5/1024 - V\_{off} \right) / \left( G\_{vs} G\_{vo} \right) \\]
 
@@ -306,12 +303,9 @@ name: S5
 
 # ADC Data Representing Current
 
-.center[<img src="img/CurrentData.png" height="165">]
+.center[<img src="img/CurrentData.png" height="200">]
 
 - Similar to V<sub>vf</sub> lets assume a 50Hz V<sub>if</sub> at ADC1 is sampled and converted to an ADC value every 2ms
-- Project specifications limits maximum sampling rate to 10kHz and therefore if repeatedly a sample of V<sub>vf</sub> is taken followed by a sample of V<sub>if</sub> then each V<sub>if</sub> sample will be 0.2ms apart
- - Alternatively V<sub>if</sub> can be continuously sampled over a few periods to take samples of V<sub>if</sub> every 0.1ms  
- - Need zero crossing detector to correctly align the V<sub>if</sub> samples with the V<sub>vf</sub> samples
 - From the ADC data we can estimate the AC load current at i<sup>th</sup> sample point since 
 \\[ I\_{L}[i] = \left( ADC1Value[i] \times 5/1024 - V\_{off} \right) / \left( G\_{is} G\_{io} \right) \\]
 
@@ -320,12 +314,15 @@ name: S6
 
 # Voltage & Current Samples 
 
-.center[<img src="img/VnI.png" height="270">]
+.center[<img src="img/VnI.png" height="150">]
 
 - When repeatedly a sample of V<sub>vf</sub> is taken followed by a sample of V<sub>if</sub> these samples will be 1ms apart
- - This delay can introduce a *perceived* phase-shift (i.e. phase error)  
+ - This delay can introduce a *perceived* phase-shift (i.e. phase error)
  - With good signal processing techniques this error can be minimized
 - During the project you are encouraged to investigate and improve on the techniques taught in this lecture
+- Project specifications limits maximum sampling rate to 10kHz and therefore if repeatedly a sample of V<sub>vf</sub> is taken followed by a sample of V<sub>if</sub> then each V<sub>if</sub> sample will be 0.2ms apart
+ - Alternatively V<sub>if</sub> can be continuously sampled over a few periods to take samples of V<sub>if</sub> every 0.1ms  
+ - Need zero crossing detector to correctly align the V<sub>if</sub> samples with the V<sub>vf</sub> samples
 
 ---
 
