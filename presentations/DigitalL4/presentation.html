@@ -307,7 +307,7 @@ name: S5
 
 - Similar to V<sub>vf</sub> lets assume a 50Hz V<sub>if</sub> at ADC1 is sampled and converted to an ADC value every 2ms
 - From the ADC data we can estimate the AC load current at i<sup>th</sup> sample point since
-- Think about sources of error in this process
+- Think about sources of error in this process (e.g. Gain, Tolerance, Calibration)
 \\[ I\_{L}[i] = \left( ADC1Value[i] \times 5/1024 - V\_{off} \right) / \left( G\_{is} G\_{io} \right) \\]
 
 ---
