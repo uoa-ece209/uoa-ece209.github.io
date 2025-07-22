@@ -314,10 +314,11 @@ name: S6
 
 # Voltage & Current Samples 
 
-.center[<img src="img/VnI.png" height="200">]
+.center[<img src="img/VnI.png" height="160">]
 
-- When a sample of V<sub>vf</sub> is taken followed by a sample of V<sub>if</sub> these samples will be 1ms apart (f<sub>ADC(sample)</sub> = 1 kHz)
- - This delay can introduce a *perceived* phase-shift (i.e. phase error), good signal processing techniques can minimise this
+- When a sample of V<sub>vf</sub> is taken followed by a sample of V<sub>if</sub> these samples will be 1ms apart
+ - This delay can introduce a *perceived* phase-shift (i.e. phase error)
+ - Good signal processing techniques can minimise this
 - During the project you are encouraged to investigate and improve on the techniques taught in this lecture
 - Note: Project specifications limits maximum sampling rate to 10kHz and therefore if repeatedly a sample of V<sub>vf</sub> is taken followed by a sample of V<sub>if</sub> then each V<sub>if</sub> sample will be 0.2ms apart
  - Alternatively V<sub>if</sub> can be continuously sampled over a few periods to take samples of V<sub>if</sub> every 0.1ms  
